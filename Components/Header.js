@@ -29,8 +29,8 @@ import SignInDrawer from "../Components/SignInDrawer";
 
 
 // function ElevationScroll(props) {
-  
-  
+
+
 
 
 //   const { children } = props;
@@ -56,7 +56,7 @@ import SignInDrawer from "../Components/SignInDrawer";
 //   const router = useRouter();
 //   const handellogout=()=>{
 //     router.push('/')
-    
+
 
 //     // localStorage.clear("token");
 //     sessionStorage.clear("token")
@@ -122,7 +122,7 @@ import SignInDrawer from "../Components/SignInDrawer";
 //   };
 
 
-  
+
 
 //   return (
 //     <>
@@ -131,11 +131,11 @@ import SignInDrawer from "../Components/SignInDrawer";
 //         <ElevationScroll {...props}>
 //           <AppBar
 //             className="app-bar"
-           
+
 //           >
 //             <Toolbar  style={{padding:'0px',backgroundColor:'white'}}>
 //               <Container
-            
+
 //                 sx={{
 //                   display: `flex`,
 //                   flexDirection:"row-reverse",
@@ -144,30 +144,30 @@ import SignInDrawer from "../Components/SignInDrawer";
 //                   // backgroundColor:'white'
 //                 }}
 //                    >
-                    
+
 //                 <div className="logo-image">
 //                   <IconButton className="logo-header" sx={{ width: '95%' }}>
-                   
+
 //                   </IconButton>
 //                   <SideDrawer navLinks={navList} />
-                
+
 //                 </div>
 //                 <Button className="hidden md:inline" variant="outlined" onClick={(event)=>toggleDrawer('right',true,event)}>Login</Button>
 //                 <TextField placeholder='Search'  sx={{width:'80%',marginLeft:'25%'}}/>
 //                  {/* <Navbar navLinks={menuItems} classes={classes} /> */}
-            
+
 //                 {/* <SideDrawer navLinks={menuItems} /> */}
 //                 <SignInDrawer
 //                   anchor="right"
 //                   toggleDrawer={toggleDrawer}
 //                   isOpen={isDrawerOpen}
-                  
+
 //                 />
 //                  {/* <LoginDrawer
 //                   anchor="right"
 //                   toggleDrawer={toggleDrawer}
 //                   isOpen={isDrawerOpen}
-                  
+
 //                 /> */}
 //               </Container>
 //             </Toolbar>
@@ -181,17 +181,17 @@ import SignInDrawer from "../Components/SignInDrawer";
 // export default Header;
 
 import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Input, Avatar,IconButton, TextField, Button, useScrollTrigger } from '@mui/material';
+import { AppBar, Toolbar, Input, Avatar, IconButton, TextField, Button, useScrollTrigger } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 import { useContext } from "react";
 
 import sharedContext from '../context/SharedContext';
 
 const Header = ({ toggleSidenav }) => {
-    const [isDrawerOpen, setOpenDrawer] = useState(false);
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
   // const [token, setToken]=useState();
   // const [userData, setUserData]=useState();
-  const {userRole,token,isSidenavOpen,setUserRole,setToken,setIsSidenavOpen}=useContext(sharedContext);
+  const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
 
   // useEffect(()=>{
   //   if(window){
@@ -215,35 +215,35 @@ const Header = ({ toggleSidenav }) => {
 
   return (
     <AppBar position="static">
-      <Toolbar style={{padding:'10px',backgroundColor:'white',width:'100%'}}>
-        
-      <SignInDrawer
-                  anchor="right"
-                  toggleDrawer={toggleDrawer}
-                  isOpen={isDrawerOpen}
-                  
-                />
+      <Toolbar style={{ padding: '10px', backgroundColor: 'white', width: '100%' }}>
+
+        <SignInDrawer
+          anchor="right"
+          toggleDrawer={toggleDrawer}
+          isOpen={isDrawerOpen}
+
+        />
 
         {/* Search Field */}
-        <TextField variant='outlined' placeholder="Search" className='ml-auto'/>
+        <TextField variant='outlined' placeholder="Search" className='ml-auto' />
 
         {/* Username and Avatar */}
-        {token?<div className="hidden md:flex items-center ml-auto mr-auto">
-          <span style={{color:'black'}}>{userRole}</span>
+        {token ? <div className="hidden md:flex items-center ml-auto mr-auto">
+          <span style={{ color: 'black' }}>{userRole}</span>
           <Avatar />
-        </div>:             <Button className="hidden md:inline" variant="outlined" onClick={(event)=>toggleDrawer('right',true,event)}>Login</Button>
-}
+        </div> : <Button className="hidden md:inline" variant="outlined" onClick={(event) => toggleDrawer('right', true, event)}>Login</Button>
+        }
         <IconButton
-        edge="end"
-        aria-label="menu"
-        onClick={toggleSidenav}
-        sx={{
-          textAlign: "right",
-        }}
-        className="inline md:hidden"
-      >
-        <Menu fontSize="large" />
-      </IconButton>
+          edge="end"
+          aria-label="menu"
+          onClick={toggleSidenav}
+          sx={{
+            textAlign: "right",
+          }}
+          className="inline md:hidden"
+        >
+          <Menu fontSize="large" />
+        </IconButton>
 
       </Toolbar>
     </AppBar>
