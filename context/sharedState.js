@@ -3,14 +3,14 @@ import SharedContext from './SharedContext'
 
 const SharedState=(props)=> {
 
-    const [userRole,setUserRole]=useState('SUPERADMIN');
+    const [userRole,setUserRole]=useState('USER');
     const [token,setToken]=useState();
     const [isSidenavOpen, setIsSidenavOpen] = useState(false);
    useEffect(()=>{
     if(window){
         // setToken()
         setToken(sessionStorage.getItem('token'))
-        setUserRole(sessionStorage.getItem('userRole'))
+        setUserRole(sessionStorage.getItem('userRole')||'USER')
     }
    },[])
   return (

@@ -233,17 +233,19 @@ const Header = ({ toggleSidenav }) => {
           <Avatar />
         </div>:             <Button className="hidden md:inline" variant="outlined" onClick={(event)=>toggleDrawer('right',true,event)}>Login</Button>
 }
-        <IconButton
+      <div   className="md:hidden">
+      <IconButton
         edge="end"
         aria-label="menu"
         onClick={toggleSidenav}
         sx={{
           textAlign: "right",
         }}
-        className="inline md:hidden"
+      
       >
         <Menu fontSize="large" />
       </IconButton>
+        </div>  
 
       </Toolbar>
     </AppBar>

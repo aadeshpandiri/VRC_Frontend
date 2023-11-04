@@ -1,5 +1,5 @@
 const roles = {
-    // 'user':['Dashboard'],
+    'USER':['Dashboard'],
     'SUPERADMIN': ['Dashboard', 'Approvals', 'Receipts', 'Payroll'],
     'MANAGER': ['Dashboard',            
                  'Receipts'],

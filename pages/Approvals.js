@@ -5,7 +5,7 @@ import Sidenav from '../Components/SideNav';
 import sharedContext from '../context/SharedContext';
 import { useContext } from "react";
 
-import { Drawer, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/material';
 // const roles = {
    
 //     'SUPERADMIN': ['Dashboard', 'Approvals', 'Receipts', 'Payroll'],
@@ -13,6 +13,7 @@ import { Drawer, List, ListItem, ListItemText, IconButton } from '@mui/material'
 //     'SALES': ['Dashboard', 'OnBoard Form'],
 //   };
 import roles from '../data/roles'
+import SideBar from '../Components/SideBar';
 function Approvals() {
     const {userRole,token,isSidenavOpen,setUserRole,setToken,setIsSidenavOpen}=useContext(sharedContext);
     const [approvalsList,setApprovalsList]=useState([]);
@@ -35,12 +36,22 @@ function Approvals() {
         fetch("https://vrcbackend.onrender.com/admin/getUsersList", requestOptions)
           .then(response => response.json())
           .then(result => {
-            console.log(result)
-            setApprovalsList(result.data)
-
+            if(result.status==401 || result.message=='Token Invalid/Expired'){
+              handleLogout();
+            }
+            else{
+              console.log(result)
+              setApprovalsList(result.data)
+  
+            }
+            
         })
           .catch(error => console.log('error', error));
     }},[token])
+    const handleLogout=()=>{
+      sessionStorage.clear();
+      setToken(null);
+    }
   return (
     <div className="md:flex h-screen w-screen">
     
@@ -54,13 +65,14 @@ function Approvals() {
        isSidenavOpen={isSidenavOpen}
        toggleSidenav={toggleSidenav}        />
 
-<List>
+{/* <List>
      {roles[userRole]?.map((item, index) => (
        <ListItem  key={index}>
          <ListItemText primary={item} />
        </ListItem>
      ))}
-   </List>
+   </List> */}
+   <SideBar/>
    </div>
 
    {/* Content Container */}
@@ -74,20 +86,27 @@ function Approvals() {
      {/* Main Content */}
      {/* <Main /> */}
      <div>
-        {approvalsList?.map((item,index)=>(
-        <div key={index}>  <div className='flex justify-between '>
-               <span>{index+1}</span> 
-               <span>{item.name}</span> 
-               <span>{item.emailId}</span> 
-               <span>{item.role_type}</span> 
-               <span>{item.status}</span> 
+      <table className='w-full text-left overflow-y-scroll'>     {approvalsList?.map((item,index)=>(
+     
+        <tr key={index}>
+         
+                <td>{index+1}</td> 
+               <td>{item.name}</td> 
+               <td>{item.emailId}</td> 
+               <td>{item.role_type}</td> 
+               <td>{item.status}</td> 
 
-            </div>
-            <div>
+            <div className='flex justify-end'>
+              <Button variant='outlined' color='success'>Approve</Button>
+              <Button color='error'>Reject</Button>
+              </div>
+            
+            
+                </tr>
 
-                </div>
-                </div>
        ) )}
+       </table>
+
      </div>
    </div>
 

@@ -24,6 +24,7 @@ const MatEdit = ({ index }) => {
          />
 };
 const Main = () => {
+  
   const columns = [
     // { field: 'sno', headerName: 'Sno', width: 90 },
     
@@ -73,7 +74,11 @@ const Main = () => {
     }
   ];
   const [rows,setRows]=useState([])
-  const {token}=useContext(sharedContext);
+  const handleLogout=()=>{
+    sessionStorage.clear();
+    setToken(null)
+  }
+  const {token,setToken}=useContext(sharedContext);
   useEffect(()=>{
 if(token){
   var myHeaders = new Headers();
@@ -88,9 +93,15 @@ var requestOptions = {
 fetch("https://vrcbackend.onrender.com/project/getProjects", requestOptions)
   .then(response => response.json())
   .then(result =>{
-
+    if(result.status==401 || result.message=='Token Invalid/Expired'){
+      handleLogout();
+    }
+    else{
+     
    console.log(result)
    setRows(result.data)
+    
+    }
   })
   .catch(error => console.log('error', error));}
   },[token])

@@ -56,6 +56,8 @@ import routes from '../data/routes'
 // };
 import roles from '../data/roles'
 import { useRouter } from "next/router";
+import Link from "next/link";
+import SideBar from "../Components/SideBar";
 export default function Home() {
  
   // const userRole = 'superadmin'; // Set the user's role here
@@ -86,22 +88,24 @@ export default function Home() {
           isSidenavOpen={isSidenavOpen}
           toggleSidenav={toggleSidenav}        />
 
-<List className="flex flex-col">
+{/* <List className="flex flex-col">
   <div>
         {roles[userRole]?.map((item, index) => (
           <div key={index} name={item} className="p-2" 
-          onClick={(e)=>{
-            console.log(routes[item])
-            router.push(`${routes[item]}`)
-          }
-          }
-          >{item}</div>
+          // onClick={(e)=>{
+          //   console.log(routes[item])
+          //   router.push(`${routes[item]}`)
+          // }
+          // }
+          >
+            <Link href={`${routes[item]}`}>{item}</Link></div>
         ))}
         </div>
         <div onClick={handleLogout}>
           Logout
         </div>
-      </List>
+      </List> */}
+      <SideBar/>
       </div>
 
       {/* Content Container */}
