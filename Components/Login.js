@@ -1,48 +1,48 @@
-import { TextField } from '@mui/material'
+// import { TextField } from '@mui/material'
 import React from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 
-function Login({email,password,rememberMe,onChangeInput,hangleGotoSignup,handleClose}) {
+function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, handleClose }) {
 
-    const {userRole,token,isSidenavOpen,setUserRole,setToken,setIsSidenavOpen}=useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-var raw = JSON.stringify({
-  "emailId": email,
-  "password": password
-});
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            "emailId": email,
+            "password": password
+        });
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
 
-fetch("https://vrcbackend.onrender.com/auth/login", requestOptions)
-  .then(response => response.json())
-  .then(result => {
-    console.log(result)
-    setToken(result.data.accessToken)
-    setUserRole(result.data.role_type)
-    handleClose()
-    sessionStorage.setItem('token',result.data.accessToken)
-    sessionStorage.setItem('userRole',result.data.role_type)
-    // location.reload()
+        fetch("https://vrcbackend.onrender.com/auth/login", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setToken(result.data.accessToken)
+                setUserRole(result.data.role_type)
+                handleClose()
+                sessionStorage.setItem('token', result.data.accessToken)
+                sessionStorage.setItem('userRole', result.data.role_type)
+                // location.reload()
 
-})
-  .catch(error => console.log('error', error));
+            })
+            .catch(error => console.log('error', error));
     };
-  return (
-    // <div className='flex flex-col p-10'>
-    //     <TextField placeholder='Email' onChange={onChangeInput} name='email' />
-    //     <TextField type='password' name='password'/>
-    //     </div>
-    <div className='logIn__wrap'>
+    return (
+        // <div className='flex flex-col p-10'>
+        //     <TextField placeholder='Email' onChange={onChangeInput} name='email' />
+        //     <TextField type='password' name='password'/>
+        //     </div>
+        <div className='logIn__wrap'>
             <div className='lg__Mn-cnt'>
                 <div className='lg__Ttl'>
                     <h2>Log in to your account</h2>
@@ -81,8 +81,8 @@ fetch("https://vrcbackend.onrender.com/auth/login", requestOptions)
                             <div className='rm_Pass'>
                                 <label>
                                     <input
-                                       name='rememberMe'
-                                       type="checkbox"
+                                        name='rememberMe'
+                                        type="checkbox"
                                         checked={rememberMe}
                                         onChange={onChangeInput}
                                     />{' '}
@@ -103,7 +103,7 @@ fetch("https://vrcbackend.onrender.com/auth/login", requestOptions)
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default Login
