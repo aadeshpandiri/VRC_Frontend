@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-import { FormControlLabel, IconButton } from '@material-ui/core';
+// import { FormControlLabel, IconButton } from '@material-ui/core';
 import { Button } from '@mui/material';
 // import { DataGrid } from "@material-ui/data-grid";
-import EditIcon from '@material-ui/icons/Edit';
-import { blue } from '@material-ui/core/colors';
+// import EditIcon from '@material-ui/icons/Edit';
+// import { blue } from '@material-ui/core/colors';
 import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
 import AddprojectDrawer from './AddprojectDrawer';
-const MatEdit = ({ index }) => {
+import { Edit } from '@mui/icons-material';
 
-  const handleEditClick = () => {
-    // some action
-  }
+// const MatEdit = ({ index }) => {
+
+//   const handleEditClick = () => {
+//     // some action
+//   }
 
 
 
-  return <FormControlLabel
-    control={
-      <IconButton color="secondary" aria-label="add an alarm" onClick={handleEditClick} >
-        <EditIcon style={{ color: blue[500] }} />
-      </IconButton>
-    }
-  />
-};
+//   return <FormControlLabel
+//     control={
+//       <IconButton color="secondary" aria-label="add an alarm" onClick={handleEditClick} >
+//         <EditIcon  />
+//       </IconButton>
+//     }
+//   />
+// };
 const Main = () => {
   
   const columns = [
@@ -69,7 +71,8 @@ const Main = () => {
       renderCell: (params) => {
         return (
           <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-            <MatEdit index={params.row.id} />
+            {/* <MatEdit index={params.row.id} /> */}
+            <Edit/>
           </div>
         );
       }
@@ -141,7 +144,9 @@ const Main = () => {
   //   console.log(t);
   //   return t;
   // }
-
+const AddRow=(item)=>{
+  setRows([...rows,item])
+}
   return (
     <div className="p-4">
       {/* Your Data Grid Table */}
@@ -149,8 +154,17 @@ const Main = () => {
         anchor="right"
         toggleDrawer={toggleDrawer}
         isOpen={isDrawerOpen}
+        AddRow={AddRow}
       />
-      {token && <Button style={{ color: "white", backgroundColor: 'rgba(19, 102, 217, 1)' }} onClick={(event) => toggleDrawer('right', true, event)}>Add Project</Button>}
+      <div>
+      <Button
+                variant="outlined"
+                onClick={(event) => toggleDrawer('right', true, event)}
+                
+                >Add Project
+            </Button>
+
+      </div>
       <Box sx={{ height: '80vh', width: '100%' }}>
         <DataGrid
           rows={rows}

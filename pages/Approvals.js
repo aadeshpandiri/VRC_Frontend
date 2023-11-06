@@ -85,16 +85,19 @@ function Approvals() {
 
      {/* Main Content */}
      {/* <Main /> */}
-     <div>
-      <table className='w-full text-left overflow-y-scroll'>     {approvalsList?.map((item,index)=>(
+     <div class='bg-slate-300 h-full p-4'>
+      <div className='rounded-md	'>
+      <table className='w-full text-left overflow-y-scroll '>
+        
+        <tbody>   {approvalsList?.map((item,index)=>(
      
-        <tr key={index}>
+        <tr key={index} className='bg-white '>
          
-                <td>{index+1}</td> 
-               <td>{item.name}</td> 
-               <td>{item.emailId}</td> 
-               <td>{item.role_type}</td> 
-               <td>{item.status}</td> 
+                <td className='p-4'>{index+1}</td> 
+               <td className='p-4'>{item.name}</td> 
+               <td className='p-4'>{item.emailId}</td> 
+               <td className='p-4'>{item.role_type}</td> 
+               <td className='p-4'>{item.status}</td> 
 
             <div className='flex justify-end'>
               <Button variant='outlined' color='success'>Approve</Button>
@@ -104,9 +107,9 @@ function Approvals() {
             
                 </tr>
 
-       ) )}
+       ) )}</tbody>
        </table>
-
+       </div>
      </div>
    </div>
 

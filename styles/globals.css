@@ -11,14 +11,12 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* min-height: 100vh; */
+ 
   margin-top: 4rem;
   margin-bottom: 2rem;
 }
 
-.lg__Box {
-  /* min-width: 350px; */
-}
+
 
 .lg__Ttl h2 {
   font-size: 30px;
@@ -113,7 +111,6 @@
 .sbt__Btn button:hover {
   color: #1366d9;
   background: #fff;
-  /* border: 1px solid #1366D9; */
 }
 
 .ck__Act p {
@@ -160,23 +157,16 @@
 .navigation-list {
   display: flex;
   flex-direction: column;
-  /* background-color:  aliceblue; */
-  /* background-color: black; */
-  /* background-color:#8A9EA8; */
   background-color: whitesmoke;
   color: black;
 
-  /* min-width: 100px; */
   height: 100vh;
   align-items: center;
-  /* position: fixed; */
-  /* z-index: 999999; */
-  /* font:'Titillium Web' */
+ 
   margin-top: 40%;
 }
 .each-navigation {
-  /* margin: 10px; */
-  /* margin-bottom: 15px; */
+  
   width: -webkit-fill-available;
   cursor: pointer;
   padding: 5px;
@@ -189,28 +179,26 @@
   margin-left: 20px;
 }
 .Nav-display-name {
-  /* font-weight: 600; */
+ 
   font-size: larger;
   margin-left: 10px;
 }
 
 .navigation-selected {
-  /* border-bottom: 1px solid white;
-   */
-  /* background-color: white; */
+
   background-color: lavender;
-  /* color: black; */
+
   color: black;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   margin-top: 15px;
   font-weight: bold;
-  /* margin-top: 5px; */
+  
 }
 
 .AddProject__wrap {
   width: 500px;
-  /* height: 594px; */
+
 }
 
 .AddprojectCard h2 {
@@ -273,7 +261,7 @@
 .add__Btn button:hover {
   color: #1366d9;
   background: #fff;
-  /* border: 1px solid #1366D9; */
+ 
 }
 
 .dcrd__Btn button {

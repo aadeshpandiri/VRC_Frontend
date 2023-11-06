@@ -3,7 +3,7 @@ import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 
-function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose }) {
+function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose,AddRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
 
@@ -43,6 +43,17 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                // let temp={
+                //     "project_id":result.data,
+                //     "project_name": projectName,
+                //     "status": status,
+                //     "project_type": type,
+                //     "tower_number": towerNumber,
+                //     "flat_number": flatNumber,
+                //     "villa_number": villaNumber,
+                //     "plot_number": plotNumber
+                // }
+                AddRow(result.data)
                 handleClose()
             })
             .catch(error => console.log('error', error));

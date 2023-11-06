@@ -16,7 +16,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import { Button } from "@mui/material";
 import Addproject from "./Addproject";
 // import Register from "./Register";
-const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper }) => {
+const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
     const router = useRouter();
     const [projectName, setProjectName] = useState('');
     const [type, setType] = useState('');
@@ -27,23 +27,23 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper }) => {
     const [plotNumber, setPlotNumber] = useState('');
     const [current, setCurrentStep] = useState(1);
 
-    const hangleGotoApartment = () => {
-        setCurrentStep(2)
+    // const hangleGotoApartment = () => {
+    //     setCurrentStep(2)
 
-    }
-    const hangleGotoAddproject = () => {
-        setCurrentStep(1)
-    }
-    const [open, setOpen] = useState(false);
-    const [scroll, setScroll] = React.useState('paper');
+    // }
+    // const hangleGotoAddproject = () => {
+    //     setCurrentStep(1)
+    // }
+    // const [open, setOpen] = useState(false);
+    // const [scroll, setScroll] = React.useState('paper');
     // const [popupContent,setPopupContent]=useState();
-    const handleClickOpen = (e) => {
-        setOpen(true);
-        setScroll('paper');
+    // const handleClickOpen = (e) => {
+    //     setOpen(true);
+    //     // setScroll('paper');
 
-        // console.log(e)
-        // setPopupContent(e.target.name);
-    };
+    //     // console.log(e)
+    //     // setPopupContent(e.target.name);
+    // };
 
     const handleClose = (event) => {
         // setOpen(false);
@@ -51,14 +51,14 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper }) => {
     };
 
     const descriptionElementRef = React.useRef(null);
-    React.useEffect(() => {
-        if (open) {
-            const { current: descriptionElement } = descriptionElementRef;
-            if (descriptionElement !== null) {
-                descriptionElement.focus();
-            }
-        }
-    }, [open]);
+    // React.useEffect(() => {
+    //     if (open) {
+    //         const { current: descriptionElement } = descriptionElementRef;
+    //         if (descriptionElement !== null) {
+    //             descriptionElement.focus();
+    //         }
+    //     }
+    // }, [open]);
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle login logic here
@@ -121,7 +121,8 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper }) => {
                                     villaNumber={villaNumber}
                                     plotNumber={plotNumber}
                                     onChangeInput={onChangeInput}
-                                    handleClose={handleClose} />
+                                    handleClose={handleClose} 
+                                    AddRow={AddRow}/>
                             }
 
                         </Box>
