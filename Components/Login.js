@@ -2,13 +2,15 @@
 import React from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
+import Loader from './Loader';
 
 function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, handleClose }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         var raw = JSON.stringify({
@@ -33,9 +35,13 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
                 sessionStorage.setItem('token', result.data.accessToken)
                 sessionStorage.setItem('userRole', result.data.role_type)
                 // location.reload()
+                setLoader(false)
 
             })
-            .catch(error => console.log('error', error));
+            .catch(error =>{
+                console.log('error', error)
+                setLoader(false)
+            } );
     };
     return (
         // <div className='flex flex-col p-10'>
@@ -43,6 +49,7 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
         //     <TextField type='password' name='password'/>
         //     </div>
         <div className='logIn__wrap'>
+            <Loader/>
             <div className='lg__Mn-cnt'>
                 <div className='lg__Ttl'>
                     <h2>Log in to your account</h2>

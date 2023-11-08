@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 // import { FormControlLabel, IconButton } from '@material-ui/core';
-import { Button } from '@mui/material';
+import { Button, MenuItem, Select } from '@mui/material';
 // import { DataGrid } from "@material-ui/data-grid";
 // import EditIcon from '@material-ui/icons/Edit';
 // import { blue } from '@material-ui/core/colors';
@@ -10,25 +10,28 @@ import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
 import AddprojectDrawer from './AddprojectDrawer';
 import { Edit } from '@mui/icons-material';
+import Loader from './Loader';
 
-// const MatEdit = ({ index }) => {
+const MatEdit = ({ index ,setCurrent,setOpenDrawer,setEditRow}) => {
 
-//   const handleEditClick = () => {
-//     // some action
-//   }
+  const handleEditClick = () => {
+    // some action
+    console.log(index)
+    setEditRow(index)
+    setOpenDrawer(true)
+    setCurrent('edit')
+  }
 
 
 
-//   return <FormControlLabel
-//     control={
-//       <IconButton color="secondary" aria-label="add an alarm" onClick={handleEditClick} >
-//         <EditIcon  />
-//       </IconButton>
-//     }
-//   />
-// };
+  return <div onClick={handleEditClick}>
+    <Edit/>
+  </div>
+ 
+};
 const Main = () => {
-  
+  const [current, setCurrent] = useState('');
+
   const columns = [
     // { field: 'sno', headerName: 'Sno', width: 90 },
 
@@ -61,6 +64,22 @@ const Main = () => {
       field: 'status',
       headerName: 'Status',
       width: 160,
+      // renderCell: (params) => {
+      //   return (
+      //     <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+      //       <Select
+      //        value={params.row.status}
+      //         // onChange={onChangeInput}
+      //         autoComplete="off"
+      //         name='type'>
+      //       <MenuItem value="" disabled>Type</MenuItem>
+      //                                   <MenuItem value="AppartTOKENment">TOKEN</MenuItem>
+      //                                   <MenuItem value="AVAILABLE">AVAILABLE</MenuItem>
+      //                                   <MenuItem value="SOLD">SOLD</MenuItem>
+      //       </Select>
+      //     </div>
+      //   );
+      // }
     },
     {
       field: "actions",
@@ -68,24 +87,27 @@ const Main = () => {
       sortable: false,
       width: 140,
       disableClickEventBubbling: true,
+
       renderCell: (params) => {
         return (
           <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-            {/* <MatEdit index={params.row.id} /> */}
-            <Edit/>
+            <MatEdit index={params.row} setCurrent={setCurrent} setOpenDrawer={setOpenDrawer} setEditRow={setEditRow} />
           </div>
         );
       }
     }
   ];
   const [rows, setRows] = useState([])
+  const [editRow,setEditRow]=useState();
+
   const handleLogout=()=>{
     sessionStorage.clear();
     setToken(null)
   }
-  const { token,setToken } = useContext(sharedContext);
+  const { token,setToken ,loader,setLoader,userRole} = useContext(sharedContext);
   useEffect(() => {
     if (token) {
+      setLoader(true)
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -107,8 +129,11 @@ const Main = () => {
           setRows(result.data)
           
     }
+    setLoader(false)
   })
-        .catch(error => console.log('error', error));
+        .catch(error => {
+          setLoader(false)
+        });
     }
   }, [token])
 
@@ -123,6 +148,10 @@ const Main = () => {
     }
 
     setOpenDrawer(open);
+    if(open){
+      setCurrent(event.target.name)
+    }
+  
   };
 
   // const rows = [
@@ -147,23 +176,31 @@ const Main = () => {
 const AddRow=(item)=>{
   setRows([...rows,item])
 }
+const SaveEditedRow=(item)=>{
+  console.log(item)
+}
   return (
-    <div className="p-4">
+    <div className="p-4 mt-20">
       {/* Your Data Grid Table */}
+      <Loader/>
       <AddprojectDrawer
         anchor="right"
         toggleDrawer={toggleDrawer}
         isOpen={isDrawerOpen}
         AddRow={AddRow}
+        SaveEditedRow={SaveEditedRow}
+        current={current}
+        editRow={editRow}
+        setEditRow={setEditRow}
       />
       <div>
-      <Button
+      {token&& userRole=='SUPERADMIN' && <Button
                 variant="outlined"
                 onClick={(event) => toggleDrawer('right', true, event)}
-                
+                name='add'
                 >Add Project
             </Button>
-
+}
       </div>
       <Box sx={{ height: '80vh', width: '100%' }}>
         <DataGrid

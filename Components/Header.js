@@ -181,13 +181,43 @@ import SignInDrawer from "../Components/SignInDrawer";
 // export default Header;
 
 import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Input, Avatar, IconButton, TextField, Button, useScrollTrigger } from '@mui/material';
-import { Menu } from '@mui/icons-material';
+import {
+  AppBar,
+  Container,
+  Toolbar,
+  IconButton,
+  Stack,
+  CssBaseline,
+  useScrollTrigger,
+  Avatar,
+  TextField,
+  Button
+} from "@mui/material";import { Menu } from '@mui/icons-material';
 import { useContext } from "react";
-
+import PropTypes from "prop-types";
 import sharedContext from '../context/SharedContext';
+function ElevationScroll(props) {
+  
+  
 
-const Header = ({ toggleSidenav }) => {
+
+  const { children } = props;
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
+
+ElevationScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
+const Header = ({ toggleSidenav ,props}) => {
   const [isDrawerOpen, setOpenDrawer] = useState(false);
   // const [token, setToken]=useState();
   // const [userData, setUserData]=useState();
@@ -214,7 +244,10 @@ const Header = ({ toggleSidenav }) => {
 
 
   return (
-    <AppBar position="static">
+    <Stack spacing={2} sx={{ flexGrow: 1 }} className="header-stack">
+    <CssBaseline />
+    <ElevationScroll {...props}>
+    <AppBar position="fixed">
       <Toolbar style={{ padding: '10px', backgroundColor: 'white', width: '100%' }}>
 
         <SignInDrawer
@@ -225,14 +258,14 @@ const Header = ({ toggleSidenav }) => {
         />
 
         {/* Search Field */}
-        <TextField variant='outlined' placeholder="Search" className='ml-auto' />
+        {/* <TextField variant='outlined' placeholder="Search" className='ml-auto' /> */}
 
-        {/* Username and Avatar */}
-        {token ? <div className="hidden md:flex items-center ml-auto mr-auto">
-          <span style={{ color: 'black' }}>{userRole}</span>
-          <Avatar />
-        </div> : <Button className="hidden md:inline" variant="outlined" onClick={(event) => toggleDrawer('right', true, event)}>Login</Button>
+        {/* Username and Avatar */} <div className="hidden md:flex items-center ml-auto">
+        {token ? <> <span style={{ color: 'black' }}>{userRole}</span>
+          <Avatar /></> : <Button className="hidden md:inline" variant="outlined" onClick={(event) => toggleDrawer('right', true, event)}>Login</Button>
         }
+        </div>
+        
       <div   className="md:hidden">
       <IconButton
           edge="end"
@@ -249,6 +282,8 @@ const Header = ({ toggleSidenav }) => {
 
       </Toolbar>
     </AppBar>
+    </ElevationScroll>
+      </Stack>
   );
 };
 

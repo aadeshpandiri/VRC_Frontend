@@ -52,6 +52,31 @@ function Approvals() {
       sessionStorage.clear();
       setToken(null);
     }
+    const handleApproveOrReject=(item,status)=>{
+      var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var raw = JSON.stringify({
+  "emailId": item.emailId,
+  "status": status
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://vrcbackend.onrender.com/admin/validateUser", requestOptions)
+  .then(response => response.json())
+  .then(result =>{
+     console.log(result)
+
+    })
+  .catch(error => console.log('error', error));
+    }
   return (
     <div className="md:flex h-screen w-screen">
     
@@ -80,18 +105,18 @@ function Approvals() {
      {/* Header */}
      <Header
        toggleSidenav={toggleSidenav}
-       userRole={userRole}
+   
      />
 
      {/* Main Content */}
      {/* <Main /> */}
-     <div class='bg-slate-300 h-full p-4'>
-      <div className='rounded-md	'>
-      <table className='w-full text-left overflow-y-scroll '>
+     <div class='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
+     
+      <table className='w-full text-left   border-separate border-spacing-y-2.5'>
         
         <tbody>   {approvalsList?.map((item,index)=>(
      
-        <tr key={index} className='bg-white '>
+        <tr key={index} className='bg-white rounded-md'>
          
                 <td className='p-4'>{index+1}</td> 
                <td className='p-4'>{item.name}</td> 
@@ -100,8 +125,8 @@ function Approvals() {
                <td className='p-4'>{item.status}</td> 
 
             <div className='flex justify-end'>
-              <Button variant='outlined' color='success'>Approve</Button>
-              <Button color='error'>Reject</Button>
+              <Button variant='outlined' color='success' onClick={()=>handleApproveOrReject(item,'V')}>Approve</Button>
+              <Button color='error' onClick={()=>handleApproveOrReject(item,'R')}>Reject</Button>
               </div>
             
             
@@ -109,7 +134,7 @@ function Approvals() {
 
        ) )}</tbody>
        </table>
-       </div>
+     
      </div>
    </div>
 

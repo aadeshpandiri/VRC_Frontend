@@ -3,22 +3,13 @@ import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 
-function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose,AddRow }) {
+function Editproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInputEdit, handleClose,SaveEditedRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
-    const [message,setMessage]=useState('');
-
+    const [message,setMessage]=useState();
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('projectName:', projectName);
-        console.log('type:', type);
-        console.log('status:', status);
-        console.log('towerNumber:', towerNumber);
-        console.log('faltNumber:', flatNumber);
-        console.log('villaNumber:', villaNumber);
-        console.log('plotNumber:', plotNumber);
-        console.log('token:', token)
-        
+
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -40,7 +31,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             redirect: 'follow'
         };
 
-        fetch("https://vrcbackend.onrender.com/project/createNewProject", requestOptions)
+        fetch("https://vrcbackend.onrender.com/project/editProject", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
@@ -48,18 +39,8 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                     setMessage(result.message)
                 }
               
-                // let temp={
-                //     "project_id":result.data,
-                //     "project_name": projectName,
-                //     "status": status,
-                //     "project_type": type,
-                //     "tower_number": towerNumber,
-                //     "flat_number": flatNumber,
-                //     "villa_number": villaNumber,
-                //     "plot_number": plotNumber
-                // }
                 if(result.message=='Success'){
-                    AddRow(result.data)
+                    SaveEditedRow(result.data)
                     handleClose()
                 }
                 
@@ -82,7 +63,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
         //     </div>
         <div className='AddProject__wrap'>
             <div className='AddprojectCard'>
-                <h2>New Project</h2>
+                <h2>Edit Project</h2>
                 <div>
                     <form onSubmit={handleSubmit} className='deatails__Box' >
                         <div className='fields__Box'>
@@ -92,7 +73,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                     <input
                                         type="projectName"
                                         value={projectName}
-                                        onChange={onChangeInput}
+                                        onChange={onChangeInputEdit}
                                         placeholder='Enter Project Name'
                                         required
                                         autoComplete="off"
@@ -105,7 +86,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                 <div className='input__Fld'>
                                     <Select 
                                         value={type}
-                                        onChange={onChangeInput}
+                                        onChange={onChangeInputEdit}
                                         required
                                         autoComplete="off"
                                         name='type'
@@ -122,16 +103,16 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                 <div className='input__Fld'>
                                     <Select style={inputThemObj}
                                         value={status}
-                                        onChange={onChangeInput}
+                                        onChange={onChangeInputEdit}
                                         required
                                         autoComplete="off"
                                         name='status'
                                     >
                                         <MenuItem value="" disabled>Select Status</MenuItem>
-                                        <MenuItem value="Available">Available</MenuItem>
-                                        <MenuItem value="Sold">Sold</MenuItem>
-                                        <MenuItem value="Token">Token</MenuItem>
-                                        <MenuItem value="Advance">Advance</MenuItem>
+                                        <MenuItem value="AVAILABLE">AVAILABLE</MenuItem>
+                                        <MenuItem value="SOLD">SOLD</MenuItem>
+                                        <MenuItem value="TOKEN">TOKEN</MenuItem>
+                                        <MenuItem value="ADVANCE">ADVANCE</MenuItem>
                                     </Select>
                                 </div>
                             </div>}
@@ -142,7 +123,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                         <input
                                             type="towerNumber"
                                             value={towerNumber}
-                                            onChange={onChangeInput}
+                                            onChange={onChangeInputEdit}
                                             placeholder='Enter Tower Number'
                                             required
                                             autoComplete="off"
@@ -156,7 +137,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                         <input
                                             type="flatNumber"
                                             value={flatNumber}
-                                            onChange={onChangeInput}
+                                            onChange={onChangeInputEdit}
                                             placeholder='Enter Flat Number'
                                             required
                                             autoComplete="off"
@@ -171,7 +152,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                     <input
                                         type="villaNumber"
                                         value={villaNumber}
-                                        onChange={onChangeInput}
+                                        onChange={onChangeInputEdit}
                                         placeholder='Enter Villa Number'
                                         required
                                         autoComplete="off"
@@ -185,7 +166,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                     <input
                                         type="plotNumber"
                                         value={plotNumber}
-                                        onChange={onChangeInput}
+                                        onChange={onChangeInputEdit}
                                         placeholder='Enter Plot Number'
                                         required
                                         autoComplete="off"
@@ -193,14 +174,15 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                     />
                                 </div>
                             </div>}
+                            <p style={{color:'red'}}>{message}</p>
                         </div>
-                        <div style={{color:'red'}}>{message}</div>
+
                         <div className='Btns__container'>
                             <div className='dcrd__Btn'>
                                 <button onClick={handleClose}>Discard</button>
                             </div>
                             <div className='add__Btn'>
-                                <button type='submit'>Add Project</button>
+                                <button type='submit'>Save Changes</button>
                             </div>
                         </div>
                     </form>
@@ -210,4 +192,4 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
     )
 }
 
-export default Addproject
+export default Editproject

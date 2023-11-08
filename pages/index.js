@@ -57,6 +57,7 @@ import routes from '../data/routes'
 import roles from '../data/roles'
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Loader from "../Components/Loader";
 import SideBar from "../Components/SideBar";
 export default function Home() {
  

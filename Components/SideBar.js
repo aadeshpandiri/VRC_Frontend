@@ -22,7 +22,7 @@ const SideBar = () => {
   }
   const getIcon=(item)=>{
     switch(item){
-      case 'Dashboard':return <Home color='blue'/>; break;
+      case 'Dashboard':return <Home color='primary'/>; break;
       case 'Approvals': return <ApprovalOutlined/>; break;
       case 'Receipts':return <ReceiptLongOutlined/>; break;
       case 'Payroll':return <AccountBalanceWalletOutlined/>; break;
@@ -31,7 +31,7 @@ const SideBar = () => {
   }
   return (
     <>
-     <List className="flex flex-col justify-between">
+     <List className="flex flex-col justify-between fixed">
   <div>
         {roles[userRole]?.map((item, index) => (
           <div key={index} name={item} className="p-4" 

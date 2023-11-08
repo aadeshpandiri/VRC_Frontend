@@ -211,7 +211,7 @@
 .deatails__Box {
   display: flex;
   flex-direction: column;
-  gap: 120px;
+  gap: 20px;
 }
 
 .fields__Box {

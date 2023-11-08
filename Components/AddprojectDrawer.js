@@ -15,8 +15,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 // import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from "@mui/material";
 import Addproject from "./Addproject";
+import Editproject from "./Editproject";
 // import Register from "./Register";
-const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
+const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,editRow,setEditRow,SaveEditedRow}) => {
     const router = useRouter();
     const [projectName, setProjectName] = useState('');
     const [type, setType] = useState('');
@@ -25,8 +26,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
     const [flatNumber, setFlatNumber] = useState('');
     const [villaNumber, setVillaNumber] = useState('');
     const [plotNumber, setPlotNumber] = useState('');
-    const [current, setCurrentStep] = useState(1);
-
+   
     // const hangleGotoApartment = () => {
     //     setCurrentStep(2)
 
@@ -68,21 +68,27 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
     const onChangeInput = (e) => {
         console.log(e.target.checked)
         switch (e.target.name) {
-            case 'projectName': setProjectName(e.target.value);
+            case 'project_name': setProjectName(e.target.value);
                 break;
             case 'type': setType(e.target.value);
                 break;
             case 'status': setStatus(e.target.value);
                 break;
-            case 'towerNumber': setTowerNumber(e.target.value);
+            case 'tower_number': setTowerNumber(e.target.value);
                 break;
-            case 'flatNumber': setFlatNumber(e.target.value);
+            case 'flat_number': setFlatNumber(e.target.value);
                 break;
-            case 'villaNumber': setVillaNumber(e.target.value);
+            case 'villa_number': setVillaNumber(e.target.value);
                 break;
-            case 'plotNumber': setPlotNumber(e.target.value);
+            case 'plot_number': setPlotNumber(e.target.value);
                 break;
         }
+    }
+    const onChangeInputEdit=(e)=>{
+        setEditRow((prevState) => ({
+            ...prevState,
+               [e.target.name]: e.target.value,
+             }))
     }
     return (
         <Dialog
@@ -111,7 +117,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
                         // onKeyDown={toggleDrawer(anchor, false)}
                         >
                             {
-                                current == 1 &&
+                                current == 'add' &&
                                 <Addproject
                                     projectName={projectName}
                                     type={type}
@@ -123,6 +129,21 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
                                     onChangeInput={onChangeInput}
                                     handleClose={handleClose} 
                                     AddRow={AddRow}/>
+                            }
+                            {
+                                current=='edit'&&
+                                <Editproject
+                                    projectName={editRow?.project_name}
+                                    type={editRow?.project_type}
+                                    status={editRow?.status}
+                                    towerNumber={editRow?.tower_number}
+                                    flatNumber={editRow?.flat_number}
+                                    villaNumber={editRow?.villa_number}
+                                    plotNumber={editRow?.plot_number}
+                                    onChangeInputEdit={onChangeInputEdit}
+                                    handleClose={handleClose} 
+                                    SaveEditedRow={SaveEditedRow}
+                                />
                             }
 
                         </Box>
