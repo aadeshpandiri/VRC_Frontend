@@ -17,7 +17,7 @@ import { Button } from "@mui/material";
 import Addproject from "./Addproject";
 import Editproject from "./Editproject";
 // import Register from "./Register";
-const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,editRow,setEditRow,SaveEditedRow}) => {
+const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current, editRow, setEditRow, SaveEditedRow }) => {
     const router = useRouter();
     const [projectName, setProjectName] = useState('');
     const [type, setType] = useState('');
@@ -26,7 +26,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,
     const [flatNumber, setFlatNumber] = useState('');
     const [villaNumber, setVillaNumber] = useState('');
     const [plotNumber, setPlotNumber] = useState('');
-   
+
     // const hangleGotoApartment = () => {
     //     setCurrentStep(2)
 
@@ -84,11 +84,11 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,
                 break;
         }
     }
-    const onChangeInputEdit=(e)=>{
+    const onChangeInputEdit = (e) => {
         setEditRow((prevState) => ({
             ...prevState,
-               [e.target.name]: e.target.value,
-             }))
+            [e.target.name]: e.target.value,
+        }))
     }
     return (
         <Dialog
@@ -112,7 +112,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,
                         <Box
                             // sx={{ width: 600 }}
                             role="presentation"
-                            className={current == 1 ? "Addproject-drawer" : "signup-drawer"}
+                        // className={current == 1 ? "Addproject-drawer" : "signup-drawer"}
                         // onClick={toggleDrawer(anchor, false)}
                         // onKeyDown={toggleDrawer(anchor, false)}
                         >
@@ -127,11 +127,11 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,
                                     villaNumber={villaNumber}
                                     plotNumber={plotNumber}
                                     onChangeInput={onChangeInput}
-                                    handleClose={handleClose} 
-                                    AddRow={AddRow}/>
+                                    handleClose={handleClose}
+                                    AddRow={AddRow} />
                             }
                             {
-                                current=='edit'&&
+                                current == 'edit' &&
                                 <Editproject
                                     projectName={editRow?.project_name}
                                     type={editRow?.project_type}
@@ -141,7 +141,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow ,current,
                                     villaNumber={editRow?.villa_number}
                                     plotNumber={editRow?.plot_number}
                                     onChangeInputEdit={onChangeInputEdit}
-                                    handleClose={handleClose} 
+                                    handleClose={handleClose}
                                     SaveEditedRow={SaveEditedRow}
                                 />
                             }

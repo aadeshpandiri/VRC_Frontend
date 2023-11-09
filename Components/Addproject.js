@@ -40,24 +40,13 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             redirect: 'follow'
         };
 
-        fetch(`${baseurl}/project/createNewProject`, requestOptions)
+        fetch(`${baseurl?.url}/project/createNewProject`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
                 if(result.status==409){
                     setMessage(result.message)
                 }
-              
-                // let temp={
-                //     "project_id":result.data,
-                //     "project_name": projectName,
-                //     "status": status,
-                //     "project_type": type,
-                //     "tower_number": towerNumber,
-                //     "flat_number": flatNumber,
-                //     "villa_number": villaNumber,
-                //     "plot_number": plotNumber
-                // }
                 if(result.message=='Success'){
                     AddRow(result.data)
                     handleClose()
@@ -69,10 +58,6 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
 
 
     return (
-        // <div className='flex flex-col p-10'>
-        //     <TextField placeholder='Email' onChange={onChangeInput} name='email' />
-        //     <TextField type='password' name='password'/>
-        //     </div>
         <div className='AddProject__wrap'>
             <div className='AddprojectCard'>
                 <h2>New Project</h2>

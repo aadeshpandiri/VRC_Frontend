@@ -15,35 +15,35 @@ function Payroll() {
         e.preventDefault();
         console.log('Entries:', entries);
 
-        // var myHeaders = new Headers();
-        // myHeaders.append("Authorization", `Bearer ${token}`);
-        // myHeaders.append("Content-Type", "application/json");
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
 
-        // var raw = JSON.stringify({
-        //     "project_name": projectName,
-        //     "status": status,
-        //     "project_type": type,
-        //     "tower_number": towerNumber,
-        //     "flat_number": flatNumber,
-        //     "villa_number": villaNumber,
-        //     "plot_number": plotNumber
-        // });
+        var raw = JSON.stringify({
+            "project_name": projectName,
+            "status": status,
+            "project_type": type,
+            "tower_number": towerNumber,
+            "flat_number": flatNumber,
+            "villa_number": villaNumber,
+            "plot_number": plotNumber
+        });
 
-        // var requestOptions = {
-        //     method: 'POST',
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: 'follow'
-        // };
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
 
-        // fetch("https://vrcbackend.onrender.com/project/createNewProject", requestOptions)
-        //     .then(response => response.json())
-        //     .then(result => {
-        //         console.log(result)
-        //         AddRow(result.data)
-        //         handleClose()
-        //     })
-        //     .catch(error => console.log('error', error));
+        fetch("https://vrcbackend.onrender.com/project/createNewProject", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                AddRow(result.data)
+                handleClose()
+            })
+            .catch(error => console.log('error', error));
     };
     // const onChangeInput = (e) => {
     //     console.log(e.target.name)

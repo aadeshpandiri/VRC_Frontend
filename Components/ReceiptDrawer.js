@@ -14,8 +14,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 // import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from "@mui/material";
 import Addproject from "./Addproject";
-import Receipt from "./Receipt";
-const ReceiptDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
+import ShowReceipt from "./ShowReceipt";
+const ReceiptDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow }) => {
     const router = useRouter();
     const [projectName, setProjectName] = useState('');
     const [type, setType] = useState('');
@@ -102,21 +102,8 @@ const ReceiptDrawer = ({ anchor, toggleDrawer, isOpen, paper,AddRow }) => {
                         // onClick={toggleDrawer(anchor, false)}
                         // onKeyDown={toggleDrawer(anchor, false)}
                         >
-                            {
-                                current == 1 &&
-                                // <Addproject
-                                //     projectName={projectName}
-                                //     type={type}
-                                //     status={status}
-                                //     towerNumber={towerNumber}
-                                //     flatNumber={flatNumber}
-                                //     villaNumber={villaNumber}
-                                //     plotNumber={plotNumber}
-                                //     onChangeInput={onChangeInput}
-                                //     handleClose={handleClose} 
-                                //     AddRow={AddRow}/>
-                                    <Receipt  handleClose={handleClose} />
-                            }
+
+                            <ShowReceipt handleClose={handleClose} />
 
                         </Box>
 

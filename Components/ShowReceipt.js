@@ -3,7 +3,7 @@ import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 
-function Receipt({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, AddRow }) {
+function ShowReceipt({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, AddRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
 
@@ -100,4 +100,4 @@ function Receipt({ projectName, type, status, towerNumber, flatNumber, villaNumb
     )
 }
 
-export default Receipt
+export default ShowReceipt
