@@ -10,6 +10,9 @@ import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
 import AddprojectDrawer from './AddprojectDrawer';
 import { Edit } from '@mui/icons-material';
+import OnboardingForm from './OnboardingForm';
+import ReceiptDrawer from './ReceiptDrawer';
+import Payroll from './Payroll';
 
 // const MatEdit = ({ index }) => {
 
@@ -28,7 +31,7 @@ import { Edit } from '@mui/icons-material';
 //   />
 // };
 const Main = () => {
-  
+
   const columns = [
     // { field: 'sno', headerName: 'Sno', width: 90 },
 
@@ -72,18 +75,18 @@ const Main = () => {
         return (
           <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
             {/* <MatEdit index={params.row.id} /> */}
-            <Edit/>
+            <Edit />
           </div>
         );
       }
     }
   ];
   const [rows, setRows] = useState([])
-  const handleLogout=()=>{
+  const handleLogout = () => {
     sessionStorage.clear();
     setToken(null)
   }
-  const { token,setToken } = useContext(sharedContext);
+  const { token, setToken } = useContext(sharedContext);
   useEffect(() => {
     if (token) {
       var myHeaders = new Headers();
@@ -98,22 +101,20 @@ const Main = () => {
       fetch("https://vrcbackend.onrender.com/project/getProjects", requestOptions)
         .then(response => response.json())
         .then(result => {
-    if(result.status==401 || result.message=='Token Invalid/Expired'){
-      handleLogout();
-    }
-    else{
-     
-          console.log(result)
-          setRows(result.data)
-          
-    }
-  })
+          if (result.status == 401 || result.message == 'Token Invalid/Expired') {
+            handleLogout();
+          }
+          else {
+            setRows(result.data)
+          }
+        })
         .catch(error => console.log('error', error));
     }
   }, [token])
 
-  const [isDrawerOpen, setOpenDrawer] = useState(false);
-  const toggleDrawer = (anchor, open, event) => {
+  const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
+  const [isReceiptDrawerOpen, setOpenReceiptDrawer] = useState(false);
+  const toggleAddProjectDrawer = (anchor, open, event) => {
     if (
       event &&
       event.type === "keydown" &&
@@ -122,7 +123,19 @@ const Main = () => {
       return;
     }
 
-    setOpenDrawer(open);
+    setOpenAddProjectDrawer(open);
+  };
+
+  const toggleReceiptDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenReceiptDrawer(open);
   };
 
   // const rows = [
@@ -144,29 +157,40 @@ const Main = () => {
   //   console.log(t);
   //   return t;
   // }
-const AddRow=(item)=>{
-  setRows([...rows,item])
-}
+  const AddRow = (item) => {
+    setRows([...rows, item])
+  }
   return (
     <div className="p-4">
       {/* Your Data Grid Table */}
       <AddprojectDrawer
         anchor="right"
-        toggleDrawer={toggleDrawer}
-        isOpen={isDrawerOpen}
+        toggleDrawer={toggleAddProjectDrawer}
+        isOpen={isAddProjectDrawerOpen}
         AddRow={AddRow}
       />
+      <ReceiptDrawer
+        anchor="right"
+        toggleDrawer={toggleReceiptDrawer}
+        isOpen={isReceiptDrawerOpen}
+      />
       <div>
-      <Button
-                variant="outlined"
-                onClick={(event) => toggleDrawer('right', true, event)}
-                
-                >Add Project
+        {token &&
+          <>
+            <Button color="primary"
+              variant="outlined"
+              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
+            >Add Project
             </Button>
-
+            <Button color='secondary'
+              variant="outlined"
+              onClick={(event) => toggleReceiptDrawer('right', true, event)}
+            >Show Receipt
+            </Button>
+          </>}
       </div>
-      <Box sx={{ height: '80vh', width: '100%' }}>
-        <DataGrid
+      <Box sx={{ width: '100%' }}>{/* height: '80vh'*/}
+        {/* <DataGrid
           rows={rows}
           columns={columns}
           initialState={{
@@ -180,7 +204,9 @@ const AddRow=(item)=>{
           pageSizeOptions={[5]}
           // checkboxSelection
           disableRowSelectionOnClick
-        />
+        /> */}
+        {/* <OnboardingForm /> */}
+        <Payroll />
       </Box>
     </div>
   );
