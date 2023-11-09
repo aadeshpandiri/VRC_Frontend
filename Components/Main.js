@@ -15,8 +15,7 @@ import ReceiptDrawer from './ReceiptDrawer';
 import Payroll from './Payroll';
 import Loader from './Loader';
 import baseurl from '../data/baseurl'
-
-const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
+const MatEdit = ({ index ,setCurrent,setOpenDrawer,setEditRow}) => {
 
   const handleEditClick = () => {
     // some action
@@ -25,32 +24,30 @@ const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
     setOpenDrawer(true)
     setCurrent('edit')
   }
+
+
+
   return <div onClick={handleEditClick}>
-    <Edit />
+    <Edit/>
   </div>
-
+ 
 };
-
-
 const Main = () => {
   const [current, setCurrent] = useState('');
-  const [openDrawer, setOpenDrawer] = useState('');
-
+  const [,setOpenDrawer]=useState(false)
   const columns = [
+    // { field: 'sno', headerName: 'Sno', width: 90 },
+
     {
       field: 'project_id',
       headerName: 'Project ID',
       width: 160,
+      // valueGetter: (params) =>
+      //   `${params.row.firstName || ''} ${params.row.lastName || ''}`,
     },
     {
       field: 'project_name',
       headerName: 'Project Name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'project_type',
-      headerName: 'Project Type',
       width: 150,
       editable: true,
     },
@@ -70,6 +67,22 @@ const Main = () => {
       field: 'status',
       headerName: 'Status',
       width: 160,
+      // renderCell: (params) => {
+      //   return (
+      //     <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+      //       <Select
+      //        value={params.row.status}
+      //         // onChange={onChangeInput}
+      //         autoComplete="off"
+      //         name='type'>
+      //       <MenuItem value="" disabled>Type</MenuItem>
+      //                                   <MenuItem value="AppartTOKENment">TOKEN</MenuItem>
+      //                                   <MenuItem value="AVAILABLE">AVAILABLE</MenuItem>
+      //                                   <MenuItem value="SOLD">SOLD</MenuItem>
+      //       </Select>
+      //     </div>
+      //   );
+      // }
     },
     {
       field: "actions",
@@ -87,16 +100,14 @@ const Main = () => {
       }
     }
   ];
-
   const [rows, setRows] = useState([])
-  const [editRow, setEditRow] = useState();
+  const [editRow,setEditRow]=useState();
 
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null)
   }
-
-  const { token, setToken, loader, setLoader, userRole } = useContext(sharedContext);
+  const { token, setToken ,loader,setLoader,userRole} = useContext(sharedContext);
   useEffect(() => {
     if (token) {
       setLoader(true)
@@ -116,13 +127,11 @@ const Main = () => {
             handleLogout();
           }
           else {
-            console.log(result.data)
             setRows(result.data)
           }
           setLoader(false)
-        })
+  })
         .catch(error => {
-          console.log("error:", error.message)
           setLoader(false)
         });
     }
@@ -153,30 +162,46 @@ const Main = () => {
 
     setOpenReceiptDrawer(open);
     setOpenDrawer(open);
-
-    if (open) {
+    if(open){
       setCurrent(event.target.name)
     }
-  }
+  
+  };
 
+  // const rows = [
+  //   { sno: 1, projectName: 'Snow', tokenNumber: 'Jon', flatNumber: 35,ProjectID:'',Status:'Available' },
+  //   ];
+
+  // const modifyData=(tdata)=>{
+  //   // console.log(tdata,'tdata')
+  //   var t=tdata.map(eachRow=>{
+  //     return {
+  //       'order_id':eachRow.order_id,
+  //     //  'type_of_service':getService(eachRow.type_of_service),
+  //     //  'fulfilled_or_not':eachRow.fulfilled_or_not==0?'Not Fulfilled':'Fulfilled',
+  //     //  'date_time':eachRow.date_time.split('T')[0],
+  //     //  'type_of_subservice':getSubService(eachRow.sub_service),
+  //     //  'name':eachRow.name
+  //     }
+  //   })
+  //   console.log(t);
+  //   return t;
+  // }
   const AddRow = (item) => {
     setRows([...rows, item])
   }
-
-  const SaveEditedRow = (item) => {
-    console.log(item)
-  }
-
+const SaveEditedRow=(item)=>{
+  console.log(item)
+}
   return (
     <div className="p-4 mt-20 bg-slate-50">
       {/* Your Data Grid Table */}
-      <Loader />
+      <Loader/>
       <AddprojectDrawer
         anchor="right"
         toggleDrawer={toggleAddProjectDrawer}
         isOpen={isAddProjectDrawerOpen}
         AddRow={AddRow}
-        current="add"
       />
       <ReceiptDrawer
         anchor="right"
@@ -198,7 +223,7 @@ const Main = () => {
             </Button>
           </>}
       </div>
-      <Box sx={{ width: '100%', height: '80vh' }}>
+      <Box sx={{ width: '100%' }}>{/* height: '80vh'*/}
         <DataGrid
           rows={rows}
           columns={columns}
@@ -211,10 +236,10 @@ const Main = () => {
           }}
           getRowId={(row) => row.project_id}
           pageSizeOptions={[5]}
-          checkboxSelection
+          // checkboxSelection
           disableRowSelectionOnClick
-        />
-        {/* <OnboardingForm />
+        /> 
+        {/* <OnboardingForm /> */}
         {/* <Payroll /> */}
       </Box>
     </div>
