@@ -10,6 +10,9 @@ import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
 import AddprojectDrawer from './AddprojectDrawer';
 import { Edit } from '@mui/icons-material';
+import OnboardingForm from './OnboardingForm';
+import ReceiptDrawer from './ReceiptDrawer';
+import Payroll from './Payroll';
 import Loader from './Loader';
 
 const MatEdit = ({ index ,setCurrent,setOpenDrawer,setEditRow}) => {
@@ -100,11 +103,11 @@ const Main = () => {
   const [rows, setRows] = useState([])
   const [editRow,setEditRow]=useState();
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     sessionStorage.clear();
     setToken(null)
   }
-  const { token,setToken ,loader,setLoader,userRole} = useContext(sharedContext);
+  const { token, setToken ,loader,setLoader,userRole} = useContext(sharedContext);
   useEffect(() => {
     if (token) {
       setLoader(true)
@@ -120,16 +123,13 @@ const Main = () => {
       fetch("https://vrcbackend.onrender.com/project/getProjects", requestOptions)
         .then(response => response.json())
         .then(result => {
-    if(result.status==401 || result.message=='Token Invalid/Expired'){
-      handleLogout();
-    }
-    else{
-     
-          console.log(result)
-          setRows(result.data)
-          
-    }
-    setLoader(false)
+          if (result.status == 401 || result.message == 'Token Invalid/Expired') {
+            handleLogout();
+          }
+          else {
+            setRows(result.data)
+          }
+          setLoader(false)
   })
         .catch(error => {
           setLoader(false)
@@ -137,8 +137,9 @@ const Main = () => {
     }
   }, [token])
 
-  const [isDrawerOpen, setOpenDrawer] = useState(false);
-  const toggleDrawer = (anchor, open, event) => {
+  const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
+  const [isReceiptDrawerOpen, setOpenReceiptDrawer] = useState(false);
+  const toggleAddProjectDrawer = (anchor, open, event) => {
     if (
       event &&
       event.type === "keydown" &&
@@ -147,6 +148,19 @@ const Main = () => {
       return;
     }
 
+    setOpenAddProjectDrawer(open);
+  };
+
+  const toggleReceiptDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenReceiptDrawer(open);
     setOpenDrawer(open);
     if(open){
       setCurrent(event.target.name)
@@ -173,9 +187,9 @@ const Main = () => {
   //   console.log(t);
   //   return t;
   // }
-const AddRow=(item)=>{
-  setRows([...rows,item])
-}
+  const AddRow = (item) => {
+    setRows([...rows, item])
+  }
 const SaveEditedRow=(item)=>{
   console.log(item)
 }
@@ -185,25 +199,32 @@ const SaveEditedRow=(item)=>{
       <Loader/>
       <AddprojectDrawer
         anchor="right"
-        toggleDrawer={toggleDrawer}
-        isOpen={isDrawerOpen}
+        toggleDrawer={toggleAddProjectDrawer}
+        isOpen={isAddProjectDrawerOpen}
         AddRow={AddRow}
-        SaveEditedRow={SaveEditedRow}
-        current={current}
-        editRow={editRow}
-        setEditRow={setEditRow}
+      />
+      <ReceiptDrawer
+        anchor="right"
+        toggleDrawer={toggleReceiptDrawer}
+        isOpen={isReceiptDrawerOpen}
       />
       <div>
-      {token&& userRole=='SUPERADMIN' && <Button
-                variant="outlined"
-                onClick={(event) => toggleDrawer('right', true, event)}
-                name='add'
-                >Add Project
+        {token &&
+          <>
+            <Button color="primary"
+              variant="outlined"
+              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
+            >Add Project
             </Button>
-}
+            <Button color='secondary'
+              variant="outlined"
+              onClick={(event) => toggleReceiptDrawer('right', true, event)}
+            >Show Receipt
+            </Button>
+          </>}
       </div>
-      <Box sx={{ height: '80vh', width: '100%' ,backgroundColor:'white'}}>
-        <DataGrid
+      <Box sx={{ width: '100%' }}>{/* height: '80vh'*/}
+        {/* <DataGrid
           rows={rows}
           columns={columns}
           initialState={{
@@ -216,8 +237,10 @@ const SaveEditedRow=(item)=>{
           getRowId={(row) => row.project_id}
           pageSizeOptions={[5]}
           // checkboxSelection
-          disableRowSelectionOnClick={true}
-        />
+          disableRowSelectionOnClick
+        /> 
+        {/* <OnboardingForm /> */}
+        <Payroll />
       </Box>
     </div>
   );

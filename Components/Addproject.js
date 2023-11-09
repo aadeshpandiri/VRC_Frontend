@@ -3,7 +3,7 @@ import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 
-function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose,AddRow }) {
+function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, AddRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
     const [message,setMessage]=useState('');
@@ -18,7 +18,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
         console.log('villaNumber:', villaNumber);
         console.log('plotNumber:', plotNumber);
         console.log('token:', token)
-        
+
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -40,7 +40,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             redirect: 'follow'
         };
 
-        fetch("https://vrcbackend.onrender.com/project/createNewProject", requestOptions)
+        fetch("https://f5ba-49-206-32-111.ngrok-free.app/project/createNewProject", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
@@ -67,13 +67,6 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             .catch(error => console.log('error', error));
     };
 
-    const inputThemObj = {
-        width: "150px",
-        height: "44px",
-        borderColor: "rgb(208,213,221)",
-        borderRadius: '8px',
-        boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)'
-    }
 
     return (
         // <div className='flex flex-col p-10'>
@@ -102,40 +95,36 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                             </div>
                             <div className='deatails__Fld'>
                                 <p>Project Type</p>
-                                <div className='input__Fld'>
-                                    <Select 
-                                        value={type}
-                                        onChange={onChangeInput}
-                                        required
-                                        autoComplete="off"
-                                        name='type'
-                                    >
-                                        <MenuItem value="" disabled>Type</MenuItem>
-                                        <MenuItem value="Appartment">Appartment</MenuItem>
-                                        <MenuItem value="Villa">Villa</MenuItem>
-                                        <MenuItem value="Plot">Plot</MenuItem>
-                                    </Select>
-                                </div>
+                                <Select className='input__Fld'
+                                    value={type}
+                                    onChange={onChangeInput}
+                                    required
+                                    autoComplete="off"
+                                    name='type'
+                                >
+                                    <MenuItem value="" disabled>Type</MenuItem>
+                                    <MenuItem value="Apartment">Apartment</MenuItem>
+                                    <MenuItem value="Villa">Villa</MenuItem>
+                                    <MenuItem value="Plot">Plot</MenuItem>
+                                </Select>
                             </div>
                             {type !== "" && <div className='deatails__Fld'>
                                 <p>Status</p>
-                                <div className='input__Fld'>
-                                    <Select style={inputThemObj}
-                                        value={status}
-                                        onChange={onChangeInput}
-                                        required
-                                        autoComplete="off"
-                                        name='status'
-                                    >
-                                        <MenuItem value="" disabled>Select Status</MenuItem>
-                                        <MenuItem value="Available">Available</MenuItem>
-                                        <MenuItem value="Sold">Sold</MenuItem>
-                                        <MenuItem value="Token">Token</MenuItem>
-                                        <MenuItem value="Advance">Advance</MenuItem>
-                                    </Select>
-                                </div>
+                                <Select className='input__Fld'
+                                    value={status}
+                                    onChange={onChangeInput}
+                                    required
+                                    autoComplete="off"
+                                    name='status'
+                                >
+                                    <MenuItem value="" disabled>Select Status</MenuItem>
+                                    <MenuItem value="AVAILABLE">Available</MenuItem>
+                                    <MenuItem value="SOLD">Sold</MenuItem>
+                                    <MenuItem value="TOKEN">Token</MenuItem>
+                                    <MenuItem value="ADVANCE">Advance</MenuItem>
+                                </Select>
                             </div>}
-                            {type === "Appartment" && <>
+                            {type === "Apartment" && <>
                                 <div className='deatails__Fld'>
                                     <p>Tower Number</p>
                                     <div className='input__Fld'>

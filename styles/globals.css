@@ -11,12 +11,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
- 
+
   margin-top: 4rem;
   margin-bottom: 2rem;
 }
-
-
 
 .lg__Ttl h2 {
   font-size: 30px;
@@ -36,7 +34,7 @@
 }
 
 .input__Fld input {
-  width: 273px;
+  flex: 1;
   height: 44px;
   color: black;
   border: 1px solid #d0d5dd;
@@ -68,7 +66,7 @@
 }
 
 .input__Fld {
-  margin-top: 6px;
+  flex: 1;
 }
 
 .rem__Div {
@@ -162,11 +160,10 @@
 
   height: 100vh;
   align-items: center;
- 
+
   margin-top: 40%;
 }
 .each-navigation {
-  
   width: -webkit-fill-available;
   cursor: pointer;
   padding: 5px;
@@ -179,13 +176,11 @@
   margin-left: 20px;
 }
 .Nav-display-name {
- 
   font-size: larger;
   margin-left: 10px;
 }
 
 .navigation-selected {
-
   background-color: lavender;
 
   color: black;
@@ -193,25 +188,24 @@
   border-bottom-right-radius: 20px;
   margin-top: 15px;
   font-weight: bold;
-  
 }
 
-.AddProject__wrap {
-  width: 500px;
-
-}
+/* .AddProject__wrap {
+  width: 30rem;
+} */
 
 .AddprojectCard h2 {
   color: rgba(56, 62, 73, 1);
   font-weight: 500;
   font-size: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 
 .deatails__Box {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .fields__Box {
@@ -223,28 +217,27 @@
 .deatails__Fld {
   display: flex;
   align-items: center;
-  gap: 55px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .deatails__Fld p {
-  width: 120px;
+  width: 150px;
   color: rgba(72, 80, 94, 1);
   font-weight: 500;
   font-size: 16px;
+  white-space: nowrap;
 }
 
 .Btns__container {
   display: flex;
-  justify-content: flex-end;
   gap: 10px;
+  justify-content: flex-end;
 }
 
-.dcrd__Btn,
-.add__Btn {
-  display: inline-block;
-}
-
-.add__Btn button {
+.add__Btn,
+.payrollSub__Btn,
+.payrollAdd__Btn button {
   padding: 10px 18px;
   font-size: 16px;
   line-height: 24px;
@@ -261,7 +254,6 @@
 .add__Btn button:hover {
   color: #1366d9;
   background: #fff;
- 
 }
 
 .dcrd__Btn button {
@@ -275,4 +267,118 @@
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+}
+
+.OnboardingFormWraper {
+  display: flex;
+  justify-content: center;
+}
+
+.OnboardingFormCard {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 30rem;
+  overflow: hidden;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.OnboardingFormCard h2 {
+  color: rgba(56, 62, 73, 1);
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 28px;
+  white-space: nowrap;
+}
+
+/* .OnboardingFormCard .input__Fld {
+  flex: 1;
+  height: 44px;
+  color: black;
+  border: 1px solid #d0d5dd;
+  outline: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  transition: 0.3s ease-in-out;
+  width: 0;
+} */
+
+.auto__Fld,
+.text__Fld {
+  flex: 1;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.ReceiptCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.ReceiptCard h2 {
+  font-weight: bold;
+  color: black;
+  font-size: 30px;
+}
+
+.ReceiptCard .details__Box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ReceiptCard .details__Fld {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.PayrollCard {
+  border-radius: 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.PayrollCard h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.prDeatails__Box {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.prDeatails__Fld {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prDeatails__Fld .colon{
+font-size: 20px;
+}
+
+.nText__Fld {
+  flex: 1;
+}
+
+.aText__Fld {
+  flex: 2;
+}
+
+.payrollAdd__Btn {
+  text-align: right;
+}
+.payrollSub__Btn {
+  text-align: center;
 }
