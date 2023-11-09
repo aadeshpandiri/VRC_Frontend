@@ -92,7 +92,7 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                         name='type'
                                     >
                                         <MenuItem value="" disabled>Type</MenuItem>
-                                        <MenuItem value="Appartment">Appartment</MenuItem>
+                                        <MenuItem value="Apartment">Apartment</MenuItem>
                                         <MenuItem value="Villa">Villa</MenuItem>
                                         <MenuItem value="Plot">Plot</MenuItem>
                                     </Select>

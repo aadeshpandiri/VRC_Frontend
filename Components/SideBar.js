@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/icons-material/Menu";
-import { Close, Home, LogoutOutlined ,ApprovalOutlined,ReceiptLongOutlined,AccountBalanceWalletOutlined} from "@mui/icons-material";
+import { Close, HomeOutlined, LogoutOutlined ,ApprovalOutlined,ReceiptLongOutlined,AccountBalanceWalletOutlined} from "@mui/icons-material";
 
 import Link from "next/link";
 import { List } from "@mui/material";
@@ -22,7 +22,7 @@ const SideBar = () => {
   }
   const getIcon=(item)=>{
     switch(item){
-      case 'Dashboard':return <Home color='primary'/>; break;
+      case 'Dashboard':return <HomeOutlined color='primary'/>; break;
       case 'Approvals': return <ApprovalOutlined/>; break;
       case 'Receipts':return <ReceiptLongOutlined/>; break;
       case 'Payroll':return <AccountBalanceWalletOutlined/>; break;

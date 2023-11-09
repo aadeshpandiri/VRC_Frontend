@@ -180,7 +180,7 @@ const SaveEditedRow=(item)=>{
   console.log(item)
 }
   return (
-    <div className="p-4 mt-20">
+    <div className="p-4 mt-20 bg-slate-50">
       {/* Your Data Grid Table */}
       <Loader/>
       <AddprojectDrawer
@@ -202,7 +202,7 @@ const SaveEditedRow=(item)=>{
             </Button>
 }
       </div>
-      <Box sx={{ height: '80vh', width: '100%' }}>
+      <Box sx={{ height: '80vh', width: '100%' ,backgroundColor:'white'}}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -216,7 +216,7 @@ const SaveEditedRow=(item)=>{
           getRowId={(row) => row.project_id}
           pageSizeOptions={[5]}
           // checkboxSelection
-          disableRowSelectionOnClick
+          disableRowSelectionOnClick={true}
         />
       </Box>
     </div>
