@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
-
+import baseurl from '../data/baseurl'
 function Editproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInputEdit, handleClose,SaveEditedRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
@@ -31,7 +31,7 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
             redirect: 'follow'
         };
 
-        fetch("https://vrcbackend.onrender.com/project/editProject", requestOptions)
+        fetch(`${baseurl}/project/editProject`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)

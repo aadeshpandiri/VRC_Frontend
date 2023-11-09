@@ -2,7 +2,7 @@ import React from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
-
+import baseurl from '../data/baseurl'
 function OnboardingForm() {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
@@ -46,7 +46,7 @@ function OnboardingForm() {
             redirect: 'follow'
         };
 
-        fetch("https://f5ba-49-206-32-111.ngrok-free.app/receipt/createReceipt", requestOptions)
+        fetch(`${baseurl}/receipt/createReceipt`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
@@ -119,7 +119,7 @@ function OnboardingForm() {
                 redirect: 'follow'
             };
 
-            fetch("https://vrcbackend.onrender.com/project/getProjects", requestOptions)
+            fetch(`${baseurl}/project/getProjects`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     const availableProjectNames = result.data

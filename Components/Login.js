@@ -3,16 +3,21 @@ import React from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import Loader from './Loader';
-
+import baseurl from '../data/baseurl'
 function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, handleClose }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
 
     const handleSubmit = (e) => {
+        console.log(`${baseurl.url}/auth/login`)
         e.preventDefault();
         setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        // myHeaders.append("Access-Control-Allow-Origin", "http://localhost:3000/");
+        // myHeaders.append('Accept', 'application/json');
+    // headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
+    // myHeaders.append('Origin','http://localhost:3000');
         var raw = JSON.stringify({
             "emailId": email,
             "password": password
@@ -25,7 +30,7 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
             redirect: 'follow'
         };
 
-        fetch("https://f5ba-49-206-32-111.ngrok-free.app/auth/login", requestOptions)
+        fetch(`${baseurl?.url}/auth/login`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)

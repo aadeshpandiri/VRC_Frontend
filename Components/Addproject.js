@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
-
+import baseurl from '../data/baseurl'
 function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, AddRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
@@ -40,7 +40,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             redirect: 'follow'
         };
 
-        fetch("https://f5ba-49-206-32-111.ngrok-free.app/project/createNewProject", requestOptions)
+        fetch(`${baseurl}/project/createNewProject`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)

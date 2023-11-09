@@ -14,7 +14,7 @@ import OnboardingForm from './OnboardingForm';
 import ReceiptDrawer from './ReceiptDrawer';
 import Payroll from './Payroll';
 import Loader from './Loader';
-
+import baseurl from '../data/baseurl'
 const MatEdit = ({ index ,setCurrent,setOpenDrawer,setEditRow}) => {
 
   const handleEditClick = () => {
@@ -120,7 +120,7 @@ const Main = () => {
         redirect: 'follow'
       };
 
-      fetch("https://vrcbackend.onrender.com/project/getProjects", requestOptions)
+      fetch(`${baseurl}/project/getProjects`, requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {

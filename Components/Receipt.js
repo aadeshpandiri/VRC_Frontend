@@ -7,57 +7,57 @@ function Receipt({ projectName, type, status, towerNumber, flatNumber, villaNumb
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('projectName:', projectName);
-        console.log('type:', type);
-        console.log('status:', status);
-        console.log('towerNumber:', towerNumber);
-        console.log('faltNumber:', flatNumber);
-        console.log('villaNumber:', villaNumber);
-        console.log('plotNumber:', plotNumber);
-        console.log('token:', token)
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log('projectName:', projectName);
+    //     console.log('type:', type);
+    //     console.log('status:', status);
+    //     console.log('towerNumber:', towerNumber);
+    //     console.log('faltNumber:', flatNumber);
+    //     console.log('villaNumber:', villaNumber);
+    //     console.log('plotNumber:', plotNumber);
+    //     console.log('token:', token)
 
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Content-Type", "application/json");
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("Authorization", `Bearer ${token}`);
+    //     myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            "project_name": projectName,
-            "status": status,
-            "project_type": type,
-            "tower_number": towerNumber,
-            "flat_number": flatNumber,
-            "villa_number": villaNumber,
-            "plot_number": plotNumber
-        });
+    //     var raw = JSON.stringify({
+    //         "project_name": projectName,
+    //         "status": status,
+    //         "project_type": type,
+    //         "tower_number": towerNumber,
+    //         "flat_number": flatNumber,
+    //         "villa_number": villaNumber,
+    //         "plot_number": plotNumber
+    //     });
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw,
+    //         redirect: 'follow'
+    //     };
 
-        fetch("https://vrcbackend.onrender.com/project/createNewProject", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                // let temp={
-                //     "project_id":result.data,
-                //     "project_name": projectName,
-                //     "status": status,
-                //     "project_type": type,
-                //     "tower_number": towerNumber,
-                //     "flat_number": flatNumber,
-                //     "villa_number": villaNumber,
-                //     "plot_number": plotNumber
-                // }
-                AddRow(result.data)
-                handleClose()
-            })
-            .catch(error => console.log('error', error));
-    };
+    //     fetch("https://vrcbackend.onrender.com/project/createNewProject", requestOptions)
+    //         .then(response => response.json())
+    //         .then(result => {
+    //             console.log(result)
+    //             // let temp={
+    //             //     "project_id":result.data,
+    //             //     "project_name": projectName,
+    //             //     "status": status,
+    //             //     "project_type": type,
+    //             //     "tower_number": towerNumber,
+    //             //     "flat_number": flatNumber,
+    //             //     "villa_number": villaNumber,
+    //             //     "plot_number": plotNumber
+    //             // }
+    //             AddRow(result.data)
+    //             handleClose()
+    //         })
+    //         .catch(error => console.log('error', error));
+    // };
 
     return (
             <div className='ReceiptCard'>
