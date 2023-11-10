@@ -70,7 +70,6 @@ const SignInDrawer = ({ anchor, toggleDrawer, isOpen, paper }) => {
       case 'email': setEmail(e.target.value); break;
       case 'password': setPassword(e.target.value); break;
       case 'rememberMe': setRememberMe(e.target.checked); break;
-
     }
   }
   return (

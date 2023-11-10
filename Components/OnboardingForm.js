@@ -46,7 +46,7 @@ function OnboardingForm() {
             redirect: 'follow'
         };
 
-        fetch(`${baseurl}/receipt/createReceipt`, requestOptions)
+        fetch(`${baseurl?.url}/receipt/createReceipt`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
@@ -213,18 +213,6 @@ function OnboardingForm() {
                         {projectType !== "" && projectType !== null &&
                             <div div className='deatails__Fld'>
                                 <p>Project Name</p>
-                                {/* <Select className='input__Fld'
-                                    value={projectName}
-                                    onChange={onChangeInput}
-                                    required
-                                    autoComplete="off"
-                                    name='projectName'
-                                >
-                                    <MenuItem value="" disabled>Select Project Name</MenuItem>
-                                    {availablePrns.map((name) => (
-                                        <MenuItem key={name} value={name}>{name}</MenuItem>
-                                    ))}
-                                </Select> */}
                                 <Autocomplete className='auto__Fld'
                                     options={availablePrns}
                                     value={projectName}

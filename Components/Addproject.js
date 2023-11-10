@@ -1,12 +1,12 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 import baseurl from '../data/baseurl'
-function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, AddRow }) {
+function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, clearFields, AddRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
-    const [message,setMessage]=useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,14 +44,15 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                if(result.status==409){
+                if (result.status == 409) {
                     setMessage(result.message)
                 }
-                if(result.message=='Success'){
+                if (result.message == 'Success') {
                     AddRow(result.data)
+                    clearFields()
                     handleClose()
                 }
-                
+
             })
             .catch(error => console.log('error', error));
     };
@@ -168,7 +169,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                                 </div>
                             </div>}
                         </div>
-                        <div style={{color:'red'}}>{message}</div>
+                        <div style={{ color: 'red' }}>{message}</div>
                         <div className='Btns__container'>
                             <div className='dcrd__Btn'>
                                 <button onClick={handleClose}>Discard</button>

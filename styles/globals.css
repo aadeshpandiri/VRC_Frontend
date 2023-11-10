@@ -353,10 +353,11 @@ body {
 .PayrollCard {
   border-radius: 8px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 30px;
+  background-color: white;
 }
 
 .PayrollCard h2 {
@@ -364,7 +365,8 @@ body {
   font-weight: 500;
 }
 
-.prDeatails__Box {
+.prDeatails__Box,
+.prFields__Box {
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -376,17 +378,21 @@ body {
   gap: 10px;
 }
 
-.prDeatails__Fld .colon{
-font-size: 20px;
+.prDeatails__Fld .colon {
+  font-size: 20px;
 }
 
-.nText__Fld {
+.prDeatails__Fld p {
   flex: 1;
 }
 
-.aText__Fld {
-  flex: 2;
+.nText__Fld {
+  flex: 3;
 }
+
+/* .aText__Fld {
+  flex: 2;
+} */
 
 .payrollAdd__Btn {
   text-align: right;

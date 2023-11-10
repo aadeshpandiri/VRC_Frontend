@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-// import { FormControlLabel, IconButton } from '@material-ui/core';
 import { Button, MenuItem, Select } from '@mui/material';
-// import { DataGrid } from "@material-ui/data-grid";
-// import EditIcon from '@material-ui/icons/Edit';
-// import { blue } from '@material-ui/core/colors';
 import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
 import AddprojectDrawer from './AddprojectDrawer';
 import { Edit } from '@mui/icons-material';
 import OnboardingForm from './OnboardingForm';
-import ReceiptDrawer from './ReceiptDrawer';
 import Payroll from './Payroll';
 import Loader from './Loader';
 import baseurl from '../data/baseurl'
@@ -63,26 +58,33 @@ const Main = () => {
       type: 'number',
       width: 110,
       editable: true,
-    }, {
+    },
+    {
       field: 'status',
       headerName: 'Status',
       width: 160,
-      // renderCell: (params) => {
-      //   return (
-      //     <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-      //       <Select
-      //        value={params.row.status}
-      //         // onChange={onChangeInput}
-      //         autoComplete="off"
-      //         name='type'>
-      //       <MenuItem value="" disabled>Type</MenuItem>
-      //                                   <MenuItem value="AppartTOKENment">TOKEN</MenuItem>
-      //                                   <MenuItem value="AVAILABLE">AVAILABLE</MenuItem>
-      //                                   <MenuItem value="SOLD">SOLD</MenuItem>
-      //       </Select>
-      //     </div>
-      //   );
-      // }
+      renderCell: (params) => {
+        const status = params.value;
+        console.log(status)
+        let color = 'black'; // Default color
+        switch (status) {
+          case 'AVAILABLE':
+            color = 'green';
+            break;
+          case 'SOLD':
+            color = 'red';
+            break;
+          case 'TOKEN':
+            color = 'yellow';
+            break;
+          case 'ADVANCE':
+            color = 'blue';
+            break;
+          default:
+            color = 'black';
+        }
+        return <div style={{ 'color': color }}>{status}</div>
+      },
     },
     {
       field: "actions",
@@ -204,10 +206,11 @@ const SaveEditedRow=(item)=>{
         current={current}
         AddRow={AddRow}
       />
-      <ReceiptDrawer
+      <AddprojectDrawer
         anchor="right"
         toggleDrawer={toggleReceiptDrawer}
         isOpen={isReceiptDrawerOpen}
+        current="sReceipt"
       />
       <div>
         {token &&

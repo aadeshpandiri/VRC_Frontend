@@ -16,6 +16,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import { Button } from "@mui/material";
 import Addproject from "./Addproject";
 import Editproject from "./Editproject";
+import ShowReceipt from "./ShowReceipt";
 // import Register from "./Register";
 const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current, editRow, setEditRow, SaveEditedRow }) => {
     const router = useRouter();
@@ -27,30 +28,24 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     const [villaNumber, setVillaNumber] = useState('');
     const [plotNumber, setPlotNumber] = useState('');
 
-    // const hangleGotoApartment = () => {
-    //     setCurrentStep(2)
-
-    // }
-    // const hangleGotoAddproject = () => {
-    //     setCurrentStep(1)
-    // }
-    // const [open, setOpen] = useState(false);
-    // const [scroll, setScroll] = React.useState('paper');
-    // const [popupContent,setPopupContent]=useState();
-    // const handleClickOpen = (e) => {
-    //     setOpen(true);
-    //     // setScroll('paper');
-
-    //     // console.log(e)
-    //     // setPopupContent(e.target.name);
-    // };
 
     const handleClose = (event) => {
         // setOpen(false);
         toggleDrawer(anchor, false, event)
     };
 
+    const clearFields = () => {
+        setProjectName("");
+        setType("");
+        setStatus("");
+        setTowerNumber("");
+        setFlatNumber("");
+        setVillaNumber("");
+        setPlotNumber("");
+    }
+
     const descriptionElementRef = React.useRef(null);
+
     // React.useEffect(() => {
     //     if (open) {
     //         const { current: descriptionElement } = descriptionElementRef;
@@ -59,12 +54,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     //         }
     //     }
     // }, [open]);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle login logic here
-        console.log('projectName:', projectName);
-        console.log('type:', type);
-    };
+
     const onChangeInput = (e) => {
         console.log(e.target.checked)
         switch (e.target.name) {
@@ -84,6 +74,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                 break;
         }
     }
+    
     const onChangeInputEdit = (e) => {
         setEditRow((prevState) => ({
             ...prevState,
@@ -109,13 +100,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                         tabIndex={-1}
                         sx={{ padding: '28px' }}
                     >
-                        <Box
-                            // sx={{ width: 600 }}
-                            role="presentation"
-                        // className={current == 1 ? "Addproject-drawer" : "signup-drawer"}
-                        // onClick={toggleDrawer(anchor, false)}
-                        // onKeyDown={toggleDrawer(anchor, false)}
-                        >
+                        <Box role="presentation">
                             {
                                 current == 'add' &&
                                 <Addproject
@@ -128,7 +113,9 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                                     plotNumber={plotNumber}
                                     onChangeInput={onChangeInput}
                                     handleClose={handleClose}
-                                    AddRow={AddRow} />
+                                    AddRow={AddRow}
+                                    clearFields={clearFields}
+                                />
                             }
                             {
                                 current == 'edit' &&
@@ -144,6 +131,10 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                                     handleClose={handleClose}
                                     SaveEditedRow={SaveEditedRow}
                                 />
+                            }
+                            {
+                                current == 'sReceipt' &&
+                                <ShowReceipt handleClose={handleClose} />
                             }
 
                         </Box>
