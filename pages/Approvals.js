@@ -14,8 +14,9 @@ import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/m
 //   };
 import roles from '../data/roles'
 import SideBar from '../Components/SideBar';
+import Loader from '../Components/Loader';
 function Approvals() {
-    const {userRole,token,isSidenavOpen,setUserRole,setToken,setIsSidenavOpen}=useContext(sharedContext);
+    const {userRole,token,isSidenavOpen,setUserRole,setToken,setIsSidenavOpen,loader,setLoader}=useContext(sharedContext);
     const [approvalsList,setApprovalsList]=useState([]);
     // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
     // const userRole = 'superadmin'; // Set the user's role here
@@ -25,6 +26,7 @@ function Approvals() {
     };
     useEffect(()=>{
         if(token){
+          setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         var requestOptions = {
@@ -44,9 +46,14 @@ function Approvals() {
               setApprovalsList(result.data)
   
             }
+            setLoader(false)
             
         })
-          .catch(error => console.log('error', error));
+          .catch(error =>{
+            setLoader(false)
+            console.log('error', error)
+          });
+         
     }},[token])
     const handleLogout=()=>{
       sessionStorage.clear();
@@ -111,7 +118,7 @@ fetch("https://vrcbackend.onrender.com/admin/validateUser", requestOptions)
      {/* Main Content */}
      {/* <Main /> */}
      <div class='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
-     
+     {loader&&<Loader/>}
       <table className='w-full text-left   border-separate border-spacing-y-2.5'>
         
         <tbody>   {approvalsList?.map((item,index)=>(

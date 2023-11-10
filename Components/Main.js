@@ -147,7 +147,7 @@ const Main = () => {
     ) {
       return;
     }
-
+    setCurrent('add')
     setOpenAddProjectDrawer(open);
   };
 
@@ -201,6 +201,7 @@ const SaveEditedRow=(item)=>{
         anchor="right"
         toggleDrawer={toggleAddProjectDrawer}
         isOpen={isAddProjectDrawerOpen}
+        current={current}
         AddRow={AddRow}
       />
       <ReceiptDrawer
@@ -211,11 +212,17 @@ const SaveEditedRow=(item)=>{
       <div>
         {token &&
           <>
-            <Button color="primary"
-              variant="outlined"
+            {/* <Button 
+              variant="contained"
               onClick={(event) => toggleAddProjectDrawer('right', true, event)}
+              sx={{
+                backfaceVisibility:'visible'
+              }}
             >Add Project
-            </Button>
+            </Button> */}
+            <div className='sbt__Btn'>
+                            <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{width:'max-content'}}>Add Project</button>
+                        </div>
             <Button color='secondary'
               variant="outlined"
               onClick={(event) => toggleReceiptDrawer('right', true, event)}
@@ -223,7 +230,7 @@ const SaveEditedRow=(item)=>{
             </Button>
           </>}
       </div>
-      <Box sx={{ width: '100%' }}>{/* height: '80vh'*/}
+      <Box sx={{ width: '100%',height: '80vh',backgroundColor:'white' }}>{/* */}
         <DataGrid
           rows={rows}
           columns={columns}

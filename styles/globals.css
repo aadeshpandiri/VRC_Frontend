@@ -1,6 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../font/InterVariableFont.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Inter';
+  /* font-weight: 500; */
+}
+
+
 .home-page {
   background-color: #f0f1f3;
   display: flex;
