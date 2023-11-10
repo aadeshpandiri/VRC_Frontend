@@ -50,6 +50,7 @@ function OnboardingForm() {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                clearFields()
             })
             .catch(error => console.log('error', error));
     };
@@ -107,257 +108,274 @@ function OnboardingForm() {
     const [availableVns, setAvailableVns] = useState([])
     const [availablePns, setAvailablePns] = useState([])
 
-    useEffect(() => {
-        if (token) {
-            console.log("API useEffect called")
-            var myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${token}`);
+    const clearFields = () => {
+        setClientName("");
+        setClientPhon("");
+        setProjectType("");
+        setProjectName("");
+        setTowerNumber("");
+        setFlatNumber("");
+        setVillaNumber("");
+        setPlotNumber("");
+        setType("");
+        setAmount("");
+        setSalespName("")
+        setType("")
+        setAmount("")
+    }
 
-            var requestOptions = {
-                method: 'GET',
-                headers: myHeaders,
-                redirect: 'follow'
-            };
 
-            fetch(`${baseurl}/project/getProjects`, requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    const availableProjectNames = result.data
-                        .filter(x => x.status === "AVAILABLE" && x.project_type === projectType)
-                        .map(x => x.project_name);
-                    setAvailablePrns(availableProjectNames);
-                    setAvailableData(result.data);
-                })
-                .catch(error => console.log('error:', error.message));
-        }
-    }, [projectType, token])
+useEffect(() => {
+    if (token) {
+        console.log("API useEffect called")
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
-    useEffect(() => {
-        console.log("tower_number useEffect called")
-        const availableTowerNumbers = availableData
-            .filter(item => item.project_name === projectName)
-            .map(item => item.tower_number);
-        setAvailableTns(availableTowerNumbers);
-    }, [projectName, availableData])
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
 
-    useEffect(() => {
-        console.log("flat_number useEffect called")
-        const availableFlatNumbers = availableData
-            .filter(item => item.project_name === projectName && item.tower_number === towerNumber)
-            .map(item => item.flat_number);
-        setAvailableFns(availableFlatNumbers);
-    }, [towerNumber, projectName, availableData])
+        fetch(`${baseurl?.url}/project/getProjects`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                const availableProjectNames = result.data
+                    .filter(x => x.status === "AVAILABLE" && x.project_type === projectType)
+                    .map(x => x.project_name);
+                setAvailablePrns(availableProjectNames);
+                setAvailableData(result.data);
+            })
+            .catch(error => console.log('error:', error.message));
+    }
+}, [projectType, token])
 
-    useEffect(() => {
-        console.log("villa_number useEffect called")
-        const availableVillaNumbers = availableData
-            .filter(item => item.project_name === projectName)
-            .map(item => item.villa_number);
-        setAvailableVns(availableVillaNumbers);
-    }, [projectName, availableData])
+useEffect(() => {
+    console.log("tower_number useEffect called")
+    const availableTowerNumbers = availableData
+        .filter(item => item.project_name === projectName)
+        .map(item => item.tower_number);
+    setAvailableTns(availableTowerNumbers);
+}, [projectName, availableData])
 
-    useEffect(() => {
-        console.log("plot_number useEffect called")
-        const availablePlotNumbers = availableData
-            .filter(item => item.project_name === projectName)
-            .map(item => item.plot_number);
-        setAvailablePns(availablePlotNumbers);
-    }, [projectName, availableData])
+useEffect(() => {
+    console.log("flat_number useEffect called")
+    const availableFlatNumbers = availableData
+        .filter(item => item.project_name === projectName && item.tower_number === towerNumber)
+        .map(item => item.flat_number);
+    setAvailableFns(availableFlatNumbers);
+}, [towerNumber, projectName, availableData])
 
-    return (
-        <div className='OnboardingFormWraper'>
-            <div className='OnboardingFormCard'>
-                <h2>Onboarding Form</h2>
-                <form onSubmit={handleSubmit} className='deatails__Box' >
-                    <div className='fields__Box'>
-                        <div className='deatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
-                            <p>Client Name</p>{/*class="w-40 text-gray-700 font-medium text-lg whitespace-nowrap"*/}
-                            <TextField className='text__Fld'
-                                type="text"
-                                value={clientName}
-                                onChange={onChangeInput}
-                                placeholder='Enter Client Name'
-                                required
-                                autoComplete="off"
-                                name='clientName'
+useEffect(() => {
+    console.log("villa_number useEffect called")
+    const availableVillaNumbers = availableData
+        .filter(item => item.project_name === projectName)
+        .map(item => item.villa_number);
+    setAvailableVns(availableVillaNumbers);
+}, [projectName, availableData])
+
+useEffect(() => {
+    console.log("plot_number useEffect called")
+    const availablePlotNumbers = availableData
+        .filter(item => item.project_name === projectName)
+        .map(item => item.plot_number);
+    setAvailablePns(availablePlotNumbers);
+}, [projectName, availableData])
+
+return (
+    <div className='OnboardingFormWraper'>
+        <div className='OnboardingFormCard'>
+            <h2>Onboarding Form</h2>
+            <form onSubmit={handleSubmit} className='deatails__Box' >
+                <div className='fields__Box'>
+                    <div className='deatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
+                        <p>Client Name</p>{/*class="w-40 text-gray-700 font-medium text-lg whitespace-nowrap"*/}
+                        <TextField className='text__Fld'
+                            type="text"
+                            value={clientName}
+                            onChange={onChangeInput}
+                            placeholder='Enter Client Name'
+                            required
+                            autoComplete="off"
+                            name='clientName'
+                        />
+                    </div>
+                    <div className='deatails__Fld'>
+                        <p>Client Phone</p>
+                        <TextField className='text__Fld'
+                            type="text"
+                            value={clientPhon}
+                            onChange={onChangeInput}
+                            placeholder='Enter Phone Number'
+                            required
+                            autoComplete="off"
+                            name='clientPhon'
+                        />
+                    </div>
+                    <div className='deatails__Fld'>
+                        <p>Project Type</p>
+                        <Autocomplete className='auto__Fld'
+                            options={["Apartment", "Villa", "Plot"]}
+                            value={projectType}
+                            onChange={(event, newValue) => handleAutocompleteChange('projectType', newValue)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Select Project Type"
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                            )}
+                        />
+                    </div>
+                    {projectType !== "" && projectType !== null &&
+                        <div div className='deatails__Fld'>
+                            <p>Project Name</p>
+                            <Autocomplete className='auto__Fld'
+                                options={availablePrns}
+                                value={projectName}
+                                onChange={(event, newValue) => handleAutocompleteChange('projectName', newValue)}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Select Project Name"
+                                        variant="outlined"
+                                        fullWidth
+                                    />
+                                )}
+                            />
+                        </div>
+                    }
+                    {projectType === "Apartment" && <>
+                        <div className='deatails__Fld'>
+                            <p>Tower Number</p>
+                            <Autocomplete className='auto__Fld'
+                                options={availableTns}
+                                value={towerNumber}
+                                onChange={(event, newValue) => handleAutocompleteChange('towerNumber', newValue)}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Select Tower Number"
+                                        variant="outlined"
+                                        fullWidth
+                                    />
+                                )}
                             />
                         </div>
                         <div className='deatails__Fld'>
-                            <p>Client Phone</p>
+                            <p>Flat Number</p>
+                            <Autocomplete className='auto__Fld'
+                                options={availableFns}
+                                value={flatNumber}
+                                onChange={(event, newValue) => handleAutocompleteChange('flatNumber', newValue)}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Select Flat Number"
+                                        variant="outlined"
+                                        fullWidth
+                                    />
+                                )}
+                            />
+                        </div>
+                    </>}
+                    {projectType === "Villa" && <div className='deatails__Fld'>
+                        <p>Villa Number</p>
+                        <Autocomplete className='auto__Fld'
+                            options={availableVns}
+                            value={villaNumber}
+                            onChange={(event, newValue) => handleAutocompleteChange('villaNumber', newValue)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Select Villa Number"
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                            )}
+                        />
+                    </div>}
+                    {projectType === "Plot" && <div className='deatails__Fld'>
+                        <p>Plot Number</p>
+                        <Autocomplete className='auto__Fld'
+                            options={availablePns}
+                            value={plotNumber}
+                            onChange={(event, newValue) => handleAutocompleteChange('plotNumber', newValue)}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Select Villa Number"
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                            )}
+                        />
+                    </div>}
+                    {projectType && <>
+                        <div className='deatails__Fld'>
+                            <p>Sales Person Name</p>
                             <TextField className='text__Fld'
                                 type="text"
-                                value={clientPhon}
+                                value={salespName}
                                 onChange={onChangeInput}
-                                placeholder='Enter Phone Number'
+                                placeholder='Enter Sales Person Name'
                                 required
                                 autoComplete="off"
-                                name='clientPhon'
+                                name='salespName'
                             />
                         </div>
                         <div className='deatails__Fld'>
-                            <p>Project Type</p>
-                            <Autocomplete className='auto__Fld'
-                                options={["Apartment", "Villa", "Plot"]}
-                                value={projectType}
-                                onChange={(event, newValue) => handleAutocompleteChange('projectType', newValue)}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Select Project Type"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
-                                )}
-                            />
-                        </div>
-                        {projectType !== "" && projectType !== null &&
-                            <div div className='deatails__Fld'>
-                                <p>Project Name</p>
-                                <Autocomplete className='auto__Fld'
-                                    options={availablePrns}
-                                    value={projectName}
-                                    onChange={(event, newValue) => handleAutocompleteChange('projectName', newValue)}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Select Project Name"
-                                            variant="outlined"
-                                            fullWidth
-                                        />
-                                    )}
-                                />
-                            </div>
-                        }
-                        {projectType === "Apartment" && <>
-                            <div className='deatails__Fld'>
-                                <p>Tower Number</p>
-                                <Autocomplete className='auto__Fld'
-                                    options={availableTns}
-                                    value={towerNumber}
-                                    onChange={(event, newValue) => handleAutocompleteChange('towerNumber', newValue)}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Select Tower Number"
-                                            variant="outlined"
-                                            fullWidth
-                                        />
-                                    )}
-                                />
-                            </div>
-                            <div className='deatails__Fld'>
-                                <p>Flat Number</p>
-                                <Autocomplete className='auto__Fld'
-                                    options={availableFns}
-                                    value={flatNumber}
-                                    onChange={(event, newValue) => handleAutocompleteChange('flatNumber', newValue)}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Select Flat Number"
-                                            variant="outlined"
-                                            fullWidth
-                                        />
-                                    )}
-                                />
-                            </div>
-                        </>}
-                        {projectType === "Villa" && <div className='deatails__Fld'>
-                            <p>Villa Number</p>
-                            <Autocomplete className='auto__Fld'
-                                options={availableVns}
-                                value={villaNumber}
-                                onChange={(event, newValue) => handleAutocompleteChange('villaNumber', newValue)}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Select Villa Number"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
-                                )}
-                            />
-                        </div>}
-                        {projectType === "Plot" && <div className='deatails__Fld'>
-                            <p>Plot Number</p>
-                            <Autocomplete className='auto__Fld'
-                                options={availablePns}
-                                value={plotNumber}
-                                onChange={(event, newValue) => handleAutocompleteChange('plotNumber', newValue)}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Select Villa Number"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
-                                )}
-                            />
-                        </div>}
-                        {projectType && <>
-                            <div className='deatails__Fld'>
-                                <p>Sales Person Name</p>
-                                <TextField className='text__Fld'
-                                    type="text"
-                                    value={salespName}
+                            <p>Type</p>
+                            <div>
+                                <FormControlLabel value="end" control={<Radio
+                                    checked={type === 'TOKEN'}
                                     onChange={onChangeInput}
-                                    placeholder='Enter Sales Person Name'
-                                    required
-                                    autoComplete="off"
-                                    name='salespName'
-                                />
-                            </div>
-                            <div className='deatails__Fld'>
-                                <p>Type</p>
-                                <div>
-                                    <FormControlLabel value="end" control={<Radio
-                                        checked={type === 'TOKEN'}
-                                        onChange={onChangeInput}
-                                        value="TOKEN"
-                                        name="type"
-                                        inputProps={{ 'aria-label': 'TOKEN' }}
-                                        labelPlacement="end"
-                                    />} label="Token" />
-                                    <FormControlLabel value="end" control={<Radio
-                                        checked={type === 'ADVANCE'}
-                                        onChange={onChangeInput}
-                                        value="ADVANCE"
-                                        name="type"
-                                        inputProps={{ 'aria-label': 'ADVANCE' }}
-                                        labelPlacement="end"
-                                    />} label="Advance" />
-                                </div>
-
-
-                            </div>
-                            <div className='deatails__Fld'>
-                                <p>Amount</p>
-                                <TextField className='text__Fld'
-                                    type="text"
-                                    value={amount}
+                                    value="TOKEN"
+                                    name="type"
+                                    inputProps={{ 'aria-label': 'TOKEN' }}
+                                    labelPlacement="end"
+                                />} label="Token" />
+                                <FormControlLabel value="end" control={<Radio
+                                    checked={type === 'ADVANCE'}
                                     onChange={onChangeInput}
-                                    placeholder='Enter Amount'
-                                    required
-                                    autoComplete="off"
-                                    name='amount'
-                                />
+                                    value="ADVANCE"
+                                    name="type"
+                                    inputProps={{ 'aria-label': 'ADVANCE' }}
+                                    labelPlacement="end"
+                                />} label="Advance" />
                             </div>
-                        </>}
-                    </div>
 
-                    <div className='Btns__container'>
-                        <div className='dcrd__Btn'>
-                            <button>Discard</button>
+
                         </div>
-                        <div className='add__Btn'>
-                            <button type='submit'>Submit</button>
+                        <div className='deatails__Fld'>
+                            <p>Amount</p>
+                            <TextField className='text__Fld'
+                                type="text"
+                                value={amount}
+                                onChange={onChangeInput}
+                                placeholder='Enter Amount'
+                                required
+                                autoComplete="off"
+                                name='amount'
+                            />
                         </div>
+                    </>}
+                </div>
+
+                <div className='Btns__container'>
+                    <div className='dcrd__Btn'>
+                        <button>Discard</button>
                     </div>
-                </form>
-            </div >
+                    <div className='add__Btn'>
+                        <button type='submit'>Submit</button>
+                    </div>
+                </div>
+            </form>
         </div >
+    </div >
 
-    )
+)
 }
 
 export default OnboardingForm

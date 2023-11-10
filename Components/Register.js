@@ -105,15 +105,14 @@ function Register({ hangleGotoLogin }) {
               <label>Role*</label>
               <div className='input__Fld'>
                 <select
-
                   name='role'
                   value={role}
                   onChange={onChangeInput}
                   required
                 >
-                  <option value="SALES">Sales</option>
-                  <option value="MANAGER">Manager</option>
-                  {/* <option value="Admin">Admin</option> */}
+                  <option value="">Select Role</option>
+                  <option value="SALES">SALES</option>
+                  <option value="MANAGER">MANAGER</option>
                 </select>
               </div>
               <span className='info'>Must be at least 8 characters.</span>

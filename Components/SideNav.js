@@ -3,12 +3,13 @@ import { Drawer, List, ListItem, ListItemText, IconButton } from '@mui/material'
 import { Close } from '@mui/icons-material';
 import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
+
 const roles = {
   'user':['Dashboard'],
   'SUPERADMIN': ['Dashboard', 'Approvals', 'Receipts', 'Payroll'],
   'MANAGER': ['Dashboard',            
                'Receipts'],
-  'SALES': ['Dashboard','OnBoard Form'],
+  'SALES': ['Dashboard','Onboard'],
 };
 
 const Sidenav = ({ role, isSidenavOpen, toggleSidenav }) => {

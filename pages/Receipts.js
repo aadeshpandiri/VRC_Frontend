@@ -1,9 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import Header from '../Components/Header';
 import Sidenav from '../Components/SideNav';
 import sharedContext from '../context/SharedContext';
 import { useContext } from "react";
+import AddprojectDrawer from '../Components/AddprojectDrawer';
+
 
 import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/material';
 // const roles = {
@@ -14,6 +15,7 @@ import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/m
 //   };
 import roles from '../data/roles'
 import SideBar from '../Components/SideBar';
+import { data } from 'autoprefixer';
 
 function Receipts() {
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
@@ -50,6 +52,23 @@ function Receipts() {
         .catch(error => console.log('error', error));
     }
   }, [token])
+
+  const [current, setCurrent] = useState('');
+  const [isReceiptDrawerOpen, setOpenReceiptDrawer] = useState(false);
+  const [data, setData] = useState({})
+  const toggleReceiptDrawer = (anchor, open, event, item) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setCurrent('sReceipt')
+    setOpenReceiptDrawer(open);
+    setData(item)
+  };
+
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null);
@@ -66,14 +85,6 @@ function Receipts() {
           navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
           toggleSidenav={toggleSidenav} />
-
-        {/* <List>
-      {roles[userRole]?.map((item, index) => (
-        <ListItem  key={index}>
-          <ListItemText primary={item} />
-        </ListItem>
-      ))}
-    </List> */}
         <SideBar />
       </div>
 
@@ -87,11 +98,20 @@ function Receipts() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        {/* {console.log("return",receiptsList)} */}
-        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
+        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20 flex flex-col gap-5'>
+          <AddprojectDrawer
+            anchor="right"
+            toggleDrawer={toggleReceiptDrawer}
+            isOpen={isReceiptDrawerOpen}
+            current={current}
+            data={data}
+            receiptsList={receiptsList}
+            setReceiptsList={setReceiptsList}
+          />
           {
             receiptsList?.map((item, index) => {
-              return <div key={index}>{item.project_id}</div>
+              console.log(item)
+              return <div key={index} className='bg-white p-2 rounded-md' onClick={(event) => toggleReceiptDrawer('right', true, event, item)}>Project ID:{item.project_id}</div>
             })
           }
         </div>

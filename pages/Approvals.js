@@ -99,7 +99,7 @@ function Approvals() {
 
     return <div>
       not accessible
-      <Link  href='/'>Home</Link>
+      <Link href='/'>Home</Link>
     </div>
   }
   return (
@@ -140,25 +140,22 @@ function Approvals() {
           {loader && <Loader />}
           <table className='w-full text-left   border-separate border-spacing-y-2.5'>
 
-            <tbody>   {approvalsList?.map((item, index) => (
+            <tbody>
+              {approvalsList?.map((item, index) => (
+                <tr key={index} className='bg-white rounded-md'>
+                  <td className='p-4'>{index + 1}</td>
+                  <td className='p-4'>{item.name}</td>
+                  <td className='p-4'>{item.emailId}</td>
+                  <td className='p-4'>{item.role_type}</td>
+                  <td className='p-4'>{item.status}</td>
 
-              <tr key={index} className='bg-white rounded-md'>
+                  <div className='flex justify-end'>
+                    <Button variant='outlined' color='success' onClick={() => handleApproveOrReject(item, 'V')}>Approve</Button>
+                    <Button color='error' onClick={() => handleApproveOrReject(item, 'R')}>Reject</Button>
+                  </div>
+                </tr>
 
-                <td className='p-4'>{index + 1}</td>
-                <td className='p-4'>{item.name}</td>
-                <td className='p-4'>{item.emailId}</td>
-                <td className='p-4'>{item.role_type}</td>
-                <td className='p-4'>{item.status}</td>
-
-                <div className='flex justify-end'>
-                  <Button variant='outlined' color='success' onClick={() => handleApproveOrReject(item, 'V')}>Approve</Button>
-                  <Button color='error' onClick={() => handleApproveOrReject(item, 'R')}>Reject</Button>
-                </div>
-
-
-              </tr>
-
-            ))}</tbody>
+              ))}</tbody>
           </table>
 
         </div>

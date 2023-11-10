@@ -34,7 +34,7 @@ function Navigations() {
       },
       {
           route:'/onboard',
-          displayName:'On Board Form',
+          displayName:'Onboard',
           id:4,
           icon:<WorkOutlineIcon fontSize='large'></WorkOutlineIcon>,
           role_type:['Sales']

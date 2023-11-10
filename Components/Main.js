@@ -29,16 +29,13 @@ const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
 };
 const Main = () => {
   const [current, setCurrent] = useState('');
-  const [, setOpenDrawer] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
   const columns = [
-    // { field: 'sno', headerName: 'Sno', width: 90 },
 
     {
       field: 'project_id',
       headerName: 'Project ID',
       width: 160,
-      // valueGetter: (params) =>
-      //   `${params.row.firstName || ''} ${params.row.lastName || ''}`,
     },
     {
       field: 'project_name',
@@ -139,7 +136,7 @@ const Main = () => {
   }, [token])
 
   const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
-  const [isReceiptDrawerOpen, setOpenReceiptDrawer] = useState(false);
+
   const toggleAddProjectDrawer = (anchor, open, event) => {
     if (
       event &&
@@ -148,53 +145,13 @@ const Main = () => {
     ) {
       return;
     }
-    if (event.target.name === "add") {
-      setCurrent('add')
-      setOpenAddProjectDrawer(open);
-    }
-    else if (event.target.name === "sRecipt") {
-      setCurrent('sReceipt')
-      setOpenReceiptDrawer(open);
-      // setOpenDrawer(open);
-    }
+    setCurrent('add')
+    setOpenAddProjectDrawer(open);
+
   };
 
-  // const toggleReceiptDrawer = (anchor, open, event) => {
-  //   if (
-  //     event &&
-  //     event.type === "keydown" &&
-  //     (event.key === "Tab" || event.key === "Shift")
-  //   ) {
-  //     return;
-  //   }
-  //   setCurrent('sReceipt')
-  //   setOpenReceiptDrawer(open);
-  //   setOpenDrawer(open);
-  //   if (open) {
-  //     setCurrent(event.target.name)
-  //   }
 
-  // };
 
-  // const rows = [
-  //   { sno: 1, projectName: 'Snow', tokenNumber: 'Jon', flatNumber: 35,ProjectID:'',Status:'Available' },
-  //   ];
-
-  // const modifyData=(tdata)=>{
-  //   // console.log(tdata,'tdata')
-  //   var t=tdata.map(eachRow=>{
-  //     return {
-  //       'order_id':eachRow.order_id,
-  //     //  'type_of_service':getService(eachRow.type_of_service),
-  //     //  'fulfilled_or_not':eachRow.fulfilled_or_not==0?'Not Fulfilled':'Fulfilled',
-  //     //  'date_time':eachRow.date_time.split('T')[0],
-  //     //  'type_of_subservice':getSubService(eachRow.sub_service),
-  //     //  'name':eachRow.name
-  //     }
-  //   })
-  //   console.log(t);
-  //   return t;
-  // }
   const AddRow = (item) => {
     setRows([...rows, item])
   }
@@ -212,33 +169,12 @@ const Main = () => {
         current={current}
         AddRow={AddRow}
       />
-      {/* <AddprojectDrawer
-        anchor="right"
-        toggleDrawer={toggleReceiptDrawer}
-        isOpen={isReceiptDrawerOpen}
-        current={current}
-      /> */}
       <div>
         {token &&
-          <>
-            {/* <Button 
-              variant="contained"
-              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
-              sx={{
-                backfaceVisibility:'visible'
-              }}
-            >Add Project
-            </Button> */}
-            <div className='sbt__Btn'>
-              <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
-            </div>
-            <Button color='secondary'
-              variant="outlined"
-              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
-              name="sRecipt"
-            >Show Receipt
-            </Button>
-          </>}
+          <div className='sbt__Btn'>
+            <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
+          </div>
+        }
       </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>{/* */}
         <DataGrid
@@ -256,8 +192,6 @@ const Main = () => {
           // checkboxSelection
           disableRowSelectionOnClick
         />
-        {/* <OnboardingForm /> */}
-        {/* <Payroll /> */}
       </Box>
     </div>
   );

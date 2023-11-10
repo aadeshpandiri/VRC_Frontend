@@ -8,21 +8,15 @@ import Link from "next/link";
 
 import roles from '../data/roles'
 import SideBar from '../Components/SideBar';
-import Payroll from '../Components/Payroll'
+import OnboardingForm from '../Components/OnboardingForm';
 
-function PayrollPage() {
+function Onboarding() {
+
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
   const [receiptsList, setReceiptsList] = useState([]);
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
-  if (userRole !== "SUPERADMIN") {
-
-    return <div>
-      not accessible
-      <Link href='/'>Home</Link>
-    </div>
-  }
 
   return (
     <div className="md:flex h-screen w-screen">
@@ -58,25 +52,12 @@ function PayrollPage() {
         {/* Main Content */}
         {/* <Main /> */}
         <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
-          <Payroll />
+          <OnboardingForm />
         </div>
       </div>
-
-      {/* Mobile Sidenav Toggle Button */}
-      {/* <IconButton
-      edge="end"
-      aria-label="menu"
-      onClick={toggleSidenav}
-      sx={{
-        textAlign: "end",
-      }}
-      className="inline md:hidden"
-    >
-      <Menu fontSize="large" />
-    </IconButton> */}
 
     </div>
   )
 }
 
-export default PayrollPage
+export default Onboarding

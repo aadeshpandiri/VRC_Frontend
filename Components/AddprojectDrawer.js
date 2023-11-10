@@ -18,7 +18,7 @@ import Addproject from "./Addproject";
 import Editproject from "./Editproject";
 import ShowReceipt from "./ShowReceipt";
 // import Register from "./Register";
-const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current, editRow, setEditRow, SaveEditedRow }) => {
+const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current, editRow, setEditRow, SaveEditedRow, data, receiptsList, setReceiptsList }) => {
     const router = useRouter();
     const [projectName, setProjectName] = useState('');
     const [type, setType] = useState('');
@@ -74,7 +74,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                 break;
         }
     }
-    
+
     const onChangeInputEdit = (e) => {
         setEditRow((prevState) => ({
             ...prevState,
@@ -134,7 +134,8 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                             }
                             {
                                 current == 'sReceipt' &&
-                                <ShowReceipt handleClose={handleClose} />
+                                <ShowReceipt data={data} receiptsList={receiptsList}
+                                    setReceiptsList={setReceiptsList} handleClose={handleClose} />
                             }
 
                         </Box>
