@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import Sidenav from '../Components/SideNav';
 import sharedContext from '../context/SharedContext';
 import { useContext } from "react";
+import Link from "next/link";
 
 import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/material';
 // const roles = {
@@ -16,7 +17,7 @@ import roles from '../data/roles'
 import SideBar from '../Components/SideBar';
 import Loader from '../Components/Loader';
 function Approvals() {
-  const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen,loader,setLoader } = useContext(sharedContext);
+  const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
   const [approvalsList, setApprovalsList] = useState([]);
   // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   // const userRole = 'superadmin'; // Set the user's role here
@@ -26,7 +27,7 @@ function Approvals() {
   };
   useEffect(() => {
     if (token) {
-          setLoader(true)
+      setLoader(true)
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
       var requestOptions = {
@@ -45,14 +46,14 @@ function Approvals() {
             console.log(result)
             setApprovalsList(result.data)
           }
-            setLoader(false)
+          setLoader(false)
 
         })
-        .catch(error =>{
-            setLoader(false)
-            console.log('error', error)
-          });
-         
+        .catch(error => {
+          setLoader(false)
+          console.log('error', error)
+        });
+
     }
   }, [token])
 
@@ -94,7 +95,15 @@ function Approvals() {
       })
       .catch(error => console.log('error', error));
   }
+  if (userRole !== "SUPERADMIN") {
+
+    return <div>
+      not accessible
+      <Link  href='/'>Home</Link>
+    </div>
+  }
   return (
+
     <div className="md:flex h-screen w-screen">
 
       {/* Sidenav (desktop mode) */}
@@ -128,7 +137,7 @@ function Approvals() {
         {/* Main Content */}
         {/* <Main /> */}
         <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
-{loader&&<Loader/>}
+          {loader && <Loader />}
           <table className='w-full text-left   border-separate border-spacing-y-2.5'>
 
             <tbody>   {approvalsList?.map((item, index) => (

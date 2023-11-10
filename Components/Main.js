@@ -10,7 +10,7 @@ import OnboardingForm from './OnboardingForm';
 import Payroll from './Payroll';
 import Loader from './Loader';
 import baseurl from '../data/baseurl'
-const MatEdit = ({ index ,setCurrent,setOpenDrawer,setEditRow}) => {
+const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
 
   const handleEditClick = () => {
     // some action
@@ -23,13 +23,13 @@ const MatEdit = ({ index ,setCurrent,setOpenDrawer,setEditRow}) => {
 
 
   return <div onClick={handleEditClick}>
-    <Edit/>
+    <Edit />
   </div>
- 
+
 };
 const Main = () => {
   const [current, setCurrent] = useState('');
-  const [,setOpenDrawer]=useState(false)
+  const [, setOpenDrawer] = useState(false)
   const columns = [
     // { field: 'sno', headerName: 'Sno', width: 90 },
 
@@ -65,7 +65,6 @@ const Main = () => {
       width: 160,
       renderCell: (params) => {
         const status = params.value;
-        console.log(status)
         let color = 'black'; // Default color
         switch (status) {
           case 'AVAILABLE':
@@ -103,13 +102,13 @@ const Main = () => {
     }
   ];
   const [rows, setRows] = useState([])
-  const [editRow,setEditRow]=useState();
+  const [editRow, setEditRow] = useState();
 
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null)
   }
-  const { token, setToken ,loader,setLoader,userRole} = useContext(sharedContext);
+  const { token, setToken, loader, setLoader, userRole } = useContext(sharedContext);
   useEffect(() => {
     if (token) {
       setLoader(true)
@@ -132,7 +131,7 @@ const Main = () => {
             setRows(result.data)
           }
           setLoader(false)
-  })
+        })
         .catch(error => {
           setLoader(false)
         });
@@ -149,26 +148,33 @@ const Main = () => {
     ) {
       return;
     }
-    setCurrent('add')
-    setOpenAddProjectDrawer(open);
+    if (event.target.name === "add") {
+      setCurrent('add')
+      setOpenAddProjectDrawer(open);
+    }
+    else if (event.target.name === "sRecipt") {
+      setCurrent('sReceipt')
+      setOpenReceiptDrawer(open);
+      // setOpenDrawer(open);
+    }
   };
 
-  const toggleReceiptDrawer = (anchor, open, event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  // const toggleReceiptDrawer = (anchor, open, event) => {
+  //   if (
+  //     event &&
+  //     event.type === "keydown" &&
+  //     (event.key === "Tab" || event.key === "Shift")
+  //   ) {
+  //     return;
+  //   }
+  //   setCurrent('sReceipt')
+  //   setOpenReceiptDrawer(open);
+  //   setOpenDrawer(open);
+  //   if (open) {
+  //     setCurrent(event.target.name)
+  //   }
 
-    setOpenReceiptDrawer(open);
-    setOpenDrawer(open);
-    if(open){
-      setCurrent(event.target.name)
-    }
-  
-  };
+  // };
 
   // const rows = [
   //   { sno: 1, projectName: 'Snow', tokenNumber: 'Jon', flatNumber: 35,ProjectID:'',Status:'Available' },
@@ -192,13 +198,13 @@ const Main = () => {
   const AddRow = (item) => {
     setRows([...rows, item])
   }
-const SaveEditedRow=(item)=>{
-  console.log(item)
-}
+  const SaveEditedRow = (item) => {
+    console.log(item)
+  }
   return (
     <div className="p-4 mt-20 bg-slate-50">
       {/* Your Data Grid Table */}
-      <Loader/>
+      <Loader />
       <AddprojectDrawer
         anchor="right"
         toggleDrawer={toggleAddProjectDrawer}
@@ -206,12 +212,12 @@ const SaveEditedRow=(item)=>{
         current={current}
         AddRow={AddRow}
       />
-      <AddprojectDrawer
+      {/* <AddprojectDrawer
         anchor="right"
         toggleDrawer={toggleReceiptDrawer}
         isOpen={isReceiptDrawerOpen}
-        current="sReceipt"
-      />
+        current={current}
+      /> */}
       <div>
         {token &&
           <>
@@ -224,16 +230,17 @@ const SaveEditedRow=(item)=>{
             >Add Project
             </Button> */}
             <div className='sbt__Btn'>
-                            <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{width:'max-content'}}>Add Project</button>
-                        </div>
+              <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
+            </div>
             <Button color='secondary'
               variant="outlined"
-              onClick={(event) => toggleReceiptDrawer('right', true, event)}
+              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
+              name="sRecipt"
             >Show Receipt
             </Button>
           </>}
       </div>
-      <Box sx={{ width: '100%',height: '80vh',backgroundColor:'white' }}>{/* */}
+      <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>{/* */}
         <DataGrid
           rows={rows}
           columns={columns}
@@ -248,7 +255,7 @@ const SaveEditedRow=(item)=>{
           pageSizeOptions={[5]}
           // checkboxSelection
           disableRowSelectionOnClick
-        /> 
+        />
         {/* <OnboardingForm /> */}
         {/* <Payroll /> */}
       </Box>
