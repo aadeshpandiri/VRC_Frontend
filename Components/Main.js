@@ -189,12 +189,11 @@ const Main = () => {
         AddRow={AddRow}
       />
       <div>
-        {token &&
-          <>
-            <div className='sbt__Btn'>
-              <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
-            </div>
-          </>}
+        {token && userRole !== "SALES" &&
+          <div className='sbt__Btn'>
+            <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
+          </div>
+        }
       </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid
