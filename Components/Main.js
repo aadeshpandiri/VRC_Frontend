@@ -22,7 +22,7 @@ const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
 
 
 
-  return <div onClick={handleEditClick}>
+  return <div onClick={handleEditClick} name='edit'>
     <Edit />
   </div>
 
@@ -136,7 +136,6 @@ const Main = () => {
   }, [token])
 
   const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
-
   const toggleAddProjectDrawer = (anchor, open, event) => {
     if (
       event &&
@@ -145,13 +144,57 @@ const Main = () => {
     ) {
       return;
     }
-    setCurrent('add')
-    setOpenAddProjectDrawer(open);
-
+    if (event.target.name === "add") {
+      setCurrent('add')
+      setOpenAddProjectDrawer(open);
+    }
+    else if (event.target.name === "sReceipt") {
+      setCurrent('sReceipt')
+      setOpenAddProjectDrawer(open);
+      // setOpenDrawer(open);
+    }
+    else if(event.target.name==='edit'){
+      setCurrent('edit');
+      setOpenDrawer(open);
+    }
   };
 
+  // const toggleReceiptDrawer = (anchor, open, event) => {
+  //   if (
+  //     event &&
+  //     event.type === "keydown" &&
+  //     (event.key === "Tab" || event.key === "Shift")
+  //   ) {
+  //     return;
+  //   }
+  //   setCurrent('sReceipt')
+  //   setOpenReceiptDrawer(open);
+  //   setOpenDrawer(open);
+  //   if (open) {
+  //     setCurrent(event.target.name)
+  //   }
 
+  // };
 
+  // const rows = [
+  //   { sno: 1, projectName: 'Snow', tokenNumber: 'Jon', flatNumber: 35,ProjectID:'',Status:'Available' },
+  //   ];
+
+  // const modifyData=(tdata)=>{
+  //   // console.log(tdata,'tdata')
+  //   var t=tdata.map(eachRow=>{
+  //     return {
+  //       'order_id':eachRow.order_id,
+  //     //  'type_of_service':getService(eachRow.type_of_service),
+  //     //  'fulfilled_or_not':eachRow.fulfilled_or_not==0?'Not Fulfilled':'Fulfilled',
+  //     //  'date_time':eachRow.date_time.split('T')[0],
+  //     //  'type_of_subservice':getSubService(eachRow.sub_service),
+  //     //  'name':eachRow.name
+  //     }
+  //   })
+  //   console.log(t);
+  //   return t;
+  // }
   const AddRow = (item) => {
     setRows([...rows, item])
   }
@@ -171,10 +214,25 @@ const Main = () => {
       />
       <div>
         {token &&
-          <div className='sbt__Btn'>
-            <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
-          </div>
-        }
+          <>
+            {/* <Button 
+              variant="contained"
+              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
+              sx={{
+                backfaceVisibility:'visible'
+              }}
+            >Add Project
+            </Button> */}
+            <div className='sbt__Btn'>
+              <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
+            </div>
+            <Button color='secondary'
+              variant="outlined"
+              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
+              name="sReceipt"
+            >Show Receipt
+            </Button>
+          </>}
       </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>{/* */}
         <DataGrid

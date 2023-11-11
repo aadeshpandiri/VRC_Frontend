@@ -217,29 +217,11 @@ ElevationScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const Header = ({ toggleSidenav ,props}) => {
-  const [isDrawerOpen, setOpenDrawer] = useState(false);
+const Header = ({ toggleSidenav ,props,toggleDrawer,isDrawerOpen}) => {
   // const [token, setToken]=useState();
   // const [userData, setUserData]=useState();
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
-
-  // useEffect(()=>{
-  //   if(window){
-  //     setToken(sessionStorage.getItem('token'))
-  //     setUserData(sessionStorage.getItem('data'))
-  //   }
-  // },[])
-  const toggleDrawer = (anchor, open, event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setOpenDrawer(open);
-  };
+ 
 
 
 

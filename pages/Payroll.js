@@ -16,6 +16,13 @@ function PayrollPage() {
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
+ 
+  useEffect(()=>{
+    if(isSidenavOpen){
+      toggleSidenav()
+    }
+  
+  },[])
   if (userRole !== "SUPERADMIN") {
 
     return <div>
@@ -23,7 +30,6 @@ function PayrollPage() {
       <Link href='/'>Home</Link>
     </div>
   }
-
   return (
     <div className="md:flex h-screen w-screen">
 
@@ -57,7 +63,7 @@ function PayrollPage() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
+        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20' style={{height:'80vh'}}>
           <Payroll />
         </div>
       </div>

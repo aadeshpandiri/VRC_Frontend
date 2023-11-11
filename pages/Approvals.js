@@ -55,14 +55,21 @@ function Approvals() {
         });
 
     }
+   
   }, [token])
-
+  useEffect(()=>{
+    if(isSidenavOpen){
+      toggleSidenav()
+    }
+  
+  },[])
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null);
   }
 
   const handleApproveOrReject = (item, status) => {
+    setLoader(true)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -87,13 +94,16 @@ function Approvals() {
         if (result.message === "Success") {
           // Create a copy of the current approvalsList without the approved/rejected item.
           const updatedList = approvalsList.filter(approvalItem => approvalItem.emailId !== item.emailId);
-
+          setLoader(false)
           // Update the state with the updated list.
           setApprovalsList(updatedList);
         }
 
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        console.log('error', error)
+        setLoader(false)
+      });
   }
   if (userRole !== "SUPERADMIN") {
 
@@ -105,7 +115,7 @@ function Approvals() {
   return (
 
     <div className="md:flex h-screen w-screen">
-
+    
       {/* Sidenav (desktop mode) */}
       <div
         className={`hidden md:block md:w-1/5 bg-[#FFFFFF] mt-20`}
@@ -136,26 +146,31 @@ function Approvals() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
+        <div className='bg-slate-300 p-4 overflow-scroll mt-20' style={{height:'80vh'}}>
           {loader && <Loader />}
           <table className='w-full text-left   border-separate border-spacing-y-2.5'>
 
             <tbody>
               {approvalsList?.map((item, index) => (
-                <tr key={index} className='bg-white rounded-md'>
-                  <td className='p-4'>{index + 1}</td>
+               <> <tr key={index} className='bg-white flex flex-wrap md:table-row'>
+                  <td className='p-4 w-3'>{index + 1}</td>
                   <td className='p-4'>{item.name}</td>
                   <td className='p-4'>{item.emailId}</td>
                   <td className='p-4'>{item.role_type}</td>
                   <td className='p-4'>{item.status}</td>
 
-                  <div className='flex justify-end'>
-                    <Button variant='outlined' color='success' onClick={() => handleApproveOrReject(item, 'V')}>Approve</Button>
-                    <Button color='error' onClick={() => handleApproveOrReject(item, 'R')}>Reject</Button>
-                  </div>
+                  
                 </tr>
 
-              ))}</tbody>
+                <div className='flex flex-row-reverse m-5'>
+                <button className='add__Btn h-10'  onClick={() => handleApproveOrReject(item, 'V')}>Approve</button>
+                <Button color='error' onClick={() => handleApproveOrReject(item, 'R')}>Reject</Button>
+              </div>
+                </>
+
+              ))}
+              
+              </tbody>
           </table>
 
         </div>

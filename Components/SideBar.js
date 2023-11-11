@@ -20,12 +20,13 @@ import onboard from '../utils/onboard.svg'
 const SideBar = () => {
 
   // const router = useRouter();
-  const { userRole, setToken } = useContext(sharedContext)
+  const { userRole,setUserRole, setToken } = useContext(sharedContext)
 
 
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null);
+    setUserRole('USER')
   }
   const getIcon = (item) => {
     switch (item) {

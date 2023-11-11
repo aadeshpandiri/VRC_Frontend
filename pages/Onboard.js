@@ -17,7 +17,12 @@ function Onboarding() {
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
-
+  useEffect(()=>{
+    if(isSidenavOpen){
+      toggleSidenav()
+    }
+  
+  },[])
   return (
     <div className="md:flex h-screen w-screen">
 

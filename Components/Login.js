@@ -1,5 +1,5 @@
 // import { TextField } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import Loader from './Loader';
@@ -7,7 +7,7 @@ import baseurl from '../data/baseurl'
 function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, handleClose }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
-
+    const [error,setError]=useState('')
     const handleSubmit = (e) => {
         console.log(`${baseurl.url}/auth/login`)
         e.preventDefault();
@@ -34,11 +34,17 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                setToken(result.data.accessToken)
-                setUserRole(result.data.role_type)
-                handleClose()
-                sessionStorage.setItem('token', result.data.accessToken)
-                sessionStorage.setItem('userRole', result.data.role_type)
+                if(result.status==404){
+                    setError(result.message)
+                }
+                else{
+                    setToken(result.data.accessToken)
+                    setUserRole(result.data.role_type)
+                    handleClose()
+                    sessionStorage.setItem('token', result.data.accessToken)
+                   
+                }
+               sessionStorage.setItem('userRole', result.data.role_type)
                 // location.reload()
                 setLoader(false)
 
@@ -104,7 +110,11 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
                             <div className='frg__Pas'>
                                 <span>Forgot password</span>
                             </div>
+                            
                         </div>
+                        <div >
+                            <span style={{color:'red'}}>{error}</span>
+                            </div>
                         <div className='sbt__Btn'>
                             <button type="submit">Sign in</button>
                         </div>

@@ -65,6 +65,19 @@ export default function Home() {
   const {userRole,token,isSidenavOpen,setToken,setIsSidenavOpen}=useContext(SharedContext);
   const router=useRouter()
   // const [userRole,setUserRole]=useState('superadmin');
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer(open);
+  };
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
@@ -72,6 +85,12 @@ export default function Home() {
     sessionStorage.clear();
     setToken(null);
   }
+  useEffect(()=>{
+    if(isSidenavOpen){
+      toggleSidenav()
+    }
+  
+  },[])
   return (
     <div className="md:flex h-screen w-screen">
        <Head>
@@ -87,8 +106,10 @@ export default function Home() {
           role={userRole}
           // navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
-          toggleSidenav={toggleSidenav}        />
-
+          toggleSidenav={toggleSidenav}        
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
+          />
 {/* <List className="flex flex-col">
   <div>
         {roles[userRole]?.map((item, index) => (
@@ -115,6 +136,8 @@ export default function Home() {
         <Header
           toggleSidenav={toggleSidenav}
           userRole={userRole}
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
         />
 
         {/* Main Content */}

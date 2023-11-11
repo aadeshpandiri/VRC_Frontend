@@ -1,21 +1,76 @@
 import React from 'react';
-import { Drawer, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
+import Image from "next/image";
+import Home from '../utils/Home.svg'
+import approval from '../utils/approval.svg'
+import receipt from '../utils/receipt.svg'
+import payroll from '../utils/payroll.svg'
+import logout from '../utils/Logout.svg'
+import SignInDrawer from './SignInDrawer';
+import Link from 'next/link';
+import routes from '../data/routes';
+import roles from '../data/roles';
 
-const roles = {
-  'user':['Dashboard'],
-  'SUPERADMIN': ['Dashboard', 'Approvals', 'Receipts', 'Payroll'],
-  'MANAGER': ['Dashboard',            
-               'Receipts'],
-  'SALES': ['Dashboard','Onboard'],
-};
 
-const Sidenav = ({ role, isSidenavOpen, toggleSidenav }) => {
-  const {userRole}=useContext(sharedContext)
-  return (
-    <Drawer
+const Sidenav = ({ role, isSidenavOpen, toggleSidenav ,toggleDrawer,isDrawerOpen}) => {
+  const {userRole,token,setToken,setUserRole}=useContext(sharedContext)
+  const getIcon=(item)=>{
+    switch(item){
+      case 'Dashboard':return <Image
+   
+      alt="Home"
+      src={Home}
+      quality={100}
+      width= {23}
+      height= {23}
+   
+      />; break;
+      case 'Approvals': return <Image
+   
+      alt="approval"
+      src={approval}
+      quality={100}
+      width= {23}
+      height= {23}
+   
+      />; break;
+      case 'Receipts':return <Image
+   
+      alt="receipt"
+      src={receipt}
+      quality={100}
+      width= {23}
+      height= {23}
+   
+      />; break;
+      case 'Payroll':return <Image
+   
+      alt="payroll"
+      src={payroll}
+      quality={100}
+      width= {23}
+      height= {23}
+   
+      />; break;
+
+    }
+  }
+  const handleLogout=()=>{
+    sessionStorage.clear();
+    setToken(null);
+    setUserRole('USER')
+  }
+  return (<>
+  <SignInDrawer
+          anchor="right"
+          toggleDrawer={toggleDrawer}
+          isOpen={isDrawerOpen}
+
+        />
+         <Drawer
       anchor="left"
       open={isSidenavOpen}
       onClose={toggleSidenav}
@@ -44,14 +99,35 @@ const Sidenav = ({ role, isSidenavOpen, toggleSidenav }) => {
 
       </div>
       <List>
+        <div>
+          {!token&& <Button onClick={(event) => toggleDrawer('right', true, event)}>Login</Button>}
+        </div>
         {roles[userRole]?.map((item, index) => (
-          <ListItem  key={index}>
-            <ListItemText primary={item} />
-          {/* console.log(item) */}
-          </ListItem>
+          <div key={index} name={item} className="p-4 flex items-center gap-4" 
+          // onClick={(e)=>{
+          //   console.log(routes[item])
+          //   router.push(`${routes[item]}`)
+          // }
+          // }
+          >
+              {getIcon(item)}
+            <Link href={`${routes[item]}`} onClick={toggleSidenav}>{item}</Link></div>
         ))}
+         {token&& <div onClick={handleLogout}  className="p-4 flex items-center gap-4">
+        <Image
+   
+   alt="logout"
+   src={logout}
+   quality={100}
+   width= {23}
+   height= {23}
+
+   /> <span style={{color:'#667085'}}>Logout</span>
+        </div>}
       </List>
     </Drawer>
+        </>
+   
   );
 };
 

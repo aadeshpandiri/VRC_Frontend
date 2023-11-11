@@ -73,6 +73,12 @@ function Receipts() {
     sessionStorage.clear();
     setToken(null);
   }
+  useEffect(()=>{
+    if(isSidenavOpen){
+      toggleSidenav()
+    }
+  
+  },[])
   return (
     <div className="md:flex h-screen w-screen">
 

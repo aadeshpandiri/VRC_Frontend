@@ -4,10 +4,10 @@ import { useContext, useState } from 'react';
 import { TextField, InputAdornment, Autocomplete } from '@mui/material';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import baseurl from '../data/baseurl'
-
+import Loader from './Loader';
 function Payroll() {
 
-    const { token } = useContext(sharedContext);
+    const { token ,loader,setLoader} = useContext(sharedContext);
 
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
@@ -16,7 +16,7 @@ function Payroll() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("submit clicked");
-
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -41,8 +41,11 @@ function Payroll() {
                 // AddRow(result.data)
                 // handleClose()
                 clearFields()
+                setLoader(false)
             })
-            .catch(error => console.log('error', error));
+            .catch(error => {console.log('error', error)
+        
+            setLoader(false)});
     };
 
     const onChangeInput = (e) => {
@@ -71,6 +74,7 @@ function Payroll() {
     return (
         <div className='PayrollCard'>
             <h2>Payroll</h2>
+            {loader&& <Loader/>}
             <form onSubmit={handleSubmit} className='prDeatails__Box'>
                 <div className='prFields__Box'>
                     <div className='prDeatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
@@ -115,7 +119,7 @@ function Payroll() {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="10px" height="16" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 0V2H4C5.704 2 7.94 3.038 8.72 5H0V7H8.97C8.66 9.61 5.974 11 4 11H0V13.47L10.25 22H13.375L2.562 13H4C7.234 13 10.674 10.61 10.97 7H16V5H10.812C10.51 3.816 9.86 2.804 9 2H16V0H0Z" fill="black" />
                                         </svg>
                                     </InputAdornment>
