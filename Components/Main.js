@@ -30,6 +30,9 @@ const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
 const Main = () => {
   const [current, setCurrent] = useState('');
   const [openDrawer, setOpenDrawer] = useState(false)
+
+  const { token, setToken, loader, setLoader, userRole } = useContext(sharedContext);
+
   const columns = [
 
     {
@@ -105,7 +108,6 @@ const Main = () => {
     sessionStorage.clear();
     setToken(null)
   }
-  const { token, setToken, loader, setLoader, userRole } = useContext(sharedContext);
   useEffect(() => {
     if (token) {
       setLoader(true)
@@ -125,7 +127,14 @@ const Main = () => {
             handleLogout();
           }
           else {
-            setRows(result.data)
+            if (userRole === "SALES") {
+              const updatedList = result.data.filter(Item => Item.status === "AVAILABLE");
+              // Update the state with the updated list.
+              setRows(updatedList);
+            }
+            else {
+              setRows(result.data)
+            }
           }
           setLoader(false)
         })
@@ -153,54 +162,21 @@ const Main = () => {
       setOpenAddProjectDrawer(open);
       // setOpenDrawer(open);
     }
-    else if(event.target.name==='edit'){
+    else if (event.target.name === 'edit') {
       setCurrent('edit');
       setOpenDrawer(open);
     }
   };
 
-  // const toggleReceiptDrawer = (anchor, open, event) => {
-  //   if (
-  //     event &&
-  //     event.type === "keydown" &&
-  //     (event.key === "Tab" || event.key === "Shift")
-  //   ) {
-  //     return;
-  //   }
-  //   setCurrent('sReceipt')
-  //   setOpenReceiptDrawer(open);
-  //   setOpenDrawer(open);
-  //   if (open) {
-  //     setCurrent(event.target.name)
-  //   }
-
-  // };
-
-  // const rows = [
-  //   { sno: 1, projectName: 'Snow', tokenNumber: 'Jon', flatNumber: 35,ProjectID:'',Status:'Available' },
-  //   ];
-
-  // const modifyData=(tdata)=>{
-  //   // console.log(tdata,'tdata')
-  //   var t=tdata.map(eachRow=>{
-  //     return {
-  //       'order_id':eachRow.order_id,
-  //     //  'type_of_service':getService(eachRow.type_of_service),
-  //     //  'fulfilled_or_not':eachRow.fulfilled_or_not==0?'Not Fulfilled':'Fulfilled',
-  //     //  'date_time':eachRow.date_time.split('T')[0],
-  //     //  'type_of_subservice':getSubService(eachRow.sub_service),
-  //     //  'name':eachRow.name
-  //     }
-  //   })
-  //   console.log(t);
-  //   return t;
-  // }
   const AddRow = (item) => {
     setRows([...rows, item])
   }
   const SaveEditedRow = (item) => {
     console.log(item)
   }
+
+  const filteredColumns = userRole !== "SALES" ? columns : columns.filter(column => column.field !== "actions");
+
   return (
     <div className="p-4 mt-20 bg-slate-50">
       {/* Your Data Grid Table */}
@@ -215,29 +191,15 @@ const Main = () => {
       <div>
         {token &&
           <>
-            {/* <Button 
-              variant="contained"
-              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
-              sx={{
-                backfaceVisibility:'visible'
-              }}
-            >Add Project
-            </Button> */}
             <div className='sbt__Btn'>
               <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
             </div>
-            <Button color='secondary'
-              variant="outlined"
-              onClick={(event) => toggleAddProjectDrawer('right', true, event)}
-              name="sReceipt"
-            >Show Receipt
-            </Button>
           </>}
       </div>
-      <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>{/* */}
+      <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid
           rows={rows}
-          columns={columns}
+          columns={filteredColumns}
           initialState={{
             pagination: {
               paginationModel: {
