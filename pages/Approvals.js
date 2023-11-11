@@ -25,6 +25,19 @@ function Approvals() {
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer(open);
+  };
   useEffect(() => {
     if (token) {
       setLoader(true)
@@ -124,7 +137,10 @@ function Approvals() {
           role={userRole}
           navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
-          toggleSidenav={toggleSidenav} />
+          toggleSidenav={toggleSidenav}
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
+          />
 
         {/* <List>
      {roles[userRole]?.map((item, index) => (
@@ -153,7 +169,7 @@ function Approvals() {
             <tbody>
               {approvalsList?.map((item, index) => (
                <> <tr key={index} className='bg-white flex flex-wrap md:table-row'>
-                  <td className='p-4 w-3'>{index + 1}</td>
+                  <td className='p-4'>{index + 1}</td>
                   <td className='p-4'>{item.name}</td>
                   <td className='p-4'>{item.emailId}</td>
                   <td className='p-4'>{item.role_type}</td>

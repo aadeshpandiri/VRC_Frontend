@@ -26,6 +26,19 @@ function Receipts() {
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer(open);
+  };
   useEffect(() => {
     if (token) {
       var myHeaders = new Headers();
@@ -79,6 +92,7 @@ function Receipts() {
     }
   
   },[])
+
   return (
     <div className="md:flex h-screen w-screen">
 
@@ -90,7 +104,9 @@ function Receipts() {
           role={userRole}
           navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
-          toggleSidenav={toggleSidenav} />
+          toggleSidenav={toggleSidenav} 
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}/>
         <SideBar />
       </div>
 

@@ -13,6 +13,19 @@ import Payroll from '../Components/Payroll'
 function PayrollPage() {
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
   const [receiptsList, setReceiptsList] = useState([]);
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer(open);
+  };
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
@@ -41,7 +54,9 @@ function PayrollPage() {
           role={userRole}
           navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
-          toggleSidenav={toggleSidenav} />
+          toggleSidenav={toggleSidenav}
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen} />
 
         {/* <List>
       {roles[userRole]?.map((item, index) => (

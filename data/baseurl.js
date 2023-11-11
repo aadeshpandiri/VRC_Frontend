@@ -1,5 +1,5 @@
 const BASEURL={
-    'url':'https://vrc-backend.onrender.com'
+    'url':'https://backend-vrc-updated.onrender.com'
 }
 
 export default BASEURL;

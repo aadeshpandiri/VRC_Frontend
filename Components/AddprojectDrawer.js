@@ -29,6 +29,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     const [plotNumber, setPlotNumber] = useState('');
 
 
+
     const handleClose = (event) => {
         // setOpen(false);
         toggleDrawer(anchor, false, event)
@@ -46,14 +47,14 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
 
     const descriptionElementRef = React.useRef(null);
 
-    // React.useEffect(() => {
-    //     if (open) {
-    //         const { current: descriptionElement } = descriptionElementRef;
-    //         if (descriptionElement !== null) {
-    //             descriptionElement.focus();
-    //         }
-    //     }
-    // }, [open]);
+    React.useEffect(() => {
+        if (isOpen) {
+            const { current: descriptionElement } = descriptionElementRef;
+            if (descriptionElement !== null) {
+                descriptionElement.focus();
+            }
+        }
+    }, [isOpen]);
 
     const onChangeInput = (e) => {
         console.log(e.target.checked)
@@ -76,9 +77,10 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     }
 
     const onChangeInputEdit = (e) => {
+        console.log(editRow,e.target.name,e.target.value)
         setEditRow((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         }))
     }
     return (
@@ -120,13 +122,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                             {
                                 current == 'edit' &&
                                 <Editproject
-                                    projectName={editRow?.project_name}
-                                    type={editRow?.project_type}
-                                    status={editRow?.status}
-                                    towerNumber={editRow?.tower_number}
-                                    flatNumber={editRow?.flat_number}
-                                    villaNumber={editRow?.villa_number}
-                                    plotNumber={editRow?.plot_number}
+                                    editRow={editRow}
                                     onChangeInputEdit={onChangeInputEdit}
                                     handleClose={handleClose}
                                     SaveEditedRow={SaveEditedRow}

@@ -14,6 +14,19 @@ function Onboarding() {
 
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
   const [receiptsList, setReceiptsList] = useState([]);
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (anchor, open, event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer(open);
+  };
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
@@ -34,7 +47,9 @@ function Onboarding() {
           role={userRole}
           navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
-          toggleSidenav={toggleSidenav} />
+          toggleSidenav={toggleSidenav} 
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}/>
 
         {/* <List>
       {roles[userRole]?.map((item, index) => (
@@ -56,7 +71,7 @@ function Onboarding() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20'>
+        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20' style={{height:'80vh'}}>
           <OnboardingForm />
         </div>
       </div>

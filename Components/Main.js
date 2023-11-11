@@ -10,13 +10,13 @@ import OnboardingForm from './OnboardingForm';
 import Payroll from './Payroll';
 import Loader from './Loader';
 import baseurl from '../data/baseurl'
-const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
+const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => {
 
   const handleEditClick = () => {
     // some action
     console.log(index)
     setEditRow(index)
-    setOpenDrawer(true)
+    setOpenAddProjectDrawer(true)
     setCurrent('edit')
   }
 
@@ -29,7 +29,7 @@ const MatEdit = ({ index, setCurrent, setOpenDrawer, setEditRow }) => {
 };
 const Main = () => {
   const [current, setCurrent] = useState('');
-  const [openDrawer, setOpenDrawer] = useState(false)
+  // const [openDrawer, setOpenDrawer] = useState(false)
 
   const { token, setToken, loader, setLoader, userRole } = useContext(sharedContext);
 
@@ -95,7 +95,7 @@ const Main = () => {
       renderCell: (params) => {
         return (
           <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-            <MatEdit index={params.row} setCurrent={setCurrent} setOpenDrawer={setOpenDrawer} setEditRow={setEditRow} />
+            <MatEdit index={params.row} setCurrent={setCurrent} setOpenAddProjectDrawer={setOpenAddProjectDrawer} setEditRow={setEditRow} />
           </div>
         );
       }
@@ -153,6 +153,9 @@ const Main = () => {
     ) {
       return;
     }
+    if(!open){
+      setOpenAddProjectDrawer(open)
+    }
     if (event.target.name === "add") {
       setCurrent('add')
       setOpenAddProjectDrawer(open);
@@ -164,7 +167,7 @@ const Main = () => {
     }
     else if (event.target.name === 'edit') {
       setCurrent('edit');
-      setOpenDrawer(open);
+      setOpenAddProjectDrawer(open);
     }
   };
 
@@ -173,6 +176,16 @@ const Main = () => {
   }
   const SaveEditedRow = (item) => {
     console.log(item)
+    const newRows = rows.map((each, i) => {
+      if (item.project_id === each.project_id) {
+        // Increment the clicked counter
+        return item;
+      } else {
+        // The rest haven't changed
+        return each;
+      }
+    });
+    setRows(newRows);
   }
 
   const filteredColumns = userRole !== "SALES" ? columns : columns.filter(column => column.field !== "actions");
@@ -187,13 +200,22 @@ const Main = () => {
         isOpen={isAddProjectDrawerOpen}
         current={current}
         AddRow={AddRow}
+        editRow={editRow}
+        setEditRow={setEditRow}
+        SaveEditedRow={SaveEditedRow}
       />
       <div>
         {token && userRole !== "SALES" &&
-          <div className='sbt__Btn'>
+         <div className='p-4 flex gap-2 items-center'> <span className='sbt__Btn' style={{backgroundColor:'none'}}>
             <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
-          </div>
+            {/* <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Edit Status</button>  */}
+            {/* <Button variant='contained'  onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</Button> */}
+            
+          </span>
+          <span ><Button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Edit Status</Button>
+</span></div>
         }
+       
       </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid

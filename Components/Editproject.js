@@ -3,25 +3,29 @@ import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 import baseurl from '../data/baseurl'
-function Editproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInputEdit, handleClose,SaveEditedRow }) {
+import Loader from './Loader';
+function Editproject({ editRow, onChangeInputEdit, handleClose,SaveEditedRow }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen,loader,setLoader } = useContext(sharedContext);
     const [message,setMessage]=useState();
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "project_name": projectName,
-            "status": status,
-            "project_type": type,
-            "tower_number": towerNumber,
-            "flat_number": flatNumber,
-            "villa_number": villaNumber,
-            "plot_number": plotNumber
+            "project_id":editRow?.project_id,
+            "pid":editRow?.pid,
+            "project_name":editRow?.project_name,
+            "status":editRow?.status,  //AVAILABLE , TOKEN , ADVANCE , SOLD
+            "project_type":editRow?.project_type, // Apartment , Villa , Plot
+            "tower_number":editRow?.tower_number,
+            "flat_number":editRow?.flat_number,
+            "villa_number":editRow?.villa_number,
+            "plot_number":editRow?.plot_number
+            
         });
 
         var requestOptions = {
@@ -31,7 +35,7 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
             redirect: 'follow'
         };
 
-        fetch(`${baseurl}/project/editProject`, requestOptions)
+        fetch(`${baseurl?.url}/project/editProject`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
@@ -43,9 +47,11 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                     SaveEditedRow(result.data)
                     handleClose()
                 }
-                
+                setLoader(false)
             })
-            .catch(error => console.log('error', error));
+            .catch(error => {console.log('error', error)
+                    setLoader(false)
+        });
     };
 
     const inputThemObj = {
@@ -62,6 +68,7 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
         //     <TextField type='password' name='password'/>
         //     </div>
         <div className='AddProject__wrap'>
+            <Loader/>
             <div className='AddprojectCard'>
                 <h2>Edit Project</h2>
                 <div>
@@ -72,7 +79,7 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                 <div className='input__Fld'>
                                     <input
                                         type="projectName"
-                                        value={projectName}
+                                        value={editRow?.project_name}
                                         onChange={onChangeInputEdit}
                                         placeholder='Enter Project Name'
                                         required
@@ -85,11 +92,11 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                 <p>Project Type</p>
                                 <div className='input__Fld'>
                                     <Select 
-                                        value={type}
+                                        value={editRow?.project_type}
                                         onChange={onChangeInputEdit}
                                         required
                                         autoComplete="off"
-                                        name='type'
+                                        name='project_type'
                                     >
                                         <MenuItem value="" disabled>Type</MenuItem>
                                         <MenuItem value="Apartment">Apartment</MenuItem>
@@ -98,11 +105,11 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                     </Select>
                                 </div>
                             </div>
-                            {type !== "" && <div className='deatails__Fld'>
+                            {editRow?.type !== "" && <div className='deatails__Fld'>
                                 <p>Status</p>
                                 <div className='input__Fld'>
                                     <Select style={inputThemObj}
-                                        value={status}
+                                        value={editRow?.status}
                                         onChange={onChangeInputEdit}
                                         required
                                         autoComplete="off"
@@ -116,13 +123,13 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                     </Select>
                                 </div>
                             </div>}
-                            {type === "Appartment" && <>
+                            {editRow?.project_type === "Apartment" && <>
                                 <div className='deatails__Fld'>
                                     <p>Tower Number</p>
                                     <div className='input__Fld'>
                                         <input
-                                            type="towerNumber"
-                                            value={towerNumber}
+                                            
+                                            value={editRow?.tower_number}
                                             onChange={onChangeInputEdit}
                                             placeholder='Enter Tower Number'
                                             required
@@ -135,8 +142,8 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                     <p>Flat Number</p>
                                     <div className='input__Fld'>
                                         <input
-                                            type="flatNumber"
-                                            value={flatNumber}
+                                         
+                                            value={editRow?.flat_number}
                                             onChange={onChangeInputEdit}
                                             placeholder='Enter Flat Number'
                                             required
@@ -146,12 +153,11 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                     </div>
                                 </div>
                             </>}
-                            {type === "Villa" && <div className='deatails__Fld'>
+                            {editRow?.project_type === "Villa" && <div className='deatails__Fld'>
                                 <p>Villa Number</p>
                                 <div className='input__Fld'>
                                     <input
-                                        type="villaNumber"
-                                        value={villaNumber}
+                                        value={editRow?.villa_number}
                                         onChange={onChangeInputEdit}
                                         placeholder='Enter Villa Number'
                                         required
@@ -160,12 +166,12 @@ function Editproject({ projectName, type, status, towerNumber, flatNumber, villa
                                     />
                                 </div>
                             </div>}
-                            {type === "Plot" && <div className='deatails__Fld'>
+                            {editRow?.project_type === "Plot" && <div className='deatails__Fld'>
                                 <p>Plot Number</p>
                                 <div className='input__Fld'>
                                     <input
-                                        type="plotNumber"
-                                        value={plotNumber}
+                                        
+                                        value={editRow?.plot_number}
                                         onChange={onChangeInputEdit}
                                         placeholder='Enter Plot Number'
                                         required

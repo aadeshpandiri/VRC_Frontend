@@ -5,20 +5,20 @@ import { MenuItem, Select } from '@mui/material';
 import baseurl from '../data/baseurl'
 function Addproject({ projectName, type, status, towerNumber, flatNumber, villaNumber, plotNumber, onChangeInput, handleClose, clearFields, AddRow }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
     const [message, setMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('projectName:', projectName);
-        console.log('type:', type);
-        console.log('status:', status);
-        console.log('towerNumber:', towerNumber);
-        console.log('faltNumber:', flatNumber);
-        console.log('villaNumber:', villaNumber);
-        console.log('plotNumber:', plotNumber);
-        console.log('token:', token)
-
+        // console.log('projectName:', projectName);
+        // console.log('type:', type);
+        // console.log('status:', status);
+        // console.log('towerNumber:', towerNumber);
+        // console.log('faltNumber:', flatNumber);
+        // console.log('villaNumber:', villaNumber);
+        // console.log('plotNumber:', plotNumber);
+        // console.log('token:', token)
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -52,9 +52,11 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                     clearFields()
                     handleClose()
                 }
-
+                setLoader(false)
             })
-            .catch(error => console.log('error', error));
+            .catch(error =>{ console.log('error', error)
+                        setLoader(false)
+        });
     };
 
 
