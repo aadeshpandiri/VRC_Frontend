@@ -8,16 +8,14 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
     const [error,setError]=useState('')
+    
     const handleSubmit = (e) => {
         console.log(`${baseurl.url}/auth/login`)
         e.preventDefault();
         setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        // myHeaders.append("Access-Control-Allow-Origin", "http://localhost:3000/");
-        // myHeaders.append('Accept', 'application/json');
-    // headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
-    // myHeaders.append('Origin','http://localhost:3000');
+
         var raw = JSON.stringify({
             "emailId": email,
             "password": password
@@ -55,10 +53,6 @@ function Login({ email, password, rememberMe, onChangeInput, hangleGotoSignup, h
             } );
     };
     return (
-        // <div className='flex flex-col p-10'>
-        //     <TextField placeholder='Email' onChange={onChangeInput} name='email' />
-        //     <TextField type='password' name='password'/>
-        //     </div>
         <div className='logIn__wrap'>
             <Loader/>
             <div className='lg__Mn-cnt'>

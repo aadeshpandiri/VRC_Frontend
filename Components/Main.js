@@ -20,8 +20,6 @@ const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => 
     setCurrent('edit')
   }
 
-
-
   return <div onClick={handleEditClick} name='edit'>
     <Edit />
   </div>
@@ -55,6 +53,20 @@ const Main = () => {
     {
       field: 'flat_number',
       headerName: 'Flat Number',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'villa_number',
+      headerName: 'Villa Number',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'plot_number',
+      headerName: 'Plot Number',
       type: 'number',
       width: 110,
       editable: true,
@@ -153,7 +165,7 @@ const Main = () => {
     ) {
       return;
     }
-    if(!open){
+    if (!open) {
       setOpenAddProjectDrawer(open)
     }
     if (event.target.name === "add") {
@@ -167,6 +179,10 @@ const Main = () => {
     }
     else if (event.target.name === 'edit') {
       setCurrent('edit');
+      setOpenAddProjectDrawer(open);
+    }
+    else if (event.target.name === 'editStatus') {
+      setCurrent('editStatus');
       setOpenAddProjectDrawer(open);
     }
   };
@@ -206,16 +222,18 @@ const Main = () => {
       />
       <div>
         {token && userRole !== "SALES" &&
-         <div className='p-4 flex gap-2 items-center'> <span className='sbt__Btn' style={{backgroundColor:'none'}}>
-            <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
-            {/* <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Edit Status</button>  */}
-            {/* <Button variant='contained'  onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</Button> */}
-            
-          </span>
-          <span ><Button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Edit Status</Button>
-</span></div>
+          <div className='p-4 flex gap-2 items-center'>
+            <span className='sbt__Btn' style={{ backgroundColor: 'none' }}>
+              <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
+              {/* <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Edit Status</button>  */}
+              {/* <Button variant='contained'  onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</Button> */}
+            </span>
+            <span >
+              <Button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="editStatus">Edit Status</Button>
+            </span>
+          </div>
         }
-       
+
       </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid

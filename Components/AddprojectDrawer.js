@@ -17,9 +17,11 @@ import { Button } from "@mui/material";
 import Addproject from "./Addproject";
 import Editproject from "./Editproject";
 import ShowReceipt from "./ShowReceipt";
+import EditStatusForm from "./EditStatusForm";
 // import Register from "./Register";
 const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current, editRow, setEditRow, SaveEditedRow, data, receiptsList, setReceiptsList }) => {
     const router = useRouter();
+
     const [projectName, setProjectName] = useState('');
     const [type, setType] = useState('');
     const [status, setStatus] = useState('');
@@ -27,8 +29,6 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     const [flatNumber, setFlatNumber] = useState('');
     const [villaNumber, setVillaNumber] = useState('');
     const [plotNumber, setPlotNumber] = useState('');
-
-
 
     const handleClose = (event) => {
         // setOpen(false);
@@ -77,12 +77,13 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     }
 
     const onChangeInputEdit = (e) => {
-        console.log(editRow,e.target.name,e.target.value)
+        console.log(editRow, e.target.name, e.target.value)
         setEditRow((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }))
     }
+    
     return (
         <Dialog
             open={isOpen}
@@ -127,6 +128,10 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                                     handleClose={handleClose}
                                     SaveEditedRow={SaveEditedRow}
                                 />
+                            }
+                            {
+                                current == 'editStatus' &&
+                                <EditStatusForm handleClose={handleClose} />
                             }
                             {
                                 current == 'sReceipt' &&

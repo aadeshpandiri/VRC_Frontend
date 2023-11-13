@@ -1,54 +1,116 @@
 import React, { useEffect, useState } from 'react'
+import { isValid, isValidEmail, checkname } from '../validations/validators'
+import { TextField } from '@mui/material';
 
 function Register({ hangleGotoLogin }) {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState('Sales');
-  const [password, setPassword] = useState('');
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    // myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTgzOTA1ODQsImV4cCI6MTY5ODM5MTE4NCwiYXVkIjoiMTpNQU5BR0VSIiwiaXNzIjoidnJjYXBwbGljYXRpb24ifQ.-YY3LHrpCAj3FG4KV1_yiOkTHZS66QSJMeMro10XOxg");
 
-    var raw = JSON.stringify({
-      "emailId": email,
-      "password": password,
-      "confirmpassword": password,
-      "type": role,
-      "name": name
-    });
+  const [formData, setFormData] = useState({
+    name: "", email: "", role: "", password: ""
+  })
 
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
+  const [errors, setErrors] = useState({})
+  const [serverErrors, setServerErrors] = useState({})
 
-    fetch("https://vrcbackend.onrender.com/auth/register", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        hangleGotoLogin();
-      })
-      .catch(error => console.log('error', error));
-    // console.log('Remember Me:', rememberMe);
-  };
-  const onChangeInput = (e) => {
-    console.log(e.target.name)
-    switch (e.target.name) {
-      case 'name': setName(e.target.value); break;
-      case 'email': setEmail(e.target.value); break;
-      case 'password': setPassword(e.target.value); break;
-      case 'role': setRole(e.target.value); break;
+  const onChangeInput = (event) => {
+    const { name, value, type, checked } = event.target
+    setFormData((preState) => {
+      return {
+        ...preState,
+        // [name]: type === "checkbox" ? checked : value
+        [name]: value
+      }
+    })
+
+    if (!checkname(value)) {
+      setErrors({
+        ...errors,
+        [name]: 'Name should only contain letters',
+      });
     }
-  }
-  // useEffect(()=>{
+    else {
+      setErrors({
+        ...errors,
+        [name]: '',
+      });
+    }
 
-  // })
+    // setErrors(((preState) => {
+    //   return {
+    //     ...preState,
+    //     [name]: ""
+    //   }
+    // }))
+  }
+
+  const handleSubmit = (e) => {
+    try {
+      e.preventDefault();
+      // Handle login logic here
+
+      const { name, email, role, password } = formData
+
+      const credentials = { name, email, role, password }
+
+      const errs = {}
+
+
+
+      // if (!isValid(credentials.email)) {
+      //   errs.email = `please fill the email column`
+      // } else {
+      //   if (!isValidEmail(credentials.email)) {
+      //     errs.email = `invalid emailId`
+      //   }
+      // }
+
+      // if (!isValid(credentials.role)) {
+      //   errs.password = `please select the role`
+      // }
+
+      // if (!isValid(credentials.password)) {
+      //   errs.password = `please fill the password column`
+      // }
+
+      // setErrors(errs)
+
+      // if (Object.keys(errs).length === 0) {
+      //   var myHeaders = new Headers();
+      //   myHeaders.append("Content-Type", "application/json");
+
+      //   var raw = JSON.stringify({
+      //     "emailId": email,
+      //     "password": password,
+      //     "confirmpassword": password,
+      //     "type": role,
+      //     "name": name
+      //   });
+
+      //   var requestOptions = {
+      //     method: 'POST',
+      //     headers: myHeaders,
+      //     body: raw,
+      //     redirect: 'follow'
+      //   };
+
+      //   fetch("https://vrcbackend.onrender.com/auth/register", requestOptions)
+      //     .then(response => response.json())
+      //     .then(result => {
+      //       console.log(result)
+      //       hangleGotoLogin();
+      //     })
+      //     .catch(error => console.log('error', error));
+      // }
+    }
+    catch (err) {
+      console.log(err.message)
+      const errs = {}
+      errs.message = err.response.data.msg
+      setServerErrors(errs)
+    }
+  };
+
+
+
   return (
     <div className='logIn__wrap'>
       <div className='lg__Mn-cnt'>
@@ -61,16 +123,21 @@ function Register({ hangleGotoLogin }) {
             <div className='lg__Fld'>
               <label>Name*</label>
               <div className='input__Fld'>
-                <input
+                <TextField
                   name='name'
                   type="text"
-                  value={name}
+                  value={formData.name}
                   onChange={onChangeInput}
-                  placeholder='Enter your name'
+                  placeholder='Enter your Name'
                   autoComplete="off"
                   required
+                  error={Boolean(errors.name)}
+                  helperText={errors.name}
                 />
               </div>
+              {/* <div className='errBlock'>
+                {(errors.name) ? <p> {errors.name}</p> : null}
+              </div> */}
             </div>
             <div className='lg__Fld'>
               <label>Email*</label>
@@ -78,12 +145,15 @@ function Register({ hangleGotoLogin }) {
                 <input
                   type="email"
                   name='email'
-                  value={email}
+                  value={formData.email}
                   onChange={onChangeInput}
                   placeholder='Enter your email'
                   autoComplete="off"
                   required
                 />
+              </div>
+              <div className='errBlock'>
+                {(errors.email) ? <p> {errors.email}</p> : null}
               </div>
             </div>
             <div className='lg__Fld'>
@@ -92,12 +162,15 @@ function Register({ hangleGotoLogin }) {
                 <input
                   type="password"
                   name='password'
-                  value={password}
+                  value={formData.password}
                   onChange={onChangeInput}
                   placeholder='Create a password'
                   autoComplete="off"
                   required
                 />
+              </div>
+              <div className='errBlock'>
+                {(errors.password) ? <p> {errors.password}</p> : null}
               </div>
               <span className='info'>Must be at least 8 characters.</span>
             </div>
@@ -106,7 +179,7 @@ function Register({ hangleGotoLogin }) {
               <div className='input__Fld'>
                 <select
                   name='role'
-                  value={role}
+                  value={formData.role}
                   onChange={onChangeInput}
                   required
                 >
@@ -115,7 +188,9 @@ function Register({ hangleGotoLogin }) {
                   <option value="MANAGER">MANAGER</option>
                 </select>
               </div>
-              <span className='info'>Must be at least 8 characters.</span>
+              <div className='errBlock'>
+                {(errors.role) ? <p> {errors.role}</p> : null}
+              </div>
             </div>
             <div className='sbt__Btn'>
               <button type="submit">Get started</button>

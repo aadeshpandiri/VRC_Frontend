@@ -30,12 +30,12 @@ function Onboarding() {
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
   };
-  useEffect(()=>{
-    if(isSidenavOpen){
+  useEffect(() => {
+    if (isSidenavOpen) {
       toggleSidenav()
     }
-  
-  },[])
+
+  }, [])
   return (
     <div className="md:flex h-screen w-screen">
 
@@ -47,9 +47,9 @@ function Onboarding() {
           role={userRole}
           navigation={roles[userRole]}
           isSidenavOpen={isSidenavOpen}
-          toggleSidenav={toggleSidenav} 
+          toggleSidenav={toggleSidenav}
           toggleDrawer={toggleDrawer}
-          isDrawerOpen={isDrawerOpen}/>
+          isDrawerOpen={isDrawerOpen} />
 
         {/* <List>
       {roles[userRole]?.map((item, index) => (
@@ -65,13 +65,15 @@ function Onboarding() {
       <div className="md:w-4/5">
         {/* Header */}
         <Header
+          userRole={userRole}
           toggleSidenav={toggleSidenav}
-
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
         />
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20' style={{height:'80vh'}}>
+        <div className='bg-slate-300 h-full p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
           <OnboardingForm />
         </div>
       </div>
