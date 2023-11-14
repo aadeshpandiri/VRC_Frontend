@@ -17,7 +17,7 @@ function Register() {
   const [serverErrors, setServerErrors] = useState({})
   const [buttonflag,setButtonFlag]=useState(false);
   const hangleGotoLogin=()=>{
-    router.push('/Login');
+    router.push('/');
   }
   const onChangeInput = (event) => {
     const { name, value, type, checked } = event.target

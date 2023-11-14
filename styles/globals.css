@@ -247,9 +247,10 @@ body {
 
 .deatails__Fld {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 10px;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
 }
 .deatails__Fld p {
   flex: 1;
@@ -316,7 +317,7 @@ body {
 }
 
 .EditStatusFormCard {
-  width: 30rem;
+  /* width: 30rem; */
 }
 
 .OnboardingFormCard,

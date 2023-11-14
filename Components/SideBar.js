@@ -32,7 +32,7 @@ const SideBar = () => {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    router.push('/Login')
+    router.push('/')
     setToken(null);
     setUserRole('USER')
   }

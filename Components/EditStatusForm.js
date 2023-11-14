@@ -197,6 +197,8 @@ function EditStatusForm({ handleClose }) {
             .then(result => {
                 console.log(result)
                 clearFields()
+                handleClose()
+
             })
             .catch(error => console.log('error', error));
     };
@@ -340,16 +342,16 @@ function EditStatusForm({ handleClose }) {
                     </>}
                 </div>
 
-                <div className='Btns__container'>
-                    <div className='dcrd__Btn' onClick={handleClose}>
-                        <button>Discard</button>
+                    <div className='Btns__container'>
+                        {/* <div className='dcrd__Btn' >
+                            <button onClick={handleClose}>Discard</button>
+                        </div> */}
+                        <div className='add__Btn'>
+                            <button type='submit'>Submit</button>
+                        </div>
                     </div>
-                    <div className='add__Btn'>
-                        <button type='submit'>Submit</button>
-                    </div>
-                </div>
-            </form>
-        </div >
+                </form>
+            </div >
 
     )
 }

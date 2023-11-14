@@ -66,7 +66,7 @@ const Sidenav = ({ role, isSidenavOpen, toggleSidenav, toggleDrawer, isDrawerOpe
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null);
-    router.push('/Login')
+    router.push('/')
     setUserRole('USER')
   }
   return (<>

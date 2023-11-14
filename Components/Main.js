@@ -14,6 +14,7 @@ import Sales from '../utils/Sales.svg';
 import Revenue from '../utils/Revenue.svg';
 import Profit from '../utils/Profit.svg'
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => {
 
   const handleEditClick = () => {
@@ -33,7 +34,7 @@ const Main = () => {
   const [current, setCurrent] = useState('');
   // const [openDrawer, setOpenDrawer] = useState(false)
 
-  const { token, setToken, loader, setLoader, userRole } = useContext(sharedContext);
+  const { token, setToken, loader, setLoader, userRole,setUserRole } = useContext(sharedContext);
 
   const columns = [
 
@@ -119,6 +120,7 @@ const Main = () => {
       }
     }
   ];
+  const router =useRouter()
   const [rows, setRows] = useState([])
   const [editRow, setEditRow] = useState();
   const [income,setIncome]=useState();
@@ -126,7 +128,9 @@ const Main = () => {
 
   const handleLogout = () => {
     sessionStorage.clear();
+    router.push('/')
     setToken(null)
+    setUserRole('USER')
   }
   useEffect(() => {
     if (token) {
@@ -191,7 +195,7 @@ const Main = () => {
         });
       }
     
-  }, [token])
+  }, [token,userRole])
   useEffect(() => {
     if(userRole=='SUPERADMIN'){
          setLoader(true)
@@ -220,7 +224,7 @@ const Main = () => {
            });
          }
        
-     }, [token])
+     }, [token,userRole])
   const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
   const toggleAddProjectDrawer = (anchor, open, event) => {
     if (

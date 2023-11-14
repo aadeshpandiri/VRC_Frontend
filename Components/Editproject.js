@@ -184,9 +184,9 @@ function Editproject({ editRow, onChangeInputEdit, handleClose,SaveEditedRow }) 
                         </div>
 
                         <div className='Btns__container'>
-                            <div className='dcrd__Btn'>
+                            {/* <div className='dcrd__Btn'>
                                 <button onClick={handleClose}>Discard</button>
-                            </div>
+                            </div> */}
                             <div className='add__Btn'>
                                 <button type='submit'>Save Changes</button>
                             </div>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
-import Loader from '../Components/Loader';
+import Loader from './Loader';
 import baseurl from '../data/baseurl';
 import { useRouter } from 'next/router';
 function Login() {
