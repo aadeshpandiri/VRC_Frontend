@@ -10,6 +10,10 @@ import OnboardingForm from './OnboardingForm';
 import Payroll from './Payroll';
 import Loader from './Loader';
 import baseurl from '../data/baseurl'
+import Sales from '../utils/Sales.svg';
+import Revenue from '../utils/Revenue.svg';
+import Profit from '../utils/Profit.svg'
+import Image from 'next/image';
 const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => {
 
   const handleEditClick = () => {
@@ -117,6 +121,8 @@ const Main = () => {
   ];
   const [rows, setRows] = useState([])
   const [editRow, setEditRow] = useState();
+  const [income,setIncome]=useState();
+  const [expence,setExpence]=useState();
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -157,7 +163,64 @@ const Main = () => {
         });
     }
   }, [token])
+    useEffect(() => {
+ if(userRole=='SUPERADMIN'){
+      setLoader(true)
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
 
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`${baseurl?.url}/income/getIncome`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.status == 401 || result.message == 'Token Invalid/Expired') {
+            handleLogout();
+          }
+          else {
+            setIncome(result.data)
+          }
+          setLoader(false)
+        })
+        .catch(error => {
+          setLoader(false)
+        });
+      }
+    
+  }, [token])
+  useEffect(() => {
+    if(userRole=='SUPERADMIN'){
+         setLoader(true)
+         var myHeaders = new Headers();
+         myHeaders.append("Authorization", `Bearer ${token}`);
+   
+         var requestOptions = {
+           method: 'GET',
+           headers: myHeaders,
+           redirect: 'follow'
+         };
+   
+         fetch(`${baseurl?.url}/payroll/getExpenses`, requestOptions)
+           .then(response => response.json())
+           .then(result => {
+             if (result.status == 401 || result.message == 'Token Invalid/Expired') {
+               handleLogout();
+             }
+             else {
+               setExpence(result.data)
+             }
+             setLoader(false)
+           })
+           .catch(error => {
+             setLoader(false)
+           });
+         }
+       
+     }, [token])
   const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
   const toggleAddProjectDrawer = (anchor, open, event) => {
     if (
@@ -222,6 +285,38 @@ const Main = () => {
         setEditRow={setEditRow}
         SaveEditedRow={SaveEditedRow}
       />
+      {
+        userRole=='SUPERADMIN'&&
+        <div className='flex gap-5 bg-white m-4 p-4 justify-around'>
+          <div className='flex flex-col items-center'>
+          <Image
+             alt="Sales"
+              src={Sales}
+              quality={100}
+              width= {25}
+            height= {23}   />
+            <span className='flex flex-col md:flex-row items-center font-medium md:gap-3'><span> ₹{income}</span><span>Income</span></span>
+          </div>
+          <div className='flex flex-col items-center'
+          ><Image
+             alt="Revenue"
+              src={Revenue}
+              quality={100}
+              width= {25}
+            height= {23}   />
+            <span className='flex flex-col md:flex-row items-center font-medium md:gap-3' ><span> ₹{expence}</span><span>Expence</span></span></div>
+          <div className='flex flex-col items-center'>
+          <Image
+             alt="Profit"
+              src={Profit}
+              quality={100}
+              width= {25}
+            height= {23}   />
+            <span className='flex flex-col md:flex-row items-center font-medium md:gap-3'><span> ₹{income -expence}</span><span>Profit</span></span>
+          </div>
+
+        </div>
+      }
       <div>
         {token && userRole !== "SALES" &&
           <div className='p-4 flex gap-2 items-center'>

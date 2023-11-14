@@ -15,7 +15,7 @@ function EditStatusForm({ handleClose }) {
         villa_number: '',
         plot_number: '',
         status: '',
-        amount_received: '',
+        amount_received: 0,
     });
 
     const [availableData, setAvailableData] = useState([])
@@ -34,7 +34,7 @@ function EditStatusForm({ handleClose }) {
         });
 
         // Validate name field
-        if (name === 'amount') {
+        if (name === 'amount_received') {
             if (!/^\d+$/.test(value)) {
                 setErrors({
                     ...errors,
@@ -65,7 +65,7 @@ function EditStatusForm({ handleClose }) {
             villa_number: '',
             plot_number: '',
             status: '',
-            amount_received: '',
+            amount_received: 0,
         })
     }
 
@@ -304,7 +304,7 @@ function EditStatusForm({ handleClose }) {
                             <div className='deatails__Fld'>
                                 <p>Amount</p>
                                 <TextField className='text__Fld'
-                                    type="text"
+                                    type="number"
                                     value={formData.amount_received}
                                     onChange={onChangeInput}
                                     placeholder='Enter Amount'

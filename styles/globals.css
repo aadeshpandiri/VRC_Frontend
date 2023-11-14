@@ -121,11 +121,10 @@ body {
   transition: .3s ease-in-out;
 }
 
-.sbt__Btn button:hover {
+/* .sbt__Btn button:hover {
   color: #1366D9;
   background: #fff;
-  /* border: 1px solid #1366D9; */
-}
+} */
 
 .ck__Act p {
   font-size: 14px;
@@ -267,10 +266,10 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-.add__Btn :hover {
+/* .add__Btn :hover {
   color: #1366d9;
   background: #fff;
-}
+} */
 
 .dcrd__Btn  {
   padding: 10px 18px;
