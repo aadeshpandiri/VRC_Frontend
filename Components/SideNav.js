@@ -13,7 +13,7 @@ import SignInDrawer from './SignInDrawer';
 import Link from 'next/link';
 import routes from '../data/routes';
 import roles from '../data/roles';
-
+import { useRouter } from 'next/router';
 
 const Sidenav = ({ role, isSidenavOpen, toggleSidenav ,toggleDrawer,isDrawerOpen}) => {
   const {userRole,token,setToken,setUserRole}=useContext(sharedContext)
@@ -58,9 +58,11 @@ const Sidenav = ({ role, isSidenavOpen, toggleSidenav ,toggleDrawer,isDrawerOpen
 
     }
   }
+  const router=useRouter()
   const handleLogout=()=>{
     sessionStorage.clear();
     setToken(null);
+    router.push('/Login')
     setUserRole('USER')
   }
   return (<>

@@ -1,7 +1,7 @@
 // /* eslint-disable @next/next/no-img-element */
 
 // import React, { useState, useEffect } from "react";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 // import {
 //   AppBar,
 //   Container,
@@ -53,7 +53,7 @@ import SignInDrawer from "../Components/SignInDrawer";
 // const Header = (props) => {
 
 
-//   const router = useRouter();
+
 //   const handellogout=()=>{
 //     router.push('/')
 
@@ -223,7 +223,7 @@ const Header = ({ toggleSidenav ,props,toggleDrawer,isDrawerOpen}) => {
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
  
 
-
+  const router = useRouter();
 
   return (
     <Stack spacing={2} sx={{ flexGrow: 1 }} className="header-stack">
@@ -244,7 +244,7 @@ const Header = ({ toggleSidenav ,props,toggleDrawer,isDrawerOpen}) => {
 
         {/* Username and Avatar */} <div className="hidden md:flex items-center ml-auto">
         {token ? <> <span style={{ color: 'black' }}>{userRole}</span>
-          <Avatar /></> : <Button className="hidden md:inline" variant="outlined" onClick={(event) => toggleDrawer('right', true, event)}>Login</Button>
+          <Avatar /></> : <Button className="hidden md:inline" variant="outlined" onClick={(event) =>router.push('/Login') }>Login</Button>
         }
         </div>
         

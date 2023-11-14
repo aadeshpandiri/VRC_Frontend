@@ -37,64 +37,66 @@ const Main = () => {
       field: 'project_id',
       headerName: 'Project ID',
       width: 160,
+      editable: false,
     },
     {
       field: 'project_name',
       headerName: 'Project Name',
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: 'tower_number',
       headerName: 'Tower Number',
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: 'flat_number',
       headerName: 'Flat Number',
       type: 'number',
       width: 110,
-      editable: true,
+      editable: false,
     },
     {
       field: 'villa_number',
       headerName: 'Villa Number',
       type: 'number',
       width: 110,
-      editable: true,
+      editable: false,
     },
     {
       field: 'plot_number',
       headerName: 'Plot Number',
       type: 'number',
       width: 110,
-      editable: true,
+      editable: false,
     },
     {
       field: 'status',
       headerName: 'Status',
       width: 160,
+      editable: false,
       renderCell: (params) => {
         const status = params.value;
         let color = 'black'; // Default color
         switch (status) {
           case 'AVAILABLE':
-            color = 'green';
+            color = '#10A760';
             break;
           case 'SOLD':
-            color = 'red';
+            color = '#F00';
             break;
           case 'TOKEN':
-            color = 'yellow';
+            color = '#E19133';
             break;
           case 'ADVANCE':
-            color = 'blue';
+            color = '#3D4DD6';
             break;
           default:
             color = 'black';
         }
-        return <div style={{ 'color': color }}>{status}</div>
+        return <div style={{ 'color': color ,fontWeight:600,fontSize:'14px'}}>{status}</div>
       },
     },
     {
@@ -103,7 +105,7 @@ const Main = () => {
       sortable: false,
       width: 140,
       disableClickEventBubbling: true,
-
+      editable: false,
       renderCell: (params) => {
         return (
           <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
@@ -249,7 +251,12 @@ const Main = () => {
           getRowId={(row) => row.project_id}
           pageSizeOptions={[5]}
           // checkboxSelection
-          disableRowSelectionOnClick
+          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          sx={{
+            fontWeight:500
+          }}
+          className='datagrid'
         />
       </Box>
     </div>

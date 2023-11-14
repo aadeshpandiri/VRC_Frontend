@@ -59,6 +59,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Loader from "../Components/Loader";
 import SideBar from "../Components/SideBar";
+import BASEURL from "../data/baseurl";
 export default function Home() {
  
   // const userRole = 'superadmin'; // Set the user's role here
@@ -90,6 +91,45 @@ export default function Home() {
       toggleSidenav()
     }
   
+  },[])
+  const getIncome=()=>{
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		redirect: 'follow'
+};
+
+fetch(`${BASEURL?.url}/income/getIncome`, requestOptions)
+		.then(response => response.json())
+		.then(result => {
+      console.log(result)
+    })
+		.catch(error => console.log('error', error));
+  }
+  const getExpence=()=>{
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+    
+    fetch(`${BASEURL?.url}/payroll/getExpenses`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+        })
+        .catch(error => console.log('error', error));
+     
+  }
+  useEffect(()=>{
+    getIncome();
+    getExpence();
   },[])
   return (
     <div className="md:flex h-screen w-screen">

@@ -16,6 +16,7 @@ import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/m
 import roles from '../data/roles'
 import SideBar from '../Components/SideBar';
 import Loader from '../Components/Loader';
+import { useRouter } from 'next/router';
 function Approvals() {
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
   const [approvalsList, setApprovalsList] = useState([]);
@@ -157,7 +158,8 @@ function Approvals() {
         {/* Header */}
         <Header
           toggleSidenav={toggleSidenav}
-
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
         />
 
         {/* Main Content */}
@@ -178,10 +180,15 @@ function Approvals() {
                   
                 </tr>
 
-                <div className='flex flex-row-reverse m-5'>
+                <tr className='mt-2 mb-5 w-full'>
+                <td className='p-4'></td>
+                  <td className='p-4'></td>
+                  <td className='p-4'></td>
+                  <td className='p-4'></td>
+                  
                 <button className='add__Btn h-10'  onClick={() => handleApproveOrReject(item, 'V')}>Approve</button>
                 <Button color='error' onClick={() => handleApproveOrReject(item, 'R')}>Reject</Button>
-              </div>
+              </tr>
                 </>
 
               ))}

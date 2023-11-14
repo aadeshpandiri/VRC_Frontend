@@ -3,9 +3,10 @@ import sharedContext from '../context/SharedContext';
 import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
+import Loader from './Loader';
 function OnboardingForm() {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen,loader,setLoader } = useContext(sharedContext);
 
     const [formData, setFormData] = useState({
         client_name: '',
@@ -41,7 +42,13 @@ function OnboardingForm() {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                clearFields()
+                if(result.status==500){
+
+                }
+                else{
+                    clearFields()
+                }
+                
             })
             .catch(error => console.log('error', error));
     };
@@ -90,6 +97,7 @@ function OnboardingForm() {
 
     useEffect(() => {
         if (token) {
+        setLoader(true)
             console.log("API useEffect called")
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
@@ -111,46 +119,58 @@ function OnboardingForm() {
 
                     const availableProjects = result.data.filter(x => x.status === "AVAILABLE")
                     setAvailableData(availableProjects);
+                setLoader(false);
                 })
-                .catch(error => console.log('error:', error.message));
+                .catch(error => {console.log('error:', error.message)
+            setLoader(false)
+        });
         }
     }, [formData.project_type, token])
 
     useEffect(() => {
+    setLoader(true)
         console.log("tower_number useEffect called")
         const availabletower_numbers = availableData
             .filter(item => item.project_name === formData.project_name)
             .map(item => item.tower_number);
         setAvailableTns(availabletower_numbers);
+    setLoader(false)
     }, [formData.project_name, availableData])
 
     useEffect(() => {
+    setLoader(true)
         console.log("flat_number useEffect called")
         const availableflat_numbers = availableData
             .filter(item => item.project_name === formData.project_name && item.tower_number === formData.tower_number)
             .map(item => item.flat_number);
         setAvailableFns(availableflat_numbers);
+    setLoader(false)
     }, [formData.tower_number, formData.project_name, availableData])
 
     useEffect(() => {
+    setLoader(true)
         console.log("villa_number useEffect called")
         const availablevilla_numbers = availableData
             .filter(item => item.project_name === formData.project_name)
             .map(item => item.villa_number);
         setAvailableVns(availablevilla_numbers);
+    setLoader(false)
     }, [formData.project_name, availableData])
 
     useEffect(() => {
+    setLoader(true)
         console.log("plot_number useEffect called")
         const availableplot_numbers = availableData
             .filter(item => item.project_name === formData.project_name)
             .map(item => item.plot_number);
         setAvailablePns(availableplot_numbers);
+    setLoader(false)
     }, [formData.project_name, availableData])
 
     return (
         <div className='OnboardingFormWraper'>
             <div className='OnboardingFormCard'>
+            <Loader/>
                 <h2>Onboarding Form</h2>
                 <form onSubmit={handleSubmit} className='deatails__Box' >
                     <div className='fields__Box'>

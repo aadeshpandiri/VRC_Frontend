@@ -3,14 +3,14 @@ import sharedContext from '../context/SharedContext';
 import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 import baseurl from '../data/baseurl'
-
+import Loader from './Loader';
 function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen,setLoader } = useContext(sharedContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -29,12 +29,13 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
             .then(result => {
                 console.log(result)
                 if (result.message === "Success") {
-                    console.log("hello I am coming")
+                    console.log("hello I am coming",data,receiptsList)
                     // Create a copy of the current approvalsList without the approved/rejected item.
                     const updatedList = receiptsList?.filter(approvalItem => approvalItem.emailId !== data.emailId);
 
                     // Update the state with the updated list.
                     setReceiptsList(updatedList);
+                    setLoader(false)
                 }
                 handleClose()
             })
@@ -43,7 +44,7 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
 
     const handleReject = (e) => {
         e.preventDefault();
-
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -71,38 +72,42 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
                     // Update the state with the updated list.
                     setReceiptsList(updatedList);
                 }
+                setLoader(false)
                 handleClose()
             })
-            .catch(error => console.log('error', error));
+            .catch(error =>{ console.log('error', error)
+            setLoader(false)
+        });
     };
 
     return (
         <div className='ReceiptCard'>
+            <Loader/>
             <h2>Receipt</h2>
             <div className='details__Box' >
                 <div className='details__Fld'>
-                    <p>Project ID</p>
-                    <p>{data?.project_id}</p>
+                    <span>Project ID</span>
+                    <span>{data?.project_id}</span>
                 </div>
                 <div className='details__Fld'>
-                    <p>Project Name</p>
-                    <p>{data?.project_name}</p>
+                    <span>Project Name</span>
+                    <span>{data?.project_name}</span>
                 </div>
                 <div className='details__Fld'>
-                    <p>Client Name</p>
-                    <p>{data?.client_name}</p>
+                    <span>Client Name</span>
+                    <span>{data?.client_name}</span>
                 </div>
                 <div className='details__Fld'>
-                    <p>Sales Person Name</p>
-                    <p>{data?.sales_person}</p>
+                    <span>Sales Person</span>
+                    <span>{data?.sales_person}</span>
                 </div>
                 <div className='details__Fld'>
-                    <p>Type</p>
-                    <p>{data?.status}</p>
+                    <span>Type</span>
+                    <span>{data?.status}</span>
                 </div>
                 <div className='details__Fld'>
-                    <p>Amount</p>
-                    <p>{data?.amount_received}</p>
+                    <span>Amount</span>
+                    <span>{data?.amount_received}</span>
                 </div>
             </div>
             {

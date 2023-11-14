@@ -115,7 +115,8 @@ function Receipts() {
         {/* Header */}
         <Header
           toggleSidenav={toggleSidenav}
-
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
         />
 
         {/* Main Content */}

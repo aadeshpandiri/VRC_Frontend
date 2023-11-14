@@ -17,14 +17,17 @@ import receipt from '../utils/receipt.svg'
 import payroll from '../utils/payroll.svg'
 import logout from '../utils/Logout.svg'
 import onboard from '../utils/onboard.svg'
+import { useRouter } from 'next/router';
+
 const SideBar = () => {
 
-  // const router = useRouter();
+  const router = useRouter();
   const { userRole,setUserRole, setToken } = useContext(sharedContext)
 
 
   const handleLogout = () => {
     sessionStorage.clear();
+    router.push('/Login')
     setToken(null);
     setUserRole('USER')
   }

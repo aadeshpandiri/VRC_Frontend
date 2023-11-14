@@ -11,7 +11,10 @@ body {
   font-family: 'Inter';
   /* font-weight: 500; */
 }
-
+.datagrid{
+  font-family: 'Inter';
+  font-weight: 400;
+}
 
 .home-page {
   background-color: #f0f1f3;
@@ -23,16 +26,18 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-height: 100vh;
+}
 
-  margin-top: 4rem;
-  margin-bottom: 2rem;
+.lg__Box {
+  min-width: 350px;
 }
 
 .lg__Ttl h2 {
   font-size: 30px;
   line-height: 38px;
   font-weight: 600;
-  color: #2b2f38;
+  color: #2B2F38;
   text-align: center;
   margin-bottom: 12px;
 }
@@ -46,18 +51,16 @@ body {
 }
 
 .input__Fld input {
-  flex: 1;
-  height: 44px;
-  color: black;
-  border: 1px solid #d0d5dd;
+  width: 100%;
+  border: 1px solid #D0D5DD;
   outline: none;
   padding: 10px 14px;
   border-radius: 8px;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  transition: 0.3s ease-in-out;
+  color: #667085;
+  transition: .3s ease-in-out;
 }
 
 .input__Fld input::placeholder {
@@ -78,7 +81,7 @@ body {
 }
 
 .input__Fld {
-  flex: 1;
+  margin-top: 6px;
 }
 
 .rem__Div {
@@ -95,32 +98,33 @@ body {
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
-  color: #48505e;
+  color: #48505E;
 }
 
 .frg__Pas span {
-  color: #1366d9;
+  color: #1366D9;
   cursor: pointer;
 }
 
-.sbt__Btn {
-  /* width: 100%; */
+.sbt__Btn button {
+  width: 100%;
   padding: 10px 18px;
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
   color: #fff;
-  background: #1366d9;
-  border: 1px solid #1366d9;
-  box-shadow: 0px 1px 2px 0px #1018280d;
+  background: #1366D9;
+  border: 1px solid #1366D9;
+  box-shadow: 0px 1px 2px 0px #1018280D;
   border-radius: 4px;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
+  transition: .3s ease-in-out;
 }
 
-.sbt__Btn:hover {
-  color: #1366d9;
+.sbt__Btn button:hover {
+  color: #1366D9;
   background: #fff;
+  /* border: 1px solid #1366D9; */
 }
 
 .ck__Act p {
@@ -132,18 +136,18 @@ body {
 }
 
 .ck__Act p span {
-  color: #1366d9;
+  color: #1366D9;
   font-weight: 500;
   cursor: pointer;
 }
 
 .ck__Act {
-  margin-top: 2rem;
+  margin-top: 9rem;
 }
 
 .lg__Box input:focus-visible {
   outline: none;
-  border: 1px solid #1366d9;
+  border: 1px solid #1366D9;
 }
 
 .info {
@@ -162,8 +166,8 @@ body {
   align-items: center;
   gap: 8px;
   cursor: pointer;
-}
 
+}
 .navigation-list {
   display: flex;
   flex-direction: column;
@@ -327,7 +331,7 @@ body {
 .ReceiptCard {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   gap: 32px;
 }
 
@@ -405,7 +409,10 @@ tr { border-bottom-right-radius: 10px; }
 }
 /* tr:first-child td { border-top-style: solid; }
 tr td:first-child { border-left-style: solid; } */
-
+.details__Fld{
+  display: flex;
+  justify-content: space-between;
+}
 
 @media (max-width:768px) {
 .deatails__Fld {
@@ -417,3 +424,4 @@ tr td:first-child { border-left-style: solid; } */
 }
   
 }
+

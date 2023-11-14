@@ -73,7 +73,8 @@ function PayrollPage() {
         {/* Header */}
         <Header
           toggleSidenav={toggleSidenav}
-
+          toggleDrawer={toggleDrawer}
+          isDrawerOpen={isDrawerOpen}
         />
 
         {/* Main Content */}
