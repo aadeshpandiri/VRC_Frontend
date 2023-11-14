@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 // // import Image from "next/image";
 // // import theme from "../styles/theme";
 // import PropTypes from "prop-types";
-import SignInDrawer from "../Components/SignInDrawer";
+// import SignInDrawer from "../Components/SignInDrawer";
 // import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 // import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 // import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
@@ -231,13 +231,13 @@ const Header = ({ toggleSidenav ,props,toggleDrawer,isDrawerOpen}) => {
     <ElevationScroll {...props}>
     <AppBar position="fixed">
       <Toolbar style={{ padding: '10px', backgroundColor: 'white', width: '100%' }}>
-
+{/* 
         <SignInDrawer
           anchor="right"
           toggleDrawer={toggleDrawer}
           isOpen={isDrawerOpen}
 
-        />
+        /> */}
 
         {/* Search Field */}
         {/* <TextField variant='outlined' placeholder="Search" className='ml-auto' /> */}

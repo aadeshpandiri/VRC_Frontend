@@ -9,7 +9,7 @@ import approval from '../utils/approval.svg'
 import receipt from '../utils/receipt.svg'
 import payroll from '../utils/payroll.svg'
 import logout from '../utils/Logout.svg'
-import SignInDrawer from './SignInDrawer';
+// import SignInDrawer from './SignInDrawer';
 import Link from 'next/link';
 import routes from '../data/routes';
 import roles from '../data/roles';
@@ -66,12 +66,12 @@ const Sidenav = ({ role, isSidenavOpen, toggleSidenav ,toggleDrawer,isDrawerOpen
     setUserRole('USER')
   }
   return (<>
-  <SignInDrawer
+  {/* <SignInDrawer
           anchor="right"
           toggleDrawer={toggleDrawer}
           isOpen={isDrawerOpen}
 
-        />
+        /> */}
          <Drawer
       anchor="left"
       open={isSidenavOpen}
