@@ -176,7 +176,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
                             <div className='dcrd__Btn'>
                                 <button onClick={handleClose}>Discard</button>
                             </div>
-                            <div className='add__Btn'>
+                            <div className='sbt__Btn'>
                                 <button type='submit'>Add Project</button>
                             </div>
                         </div>

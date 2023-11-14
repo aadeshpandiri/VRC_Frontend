@@ -168,7 +168,7 @@ function OnboardingForm() {
     }, [formData.project_name, availableData])
 
     return (
-        <div className='OnboardingFormWraper'>
+        // <div className='OnboardingFormWraper'>
             <div className='OnboardingFormCard'>
             <Loader/>
                 <h2>Onboarding Form</h2>
@@ -352,13 +352,13 @@ function OnboardingForm() {
                         <div className='dcrd__Btn' onClick={clearFields}>
                             <button>Discard</button>
                         </div>
-                        <div className='add__Btn'>
+                        <div className='sbt__Btn'>
                             <button status='submit'>Submit</button>
                         </div>
                     </div>
                 </form>
             </div >
-        </div >
+        // </div >
 
     )
 }

@@ -179,8 +179,7 @@ function EditStatusForm({ handleClose }) {
     };
 
     return (
-        <div className='OnboardingFormWraper'>
-            <div className='OnboardingFormCard'>
+            <div className='EditStatusFormCard'>
                 <h2>Edit Project Status</h2>
                 <form onSubmit={handleSubmit} className='deatails__Box' >
                     <div className='fields__Box'>
@@ -328,7 +327,6 @@ function EditStatusForm({ handleClose }) {
                     </div>
                 </form>
             </div >
-        </div >
 
     )
 }

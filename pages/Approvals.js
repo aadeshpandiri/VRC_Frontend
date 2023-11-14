@@ -69,14 +69,14 @@ function Approvals() {
         });
 
     }
-   
+
   }, [token])
-  useEffect(()=>{
-    if(isSidenavOpen){
+  useEffect(() => {
+    if (isSidenavOpen) {
       toggleSidenav()
     }
-  
-  },[])
+
+  }, [])
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null);
@@ -129,7 +129,7 @@ function Approvals() {
   return (
 
     <div className="md:flex h-screen w-screen">
-    
+
       {/* Sidenav (desktop mode) */}
       <div
         className={`hidden md:block md:w-1/5 bg-[#FFFFFF] mt-20`}
@@ -141,7 +141,7 @@ function Approvals() {
           toggleSidenav={toggleSidenav}
           toggleDrawer={toggleDrawer}
           isDrawerOpen={isDrawerOpen}
-          />
+        />
 
         {/* <List>
      {roles[userRole]?.map((item, index) => (
@@ -164,40 +164,38 @@ function Approvals() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-slate-300 p-4 overflow-scroll mt-20' style={{height:'80vh'}}>
+        <div className='bg-slate-300 p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
           {loader && <Loader />}
-          <table className='w-full text-left   border-separate border-spacing-y-2.5'>
 
-            <tbody>
-              {approvalsList?.map((item, index) => (
-               <> <tr key={index} className='bg-white flex flex-wrap md:table-row'>
-                  <td className='p-4'>{index + 1}</td>
-                  <td className='p-4'>{item.name}</td>
-                  <td className='p-4'>{item.emailId}</td>
-                  <td className='p-4'>{item.role_type}</td>
-                  <td className='p-4'>{item.status}</td>
+          {/* <table className='w-full text-left   border-separate border-spacing-y-2.5'> */}
+          {/* <tbody> */}
+          <div className='w-full text-left   border-separate border-spacing-y-2.5'>
+            {approvalsList?.map((item, index) => (
+              <>
+                <div key={index} className='bg-white flex flex-wrap justify-between rounded-md'>{/*md:table-row*/}
+                  <div className='p-4'>{index + 1}</div>
+                  <div className='p-4'>{item.name}</div>
+                  <div className='p-4'>{item.emailId}</div>
+                  <div className='p-4'>{item.role_type}</div>
+                  <div className='p-4'>{item.status}</div>
+                </div>
 
-                  
-                </tr>
-
-                <tr className='mt-2 mb-5 w-full'>
-                <td className='p-4'></td>
-                  <td className='p-4'></td>
-                  <td className='p-4'></td>
-                  <td className='p-4'></td>
-                  
-                <button className='add__Btn h-10'  onClick={() => handleApproveOrReject(item, 'V')}>Approve</button>
-                <Button color='error' onClick={() => handleApproveOrReject(item, 'R')}>Reject</Button>
-              </tr>
-                </>
-
-              ))}
-              
-              </tbody>
-          </table>
+                <div className='mt-2 mb-5 w-full flex justify-end gap-3'>
+                  {/* <div className='p-4'></div>
+                    <div className='p-4'></div>
+                    <div className='p-4'></div>
+                    <div className='p-4'></div> */}
+                  <button className='text-white rounded-md py-1 px-2 border-2 border-solid border-red' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
+                  <button className='bg-blue-1366D9 text-white rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'V')}>Approval</button>
+                </div>
+              </>
+            ))}
+          </div>
+          {/* </tbody>
+      </table> */}
 
         </div>
-      </div>
+      </div >
 
       {/* Mobile Sidenav Toggle Button */}
       {/* <IconButton
@@ -212,7 +210,7 @@ function Approvals() {
      <Menu fontSize="large" />
    </IconButton> */}
 
-    </div>
+    </div >
   )
 }
 

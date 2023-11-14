@@ -100,14 +100,14 @@ const Main = () => {
           default:
             color = 'black';
         }
-        return <div style={{ 'color': color ,fontWeight:600,fontSize:'14px'}}>{status}</div>
+        return <div style={{ 'color': color, fontWeight: 600, fontSize: '14px' }}>{status}</div>
       },
     },
     {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 140,
+      width: 50,
       disableClickEventBubbling: true,
       editable: false,
       renderCell: (params) => {
@@ -317,20 +317,22 @@ const Main = () => {
 
         </div>
       }
-      <div>
+      <div className='flex justify-end'>
         {token && userRole !== "SALES" &&
           <div className='p-4 flex gap-2 items-center'>
             <span className='sbt__Btn' style={{ backgroundColor: 'none' }}>
               <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
-              {/* <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Edit Status</button>  */}
-              {/* <Button variant='contained'  onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</Button> */}
             </span>
-            <span >
-              <Button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="editStatus">Edit Status</Button>
+            <span className='eds__Btn'>
+              <Button className='button' onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content'}} name="editStatus">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 10H15M2.5 5H17.5M7.5 15H12.5" stroke="#5D6679" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Edit Status
+              </Button>
             </span>
           </div>
         }
-
       </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid
@@ -349,7 +351,7 @@ const Main = () => {
           // disableRowSelectionOnClick
           disableSelectionOnClick
           sx={{
-            fontWeight:500
+            fontWeight: 500
           }}
           className='datagrid'
         />
