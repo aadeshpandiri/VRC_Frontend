@@ -18,11 +18,7 @@ import Login from "./Login";
 import Register from "./Register";
 const SignInDrawer = ({ anchor, toggleDrawer, isOpen, paper }) => {
   const router = useRouter();
-  const [name, setName] = useState();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState();
-  const [current, setCurrentStep] = useState(1);
+ const [current, setCurrentStep] = useState(1);
 
   const hangleGotoSignup = () => {
     setCurrentStep(2)
