@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         'blue-1366D9': '#1366D9',
+        'grey-500': 'rgba(240, 241, 243, 1)'
       },
     },
   },

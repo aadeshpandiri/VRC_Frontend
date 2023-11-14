@@ -107,7 +107,7 @@ const Main = () => {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 50,
+      width: 120,
       disableClickEventBubbling: true,
       editable: false,
       renderCell: (params) => {
@@ -272,7 +272,7 @@ const Main = () => {
   const filteredColumns = userRole !== "SALES" ? columns : columns.filter(column => column.field !== "actions");
 
   return (
-    <div className="p-4 mt-20 bg-slate-50">
+    <div className="p-4 mt-20 bg-grey-500">
       {/* Your Data Grid Table */}
       <Loader />
       <AddprojectDrawer

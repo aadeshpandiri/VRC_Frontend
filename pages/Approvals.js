@@ -164,7 +164,7 @@ function Approvals() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-slate-300 p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
+        <div className='bg-grey-500 p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
           {loader && <Loader />}
 
           {/* <table className='w-full text-left   border-separate border-spacing-y-2.5'> */}
@@ -185,7 +185,7 @@ function Approvals() {
                     <div className='p-4'></div>
                     <div className='p-4'></div>
                     <div className='p-4'></div> */}
-                  <button className='text-white rounded-md py-1 px-2 border-2 border-solid border-red' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
+                  <button className='rounded-md py-1 px-2 border-2 border-solid border-white' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
                   <button className='bg-blue-1366D9 text-white rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'V')}>Approval</button>
                 </div>
               </>
