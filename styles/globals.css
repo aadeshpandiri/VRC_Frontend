@@ -30,7 +30,7 @@ body {
 }
 
 .lg__Box {
-  min-width: 350px;
+  /* min-width: 350px; */
 }
 
 .lg__Ttl h2 {
@@ -221,9 +221,9 @@ body {
   font-weight: bold;
 }
 
-/* .AddProject__wrap {
-  width: 30rem;
-} */
+.AddProject__wrap {
+  min-width: 20rem;
+}
 
 .AddprojectCard h2 {
   color: rgba(56, 62, 73, 1);

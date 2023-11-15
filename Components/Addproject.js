@@ -63,7 +63,7 @@ function Addproject({ projectName, type, status, towerNumber, flatNumber, villaN
     return (
         <div className='AddProject__wrap'>
             <div className='AddprojectCard'>
-                <h2>New Project</h2>
+                <h2 className='font-bold'>New Project</h2>
                 <div>
                     <form onSubmit={handleSubmit} className='deatails__Box' >
                         <div className='fields__Box'>

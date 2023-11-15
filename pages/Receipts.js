@@ -94,7 +94,7 @@ function Receipts() {
   },[])
 
   return (
-    <div className="md:flex h-screen w-screen">
+    <div className="md:flex h-screen w-full">
 
       {/* Sidenav (desktop mode) */}
       <div

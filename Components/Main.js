@@ -150,7 +150,7 @@ const Main = () => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {
             handleLogout();
           }
-          else {
+          else if(result.status == 200) {
             if (userRole === "SALES") {
               const updatedList = result.data.filter(Item => Item.status === "AVAILABLE");
               // Update the state with the updated list.
@@ -185,7 +185,7 @@ const Main = () => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {
             handleLogout();
           }
-          else {
+          else if(result.status == 200){
             setIncome(result.data)
           }
           setLoader(false)
@@ -214,7 +214,7 @@ const Main = () => {
              if (result.status == 401 || result.message == 'Token Invalid/Expired') {
                handleLogout();
              }
-             else {
+             else if(result.status == 200){
                setExpence(result.data)
              }
              setLoader(false)
@@ -291,7 +291,7 @@ const Main = () => {
       />
       {
         userRole=='SUPERADMIN'&&
-        <div className='flex gap-5 bg-white m-4 p-4 justify-around'>
+        <div className='flex gap-5 bg-white m-4 p-4 justify-around flex-wrap rounded-md'>
           <div className='flex flex-col items-center'>
           <Image
              alt="Sales"
