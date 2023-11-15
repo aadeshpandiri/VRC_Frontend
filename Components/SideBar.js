@@ -91,7 +91,7 @@ const SideBar = () => {
   return (
     <>
       <List className="flex flex-col justify-between fixed" style={{
-        height: '80vh'
+        height: '90vh'
       }}>
         <div>
           {roles[userRole]?.map((item, index) => (

@@ -163,7 +163,7 @@ const Main = () => {
               // Update the state with the updated list.
               setRows(updatedList);
             }
-            else {
+            else  if (userRole === "SUPERADMIN" || userRole==='MANAGER') {
               setRows(result.data)
             }
           }
@@ -173,7 +173,7 @@ const Main = () => {
           setLoader(false)
         });
     }
-  }, [token])
+  }, [token,userRole])
     useEffect(() => {
  if(userRole=='SUPERADMIN'){
       setLoader(true)
@@ -338,23 +338,24 @@ const Main = () => {
         </div>
         </div>
       }
+      <div className='mainborder rounded-md'>
       <div className='flex justify-end'>
         {token && userRole !== "SALES" &&
           <div className='p-4 flex gap-2 items-center'>
             <span className='sbt__Btn' style={{ backgroundColor: 'none' }}>
               <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
             </span>
-            <span className='eds__Btn'>
+            { userRole === "SUPERADMIN" && <span className='eds__Btn'>
               <Button className='button' onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content'}} name="editStatus">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 10H15M2.5 5H17.5M7.5 15H12.5" stroke="#5D6679" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 Edit Status
               </Button>
-            </span>
+            </span> }
           </div>
         }
-      </div>
+     </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid
           rows={rows}
@@ -380,6 +381,7 @@ const Main = () => {
           className='datagrid'
         />
       </Box>
+      </div>
     </div>
   );
 };
