@@ -15,7 +15,7 @@ import Revenue from '../utils/Revenue.svg';
 import Profit from '../utils/Profit.svg'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Editicon from '../utils/editicon.svg'
+import Editicon from '../utils/editIcon.svg'
 const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => {
 
   const handleEditClick = () => {
