@@ -222,7 +222,8 @@ body {
 }
 
 .AddProject__wrap {
-  min-width: 20rem;
+  min-width: 18rem;
+  max-height: 50vh;
 }
 
 .AddprojectCard h2 {
@@ -236,19 +237,20 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
+  padding-bottom: 10px;
 }
 
 .fields__Box {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .deatails__Fld {
   display: flex;
   /* align-items: center; */
-  gap: 10px;
+  /* gap: 10px; */
   /* flex-wrap: wrap; */
   flex-direction: column;
 }
@@ -306,6 +308,10 @@ body {
 } */
 
 .OnboardingFormCard {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -318,6 +324,9 @@ body {
 
 .EditStatusFormCard {
   /* width: 30rem; */
+  min-width: 18rem;
+  max-height: 50vh;
+  
 }
 
 .OnboardingFormCard,
@@ -388,7 +397,7 @@ body {
 .prFields__Box {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .prDeatails__Fld {
@@ -446,9 +455,16 @@ tr td:first-child { border-left-style: solid; } */
 @media (max-width: 768px) {
   .deatails__Fld {
     display: flex;
-    align-items: baseline;
+    /* align-items: baseline; */
     gap: 10px;
     flex-wrap: wrap;
     flex-direction: column;
   }
+}
+
+.overview{
+  max-width:600px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #5D6679;
 }

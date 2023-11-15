@@ -100,7 +100,7 @@ const SideBar = () => {
               <Link href={`${routes[item]}`}>{item}</Link></div>
           ))}
         </div>
-        <div onClick={handleLogout} className="p-4 flex items-center gap-4">
+        <div onClick={handleLogout} className="p-4 flex items-center gap-4 cursor-pointer">
           <Image
 
             alt="logout"

@@ -235,7 +235,7 @@ function OnboardingForm() {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Select Project Name"
+                                    placeholder="Select Project Name"
                                     variant="outlined"
                                     fullWidth
                                 />
@@ -252,7 +252,7 @@ function OnboardingForm() {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Project Type"
+                                        placeholder="Select Project Type"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -272,7 +272,7 @@ function OnboardingForm() {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Tower Number"
+                                        placeholder="Select Tower Number"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -288,7 +288,7 @@ function OnboardingForm() {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Flat Number"
+                                        placeholder="Select Flat Number"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -305,7 +305,7 @@ function OnboardingForm() {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Select Villa Number"
+                                    placeholder="Select Villa Number"
                                     variant="outlined"
                                     fullWidth
                                 />
@@ -321,7 +321,7 @@ function OnboardingForm() {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Select Villa Number"
+                                    placeholder="Select Villa Number"
                                     variant="outlined"
                                     fullWidth
                                 />
@@ -347,6 +347,7 @@ function OnboardingForm() {
                                 <FormControlLabel value="end" control={<Radio
                                     checked={formData.status === 'TOKEN'}
                                     onChange={onChangeInput}
+                                    
                                     value="TOKEN"
                                     name="status"
                                     inputProps={{ 'aria-label': 'TOKEN' }}

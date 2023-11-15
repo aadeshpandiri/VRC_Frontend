@@ -5,7 +5,7 @@ import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Auto
 import baseurl from '../data/baseurl'
 function EditStatusForm({ handleClose }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
 
     const [formData, setFormData] = useState({
         project_name: '',
@@ -64,29 +64,37 @@ function EditStatusForm({ handleClose }) {
             redirect: 'follow'
         };
 
-        if (fieldName === 'project_name') {
+        if (fieldName === 'project_name')
+         {setLoader(true)
             fetch(`${baseurl?.url}/project/getFilteredProjectTypes/${newValue}`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     const project_types = result.data
                         .map(x => x.project_type);
                     setAvailablePts(project_types);
+                    setLoader(false)
                 })
-                .catch(error => console.log('error:', error.message));
+                .catch(error =>{ console.log('error:', error.message)
+                setLoader(false)});
         }
 
         if (fieldName === 'project_type') {
             if (newValue === "Apartment") {
+                setLoader(true)
                 fetch(`${baseurl?.url}/project/getFilteredProjectTowerNumbers/${formData.project_name}/${newValue}`, requestOptions)
                     .then(response => response.json())
                     .then(result => {
                         const tower_numbers = result.data
                             .map(x => x.tower_number);
                         setAvailableTns(tower_numbers);
+                        setLoader(false)
                     })
-                    .catch(error => console.log('error:', error.message));
+                    .catch(error => {console.log('error:', error.message)
+                    setLoader(false)
+                });
             }
             else if (newValue === "Villa") {
+                setLoader(true)
                 fetch(`${baseurl?.url}/project/getFilteredProjectVillaNumbers/${formData.project_name}/${newValue}`, requestOptions)
                     .then(response => response.json())
                     .then(result => {
@@ -94,9 +102,11 @@ function EditStatusForm({ handleClose }) {
                             .map(x => x.villa_number);
                         setAvailableVns(villa_numbers);
                     })
-                    .catch(error => console.log('error:', error.message));
+                    .catch(error => {console.log('error:', error.message)
+                    setLoader(false)});
             }
             else if (newValue === "Plot") {
+                setLoader(true)
                 fetch(`${baseurl?.url}/project/getFilteredProjectPlotNumbers/${formData.project_name}/${newValue}`, requestOptions)
                     .then(response => response.json())
                     .then(result => {
@@ -104,7 +114,9 @@ function EditStatusForm({ handleClose }) {
                             .map(x => x.plot_number);
                         setAvailablePns(plot_numbers);
                     })
-                    .catch(error => console.log('error:', error.message));
+                    .catch(error =>{ console.log('error:', error.message)
+                    setLoader(false)
+                });
             }
         }
 
@@ -142,6 +154,7 @@ function EditStatusForm({ handleClose }) {
 
     useEffect(() => {
         if (token) {
+            setLoader(true)
             console.log("API useEffect called")
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
@@ -158,8 +171,11 @@ function EditStatusForm({ handleClose }) {
                     const project_names = result.data
                         .map(x => x.project_name);
                     setAvailablePrns(project_names);
+                    setLoader(false)
                 })
-                .catch(error => console.log('error:', error.message));
+                .catch(error =>{ console.log('error:', error.message)
+                setLoader(false)
+            });
         }
     }, [formData.project_type, token])
 
@@ -184,7 +200,7 @@ function EditStatusForm({ handleClose }) {
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify(formData);
-
+        setLoader(true)
         var requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -198,9 +214,11 @@ function EditStatusForm({ handleClose }) {
                 console.log(result)
                 clearFields()
                 handleClose()
-
+                setLoader(false)
             })
-            .catch(error => console.log('error', error));
+            .catch(error =>{ console.log('error', error)
+            setLoader(false)
+        });
     };
 
     return (
@@ -217,7 +235,7 @@ function EditStatusForm({ handleClose }) {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Select Project Name"
+                                    placeholder="Select Project Name"
                                     variant="outlined"
                                     fullWidth
                                 />
@@ -233,7 +251,7 @@ function EditStatusForm({ handleClose }) {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Select Project Type"
+                                    placeholder="Select Project Type"
                                     variant="outlined"
                                     fullWidth
                                 />
@@ -250,7 +268,7 @@ function EditStatusForm({ handleClose }) {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Tower Number"
+                                        placeholder="Select Tower Number"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -266,7 +284,7 @@ function EditStatusForm({ handleClose }) {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Flat Number"
+                                        placeholder="Select Flat Number"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -284,7 +302,7 @@ function EditStatusForm({ handleClose }) {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Villa Number"
+                                        placeholder="Select Villa Number"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -301,7 +319,7 @@ function EditStatusForm({ handleClose }) {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Villa Number"
+                                        placeholder="Select Villa Number"
                                         variant="outlined"
                                         fullWidth
                                     />
@@ -318,7 +336,7 @@ function EditStatusForm({ handleClose }) {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Select Status"
+                                        placeholder="Select Status"
                                         variant="outlined"
                                         fullWidth
                                     />
