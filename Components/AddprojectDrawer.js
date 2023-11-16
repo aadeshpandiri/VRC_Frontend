@@ -22,28 +22,11 @@ import EditStatusForm from "./EditStatusForm";
 const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current, editRow, setEditRow, SaveEditedRow, data, receiptsList, setReceiptsList }) => {
     const router = useRouter();
 
-    const [projectName, setProjectName] = useState('');
-    const [type, setType] = useState('');
-    const [status, setStatus] = useState('');
-    const [towerNumber, setTowerNumber] = useState('');
-    const [flatNumber, setFlatNumber] = useState('');
-    const [villaNumber, setVillaNumber] = useState('');
-    const [plotNumber, setPlotNumber] = useState('');
 
     const handleClose = (event) => {
-        // setOpen(false);
         toggleDrawer(anchor, false, event)
     };
 
-    const clearFields = () => {
-        setProjectName("");
-        setType("");
-        setStatus("");
-        setTowerNumber("");
-        setFlatNumber("");
-        setVillaNumber("");
-        setPlotNumber("");
-    }
 
     const descriptionElementRef = React.useRef(null);
 
@@ -83,7 +66,14 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
             [e.target.name]: e.target.value
         }))
     }
-    
+
+    const onChangeInputAutoEdit = (fieldName, newValue) => {
+        setEditRow((prevState) => ({
+            ...prevState,
+            fieldName: newValue
+        }))
+    }
+
     return (
         <Dialog
             open={isOpen}
@@ -107,17 +97,8 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                             {
                                 current == 'add' &&
                                 <Addproject
-                                    projectName={projectName}
-                                    type={type}
-                                    status={status}
-                                    towerNumber={towerNumber}
-                                    flatNumber={flatNumber}
-                                    villaNumber={villaNumber}
-                                    plotNumber={plotNumber}
-                                    onChangeInput={onChangeInput}
                                     handleClose={handleClose}
                                     AddRow={AddRow}
-                                    clearFields={clearFields}
                                 />
                             }
                             {
@@ -125,6 +106,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
                                 <Editproject
                                     editRow={editRow}
                                     onChangeInputEdit={onChangeInputEdit}
+                                    onChangeInputAutoEdit={onChangeInputAutoEdit}
                                     handleClose={handleClose}
                                     SaveEditedRow={SaveEditedRow}
                                 />

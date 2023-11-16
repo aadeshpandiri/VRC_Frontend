@@ -29,7 +29,6 @@ function OnboardingForm() {
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
-
         var raw = JSON.stringify(formData);
 
         var requestOptions = {
@@ -202,8 +201,8 @@ function OnboardingForm() {
             <h2>Onboarding Form</h2>
             <form onSubmit={handleSubmit} className='deatails__Box' >
                 <div className='fields__Box'>
-                    <div className='deatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
-                        <p>Client Name</p>{/*class="w-40 text-gray-700 font-medium text-lg whitespace-nowrap"*/}
+                    <div className='deatails__Fld'>
+                        <p>Client Name</p>
                         <TextField className='text__Fld'
                             status="text"
                             value={formData.client_name}

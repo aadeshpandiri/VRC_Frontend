@@ -112,9 +112,9 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
             </div>
             {
                 userRole === "SUPERADMIN" &&
-                <div className='Btns__container'>
+                <div className='recBtns__container'>
                     <div className='dcrd__Btn' onClick={(e, data) => handleReject(e, data)} >
-                        <button >Cancle</button>
+                        <button >Reject</button>
                     </div>
                     <div className='add__Btn' onClick={(e, data) => handleSubmit(e, data)}>
                         <button>Validate</button>
@@ -123,11 +123,10 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
             }
             {
                 userRole === "MANAGER" &&
-                <div className='Btns__container'>
+                <div className='recBtns__container'>
                     <div className='add__Btn' onClick={handleClose} >
                         <button >Close</button>
                     </div>
-
                 </div>
             }
         </div>

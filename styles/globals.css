@@ -29,10 +29,6 @@ body {
   min-height: 100vh;
 }
 
-.lg__Box {
-  /* min-width: 350px; */
-}
-
 .lg__Ttl h2 {
   font-size: 30px;
   line-height: 38px;
@@ -166,6 +162,7 @@ body {
   border: 1px solid #1366d9;
 }
 
+
 .info {
   font-size: 14px;
   line-height: 20px;
@@ -221,8 +218,8 @@ body {
   font-weight: bold;
 }
 
-.AddProject__wrap {
-  min-width: 20rem;
+.AddProject__wrap,.EditStatusFormCard {
+  min-width: 15rem;
 }
 
 .AddprojectCard h2 {
@@ -260,10 +257,17 @@ body {
   white-space: nowrap;
 }
 
-.Btns__container {
+.Btns__container,.recBtns__container {
   display: flex;
   gap: 10px;
+}
+
+.Btns__container{
   justify-content: flex-end;
+}
+
+.recBtns__container {
+  justify-content: space-around;
 }
 
 .add__Btn,
@@ -282,11 +286,6 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-/* .add__Btn :hover {
-  color: #1366d9;
-  background: #fff;
-} */
-
 .dcrd__Btn {
   padding: 10px 18px;
   font-size: 16px;
@@ -300,11 +299,6 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-/* .OnboardingFormWraper {
-  display: flex;
-  justify-content: center;
-} */
-
 .OnboardingFormCard {
   display: flex;
   flex-direction: column;
@@ -316,10 +310,6 @@ body {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.EditStatusFormCard {
-  /* width: 30rem; */
-}
-
 .OnboardingFormCard,
 .EditStatusFormCard h2 {
   color: rgba(56, 62, 73, 1);
@@ -328,21 +318,6 @@ body {
   margin-bottom: 28px;
   white-space: nowrap;
 }
-
-/* .OnboardingFormCard .input__Fld {
-  flex: 1;
-  height: 44px;
-  color: black;
-  border: 1px solid #d0d5dd;
-  outline: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 400;
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  transition: 0.3s ease-in-out;
-  width: 0;
-} */
 
 .auto__Fld,
 .text__Fld {
@@ -355,12 +330,14 @@ body {
   flex-direction: column;
   /* align-items: center; */
   gap: 32px;
+  min-width: 15rem;
 }
 
 .ReceiptCard h2 {
   font-weight: bold;
   color: black;
   font-size: 30px;
+  text-align: center;
 }
 
 .ReceiptCard .details__Box {
@@ -409,9 +386,6 @@ body {
   flex: 3;
 }
 
-/* .aText__Fld {
-  flex: 2;
-} */
 
 .payrollAdd__Btn {
   text-align: right;
@@ -420,24 +394,6 @@ body {
   text-align: center;
 }
 
-tr {
-  border-top-left-radius: 10px;
-}
-tr {
-  border-top-right-radius: 10px;
-}
-tr {
-  border-bottom-left-radius: 10px;
-}
-tr {
-  border-bottom-right-radius: 10px;
-}
-.round-tr {
-  border-radius: 10px;
-  padding: 20px;
-}
-/* tr:first-child td { border-top-style: solid; }
-tr td:first-child { border-left-style: solid; } */
 .details__Fld {
   display: flex;
   justify-content: space-between;

@@ -95,7 +95,7 @@ const SideBar = () => {
       }}>
         <div>
           {roles[userRole]?.map((item, index) => (
-            <div key={index} name={item} className={`p-4 flex items-center gap-4 ${router.pathname === routes[item] ? 'text-blue-500' : ''}`}>
+            <div key={index} name={item} className={`p-4 flex items-center gap-4 ${router.pathname === routes[item] ? 'text-blue' : ''}`}>
               {getIcon(item, router.pathname === routes[item])}
               <Link href={`${routes[item]}`}>{item}</Link></div>
           ))}

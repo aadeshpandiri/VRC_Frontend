@@ -3,9 +3,11 @@ import sharedContext from '../context/SharedContext';
 import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
+import Loader from './Loader';
+
 function EditStatusForm({ handleClose }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen } = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, setLoader } = useContext(sharedContext);
 
     const [formData, setFormData] = useState({
         project_name: '',
@@ -165,19 +167,20 @@ function EditStatusForm({ handleClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoader(true)
 
-        let pid
-        switch (formData.project_type) {
-            case "Apartment":
-                pid = formData.project_name + "_" + formData.project_type + "_" + formData.tower_number + "_" + formData.flat_number;
-                break
-            case "Villa":
-                pid = formData.project_name + "_" + formData.project_type + "_" + formData.villa_number;
-                break
-            case "Plot":
-                pid = formData.project_name + "_" + formData.project_type + "_" + formData.plot_number;
-                break
-        }
+        // let pid
+        // switch (formData.project_type) {
+        //     case "Apartment":
+        //         pid = formData.project_name + "_" + formData.project_type + "_" + formData.tower_number + "_" + formData.flat_number;
+        //         break
+        //     case "Villa":
+        //         pid = formData.project_name + "_" + formData.project_type + "_" + formData.villa_number;
+        //         break
+        //     case "Plot":
+        //         pid = formData.project_name + "_" + formData.project_type + "_" + formData.plot_number;
+        //         break
+        // }
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -198,13 +201,18 @@ function EditStatusForm({ handleClose }) {
                 console.log(result)
                 clearFields()
                 handleClose()
-
+                setLoader(false)
             })
-            .catch(error => console.log('error', error));
+            .catch(error => {
+                console.log('error', error)
+                setLoader(false)
+            }
+            );
     };
 
     return (
         <div className='EditStatusFormCard'>
+            <Loader />
             <h2>Edit Project Status</h2>
             <form onSubmit={handleSubmit} className='deatails__Box' >
                 <div className='fields__Box'>
@@ -342,16 +350,16 @@ function EditStatusForm({ handleClose }) {
                     </>}
                 </div>
 
-                    <div className='Btns__container'>
-                        {/* <div className='dcrd__Btn' >
+                <div className='Btns__container'>
+                    {/* <div className='dcrd__Btn' >
                             <button onClick={handleClose}>Discard</button>
                         </div> */}
-                        <div className='add__Btn'>
-                            <button type='submit'>Submit</button>
-                        </div>
+                    <div className='add__Btn'>
+                        <button type='submit'>Submit</button>
                     </div>
-                </form>
-            </div >
+                </div>
+            </form>
+        </div >
 
     )
 }

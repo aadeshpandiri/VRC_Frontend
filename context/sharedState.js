@@ -9,7 +9,7 @@ const SharedState=(props)=> {
     const [loader, setLoader] = useState(false);
    useEffect(()=>{
     if(window){
-        // setToken()
+        
         setToken(sessionStorage.getItem('token'))
         setUserRole(sessionStorage.getItem('userRole')||'USER')
     }

@@ -134,7 +134,7 @@ function Receipts() {
           {
             receiptsList?.map((item, index) => {
               console.log(item)
-              return <div key={index} className='bg-white p-2 rounded-md' onClick={(event) => toggleReceiptDrawer('right', true, event, item)}>Project ID:{item.project_id}</div>
+              return <div key={index} className='bg-white p-2 rounded-md cursor-pointer' onClick={(event) => toggleReceiptDrawer('right', true, event, item)}>Project ID:{item.project_id}</div>
             })
           }
         </div>
