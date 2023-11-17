@@ -7,6 +7,7 @@ import Loader from './Loader';
 function OnboardingForm() {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
+    const [error, setError] = useState('')
 
     const [formData, setFormData] = useState({
         client_name: '',
@@ -42,8 +43,8 @@ function OnboardingForm() {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                if (result.status == 500) {
-
+                if (result.status == 409) {
+                    setError(result.message)
                 }
                 else {
                     clearFields()
@@ -156,6 +157,7 @@ function OnboardingForm() {
                 amount_received: '',
             }
         );
+        setError('')
         setAvailablePrns([])
         setAvailablePts([])
         setAvailableTns([])
@@ -375,7 +377,9 @@ function OnboardingForm() {
                         </div>
                     </>}
                 </div>
-
+                <div >
+                    <span style={{ color: 'red' }}>{error}</span>
+                </div>
                 <div className='Btns__container'>
                     <div className='dcrd__Btn' onClick={clearFields}>
                         <button>Discard</button>
