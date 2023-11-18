@@ -91,7 +91,7 @@ const SideBar = () => {
   return (
     <>
       <List className="flex flex-col justify-between fixed" style={{
-        height: '80vh'
+        height: '90vh'
       }}>
         <div>
           {roles[userRole]?.map((item, index) => (
@@ -100,7 +100,7 @@ const SideBar = () => {
               <Link href={`${routes[item]}`}>{item}</Link></div>
           ))}
         </div>
-        <div onClick={handleLogout} className="p-4 flex items-center gap-4">
+        <div onClick={handleLogout} className="p-4 flex items-center gap-4 cursor-pointer">
           <Image
 
             alt="logout"

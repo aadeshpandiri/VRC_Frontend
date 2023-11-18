@@ -124,7 +124,7 @@ function Receipts() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-grey-500 h-full p-4 overflow-scroll mt-20 flex flex-col gap-5'>
+        <div className='bg-grey-500 h-full p-4 overflow-scroll mt-20 flex flex-col gap-5 pt-8' style={{ height: '90vh' }}>
           <AddprojectDrawer
             anchor="right"
             toggleDrawer={toggleReceiptDrawer}

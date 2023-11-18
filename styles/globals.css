@@ -239,9 +239,10 @@ body {
   font-weight: bold;
 }
 
-.AddProject__wrap,
-.EditStatusFormCard {
-  min-width: 15rem;
+.AddProject__wrap {
+  min-width: 22rem;
+  max-height: 50vh;
+  padding:'15px'
 }
 
 .AddprojectCard h2 {
@@ -255,19 +256,20 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
+  padding-bottom: 30px;
 }
 
 .fields__Box {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .deatails__Fld {
   display: flex;
   /* align-items: center; */
-  gap: 10px;
+  /* gap: 10px; */
   /* flex-wrap: wrap; */
   flex-direction: column;
 }
@@ -321,6 +323,17 @@ body {
 }
 
 .OnboardingFormCard {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+} 
+
+.OnboardingFormCard {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -329,6 +342,13 @@ body {
   padding: 20px;
   overflow: hidden;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.EditStatusFormCard {
+  /* width: 30rem; */
+  min-width: 22rem;
+  max-height: 50vh;
+  
 }
 
 .OnboardingFormCard,
@@ -350,7 +370,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 32px;
-  min-width: 15rem;
+  padding: 1rem;
+  min-width: 22rem;
 }
 
 .ReceiptCard h2 {
@@ -374,7 +395,12 @@ body {
   flex-direction: column;
   gap: 30px;
   background-color: white;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
 }
+
 
 .PayrollCard h2 {
   font-size: 20px;
@@ -385,7 +411,7 @@ body {
 .prFields__Box {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .prDeatails__Fld {
@@ -419,12 +445,58 @@ body {
   justify-content: space-between;
 }
 
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
   .deatails__Fld {
     display: flex;
-    align-items: baseline;
+    /* align-items: baseline; */
     gap: 10px;
     flex-wrap: wrap;
     flex-direction: column;
   }
-} */
+  .AddProject__wrap {
+    min-width: 18rem;
+    max-height: 50vh;
+  }
+  .EditStatusFormCard {
+    /* width: 30rem; */
+    min-width: 18rem;
+    max-height: 50vh;
+  }
+  .ReceiptCard {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 1rem;
+    min-width: 18rem;
+  }
+}
+
+.overview{
+  max-width:600px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #5D6679;
+}
+
+.mainborder{
+ background-color: white;
+ padding: 1.5rem;
+}
+
+::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Change color on hover */
+}
+
+/* Set the color of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Set the color of the scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}

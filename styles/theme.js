@@ -9,7 +9,7 @@ let theme = createTheme({
       // light: '#637580'
     },
     secondary: {
-      main: '#FFFFFF',
+      main: '#1570EF',
       contrastText: '#FFFFFF'
     },
     button: {

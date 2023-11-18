@@ -15,6 +15,7 @@ import Revenue from '../utils/Revenue.svg';
 import Profit from '../utils/Profit.svg'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Editicon from '../utils/editIcon.svg'
 const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => {
 
   const handleEditClick = () => {
@@ -25,7 +26,13 @@ const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => 
   }
 
   return <div onClick={handleEditClick} name='edit'>
-    <Edit />
+    {/* <Edit /> */}
+    <Image
+             alt="Editicon"
+              src={Editicon}
+              quality={100} 
+            
+            />
   </div>
 
 };
@@ -104,7 +111,7 @@ const Main = () => {
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: " ",
       sortable: false,
       width: 120,
       disableClickEventBubbling: true,
@@ -150,13 +157,15 @@ const Main = () => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {
             handleLogout();
           }
-          if (userRole === "SALES") {
-            const updatedList = result.data.filter(Item => Item.status === "AVAILABLE");
-            // Update the state with the updated list.
-            setRows(updatedList);
-          }
-          else {
-            setRows(result.data)
+          else if(result.status == 200) {
+            if (userRole === "SALES") {
+              const updatedList = result.data.filter(Item => Item.status === "AVAILABLE");
+              // Update the state with the updated list.
+              setRows(updatedList);
+            }
+            else  if (userRole === "SUPERADMIN" || userRole==='MANAGER') {
+              setRows(result.data)
+            }
           }
           setLoader(false)
         })
@@ -291,39 +300,48 @@ const Main = () => {
         SaveEditedRow={SaveEditedRow}
       />
       {
-        userRole == 'SUPERADMIN' &&
-        <div className='bg-white m-4 p-4 rounded-md'>
-          <h2 className='font-medium mb-5 text-20 text-grey'>Overview</h2>
-          <div className='flex gap-5 justify-around flex-wrap'>
-            <div className='flex flex-col items-center'>
-              <Image
-                alt="Sales"
-                src={Sales}
-                quality={100}
-                width={25}
-                height={23} />
-              <span className='flex flex-col md:flex-row items-center font-medium md:gap-3'><span> ₹{income}</span><span>Income</span></span>
-            </div>
-            <div className='flex flex-col items-center'
-            ><Image
-                alt="Revenue"
-                src={Revenue}
-                quality={100}
-                width={25}
-                height={23} />
-              <span className='flex flex-col md:flex-row items-center font-medium md:gap-3' ><span> ₹{expence}</span><span>Expence</span></span></div>
-            <div className='flex flex-col items-center'>
-              <Image
-                alt="Profit"
-                src={Profit}
-                quality={100}
-                width={25}
-                height={23} />
-              <span className='flex flex-col md:flex-row items-center font-medium md:gap-3'><span> ₹{income - expence}</span><span>Profit</span></span>
-            </div>
+        userRole=='SUPERADMIN'&&
+        <div className='bg-white  m-4 p-4 rounded-md overview'>
+        <div className='font-bold mb-5'>Overview</div>
+        <div className='flex flex-col md:flex-row gap-5 p-2 justify-around flex-wrap '>
+          <div className='flex flex-col items-center gap-2'>
+       <span className='bg-[#E8F1FD] m-2 p-0.5 rounded-sm flex items-center'>
+        <Image
+             alt="Sales"
+              src={Sales}
+              quality={100}
+              width= {25}
+            height= {23} 
+            
+            /></span>   
+            <span className='flex flex-col md:flex-row items-center font-medium md:gap-3'><span> ₹{income}</span><span>Income</span></span>
           </div>
+          <div className='flex flex-col items-center gap-2'
+          >
+            <span  className='bg-[#ECEAFF] m-2 p-0.5 rounded-sm flex items-center'>
+            <Image
+             alt="Revenue"
+              src={Revenue}
+              width= {25}
+              height= {23} 
+               />
+            </span>
+            <span className='flex flex-col md:flex-row items-center font-medium md:gap-3' ><span> ₹{expence}</span><span>Expence</span></span></div>
+          <div className='flex flex-col items-center gap-2'>
+         <span className='bg-[#FFEEDB] m-2 p-0.5 rounded-sm flex items-center'>
+         <Image
+             alt="Profit"
+              src={Profit}
+              width= {23}
+              height= {23}   
+              /></span> 
+            <span className='flex flex-col md:flex-row items-center font-medium md:gap-3'><span> ₹{income -expence}</span><span>Profit</span></span>
+          </div>
+
+        </div>
         </div>
       }
+      <div className='mainborder rounded-md'>
       <div className='flex justify-end'>
         {token && userRole !== "SALES" &&
           <div className='p-4 flex gap-2 items-center'>
@@ -340,12 +358,13 @@ const Main = () => {
             </span>}
           </div>
         }
-      </div>
+     </div>
       <Box sx={{ width: '100%', height: '80vh', backgroundColor: 'white' }}>
         <DataGrid
           rows={rows}
           columns={filteredColumns}
           initialState={{
+            ...rows.initialState,
             pagination: {
               paginationModel: {
                 pageSize: 5,
@@ -353,7 +372,9 @@ const Main = () => {
             },
           }}
           getRowId={(row) => row.project_id}
-          pageSizeOptions={[5]}
+          autoPageSize
+          pageSizeOptions={[5, 10, 25]}
+
           // checkboxSelection
           // disableRowSelectionOnClick
           disableSelectionOnClick
@@ -363,6 +384,7 @@ const Main = () => {
           className='datagrid'
         />
       </Box>
+      </div>
     </div>
   );
 };

@@ -76,7 +76,7 @@ function Onboarding() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-grey-500 h-full p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
+        <div className='bg-grey-500 h-full p-4 overflow-scroll mt-20' style={{ height: '90vh' }}>
           <OnboardingForm />
         </div>
       </div>

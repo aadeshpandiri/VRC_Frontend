@@ -82,7 +82,7 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
             // scroll={paper}
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
-            PaperProps={{ style: { borderRadius: '20px' } }}
+            PaperProps={{ style: { borderRadius: '10px' } }}
         >
 
             <DialogContent dividers={true} sx={{ padding: 0 }}>

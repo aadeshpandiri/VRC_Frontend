@@ -188,6 +188,8 @@ function Approvals() {
 
                 <div className='mt-2 mb-5 w-full flex justify-end gap-3'>
                   <button className='rounded-md py-1 px-2 border-2 border-solid border-white' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
+                 
+                  <button className='bg-white text-grey rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
                   <button className='bg-blue-1366D9 text-white rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'V')}>Approval</button>
                 </div>
               </>
