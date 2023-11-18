@@ -52,7 +52,7 @@ function Receipts() {
         redirect: 'follow'
       };
 
-      fetch("https://vrcbackend.onrender.com/receipt/getReceipts", requestOptions)
+      fetch("http://3.111.35.41:4200/receipt/getReceipts", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {
