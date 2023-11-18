@@ -173,7 +173,7 @@ function Approvals() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-grey-500 p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
+        <div className='bg-grey-500 p-4 overflow-scroll mt-20' style={{ height: '90vh' }}>
           <Loader />
           <div className='w-full text-left   border-separate border-spacing-y-2.5'>
             {approvalsList?.map((item, index) => (
@@ -187,7 +187,6 @@ function Approvals() {
                 </div>
 
                 <div className='mt-2 mb-5 w-full flex justify-end gap-3'>
-                  <button className='rounded-md py-1 px-2 border-2 border-solid border-white' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
                  
                   <button className='bg-white text-grey rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
                   <button className='bg-blue-1366D9 text-white rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'V')}>Approval</button>
