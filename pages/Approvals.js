@@ -50,7 +50,7 @@ function Approvals() {
         redirect: 'follow'
       };
 
-      fetch("https://vrcbackend.onrender.com/admin/getUsersList", requestOptions)
+      fetch("http://3.111.35.41:4200/admin/getUsersList", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {
@@ -101,7 +101,7 @@ function Approvals() {
       redirect: 'follow'
     };
 
-    fetch("https://vrcbackend.onrender.com/admin/validateUser", requestOptions)
+    fetch("http://3.111.35.41:4200/admin/validateUser", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result)
