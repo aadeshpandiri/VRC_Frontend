@@ -4,6 +4,8 @@ import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 
 function EditStatusForm({ handleClose }) {
 
@@ -17,7 +19,7 @@ function EditStatusForm({ handleClose }) {
         villa_number: '',
         plot_number: '',
         status: '',
-        amount_received: 0,
+        amount_received: '',
     });
 
     const [availablePrns, setAvailablePrns] = useState([])
@@ -30,6 +32,7 @@ function EditStatusForm({ handleClose }) {
 
     const onChangeInput = (e) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setFormData({
             ...formData,
             [name]: value,
@@ -40,13 +43,16 @@ function EditStatusForm({ handleClose }) {
             if (!/^\d+$/.test(value)) {
                 setErrors({
                     ...errors,
-                    [name]: 'Amount should only contain numbers',
+                    [name]: 'only numbers',
                 });
             } else {
                 setErrors({
                     ...errors,
                     [name]: '',
                 });
+            }
+            if (value === '') {
+                setErrors({})
             }
         }
     };
@@ -169,19 +175,6 @@ function EditStatusForm({ handleClose }) {
         e.preventDefault();
         setLoader(true)
 
-        // let pid
-        // switch (formData.project_type) {
-        //     case "Apartment":
-        //         pid = formData.project_name + "_" + formData.project_type + "_" + formData.tower_number + "_" + formData.flat_number;
-        //         break
-        //     case "Villa":
-        //         pid = formData.project_name + "_" + formData.project_type + "_" + formData.villa_number;
-        //         break
-        //     case "Plot":
-        //         pid = formData.project_name + "_" + formData.project_type + "_" + formData.plot_number;
-        //         break
-        // }
-
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -199,6 +192,7 @@ function EditStatusForm({ handleClose }) {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                toast.success('Edited Project Status Successfully')
                 clearFields()
                 handleClose()
                 setLoader(false)
@@ -208,6 +202,26 @@ function EditStatusForm({ handleClose }) {
                 setLoader(false)
             }
             );
+    };
+
+    const optionColors = {
+        AVAILABLE: '#27ae60',
+        SOLD: '#e74c3c',
+        TOKEN: '#f39c12',
+        ADVANCE: '#3498db',
+    };
+
+    const getOptionLabel = (option) => {
+        // Return the label for the option
+        return option;
+    };
+
+    const getOptionStyle = (option) => {
+        // Return the style for the option based on the predefined colors
+        const color = optionColors[option];
+        return {
+            color: color || 'black',
+        };
     };
 
     return (
@@ -319,7 +333,7 @@ function EditStatusForm({ handleClose }) {
                     {formData.project_type && <>
                         <div className='deatails__Fld'>
                             <p>Status</p>
-                            <Autocomplete className='auto__Fld'
+                            {/* <Autocomplete className='auto__Fld'
                                 options={["SOLD", "TOKEN", "ADVANCE", "AVAILABLE"]}
                                 value={formData.status}
                                 onChange={(event, newValue) => handleAutocompleteChange('status', newValue)}
@@ -331,18 +345,38 @@ function EditStatusForm({ handleClose }) {
                                         fullWidth
                                     />
                                 )}
+                            /> */}
+                            <Autocomplete
+                                className='auto__Fld'
+                                options={['AVAILABLE', 'SOLD', 'TOKEN', 'ADVANCE']}
+                                value={formData.status}
+                                onChange={(event, newValue) => handleAutocompleteChange('status', newValue)}
+                                getOptionLabel={getOptionLabel}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Select Project Status"
+                                        variant="outlined"
+                                        fullWidth
+                                    />
+                                )}
+                                renderOption={(props, option, state) => (
+                                    <li {...props} style={{ ...props.style, ...getOptionStyle(option) }}>
+                                        {option}
+                                    </li>
+                                )}
                             />
                         </div>
                         <div className='deatails__Fld'>
                             <p>Amount</p>
                             <TextField className='text__Fld'
-                                type="number"
+                                type="text"
                                 value={formData.amount_received}
                                 onChange={onChangeInput}
                                 placeholder='Enter Amount'
                                 required
-                                // error={Boolean(errors.amount)}
-                                // helperText={errors.amount}
+                                error={Boolean(errors.amount_received)}
+                                helperText={errors.amount_received}
                                 autoComplete="off"
                                 name='amount_received'
                             />

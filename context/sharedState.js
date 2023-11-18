@@ -7,13 +7,14 @@ const SharedState=(props)=> {
     const [token,setToken]=useState();
     const [isSidenavOpen, setIsSidenavOpen] = useState(false);
     const [loader, setLoader] = useState(false);
+
    useEffect(()=>{
     if(window){
-        
-        setToken(sessionStorage.getItem('token'))
+                setToken(sessionStorage.getItem('token'))
         setUserRole(sessionStorage.getItem('userRole')||'USER')
     }
    },[])
+   
   return (
     <SharedContext.Provider value={{'userRole':userRole,'setUserRole':setUserRole,'token':token,'setToken':setToken,'isSidenavOpen':isSidenavOpen,'setIsSidenavOpen':setIsSidenavOpen,'loader':loader, 'setLoader':setLoader}}>{
         props.children

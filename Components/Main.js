@@ -31,7 +31,6 @@ const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => 
 };
 const Main = () => {
   const [current, setCurrent] = useState('');
-  // const [openDrawer, setOpenDrawer] = useState(false)
 
   const { token, setToken, loader, setLoader, userRole, setUserRole } = useContext(sharedContext);
 
@@ -41,7 +40,7 @@ const Main = () => {
       field: 'project_id',
       headerName: 'Project ID',
       width: 160,
-      editable: false,
+      // editable: false,
     },
     {
       field: 'project_name',
@@ -166,6 +165,7 @@ const Main = () => {
         });
     }
   }, [token, setLoader, userRole])
+
   useEffect(() => {
     if (userRole == 'SUPERADMIN') {
       setLoader(true)
@@ -195,6 +195,7 @@ const Main = () => {
     }
 
   }, [token, userRole, setLoader])
+
   useEffect(() => {
     if (userRole == 'SUPERADMIN') {
       setLoader(true)

@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { MenuItem, Select, TextField, Autocomplete } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 function Editproject({ editRow, onChangeInputEdit, onChangeInputAutoEdit, handleClose, SaveEditedRow }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
@@ -44,6 +46,7 @@ function Editproject({ editRow, onChangeInputEdit, onChangeInputAutoEdit, handle
                 }
 
                 if (result.message == 'Success') {
+                    toast.success('Edited Project Successfully')
                     SaveEditedRow(result.data)
                     handleClose()
                 }

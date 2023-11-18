@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen,setLoader } = useContext(sharedContext);
@@ -30,6 +32,7 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
                 console.log(result)
                 if (result.message === "Success") {
                     console.log("hello I am coming",data,receiptsList)
+                    toast.success('Approved Successfully')
                     // Create a copy of the current approvalsList without the approved/rejected item.
                     const updatedList = receiptsList?.filter(approvalItem => approvalItem.emailId !== data.emailId);
 
@@ -66,6 +69,7 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
                 console.log(result)
                 if (result.message === "Success") {
                     console.log("hello I am coming")
+                    toast.success('Rejected Successfully')
                     // Create a copy of the current approvalsList without the approved/rejected item.
                     const updatedList = receiptsList?.filter(approvalItem => approvalItem.emailId !== data.emailId);
 

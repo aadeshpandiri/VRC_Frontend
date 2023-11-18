@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { MenuItem, Select, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 
 function Addproject({ handleClose, AddRow }) {
 
@@ -44,6 +46,7 @@ function Addproject({ handleClose, AddRow }) {
                     setMessage(result.message)
                 }
                 if (result.message == 'Success') {
+                    toast.success('Added Project Successfully')
                     AddRow(result.data)
                     clearFields()
                     handleClose()
@@ -64,6 +67,12 @@ function Addproject({ handleClose, AddRow }) {
         });
     }
 
+    const optionColors = {
+        AVAILABLE: '#27ae60',
+        SOLD: '#e74c3c',
+        TOKEN: '#f39c12',
+        ADVANCE: '#3498db',
+    };
 
     const handleAutocompleteChange = (fieldName, newValue) => {
         setFormData({
@@ -89,6 +98,21 @@ function Addproject({ handleClose, AddRow }) {
     const handleDiscardClick = (e) => {
         e.preventDefault(); // Prevents the default form submission
         handleClose(); // Add any other necessary logic for discarding
+    };
+
+
+
+    const getOptionLabel = (option) => {
+        // Return the label for the option
+        return option;
+    };
+
+    const getOptionStyle = (option) => {
+        // Return the style for the option based on the predefined colors
+        const color = optionColors[option];
+        return {
+            color: color || 'black',
+        };
     };
 
     return (
@@ -129,17 +153,24 @@ function Addproject({ handleClose, AddRow }) {
                             </div>
                             {formData.project_type !== "" && <div className='deatails__Fld'>
                                 <p>Status</p>
-                                <Autocomplete className='auto__Fld'
+                                <Autocomplete
+                                    className='auto__Fld'
                                     options={['AVAILABLE', 'SOLD', 'TOKEN', 'ADVANCE']}
                                     value={formData.status}
                                     onChange={(event, newValue) => handleAutocompleteChange('status', newValue)}
+                                    getOptionLabel={getOptionLabel}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
-                                            label="Select Project Name"
+                                            label="Select Project Status"
                                             variant="outlined"
                                             fullWidth
                                         />
+                                    )}
+                                    renderOption={(props, option, state) => (
+                                        <li {...props} style={{ ...props.style, ...getOptionStyle(option) }}>
+                                            {option}
+                                        </li>
                                     )}
                                 />
                             </div>}

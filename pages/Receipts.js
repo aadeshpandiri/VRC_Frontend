@@ -23,9 +23,12 @@ function Receipts() {
   // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   // const userRole = 'superadmin'; // Set the user's role here
   // const [userRole,setUserRole]=useState('superadmin');
+
   const toggleSidenav = () => {
+    console.log("called togglesidenav rec")
     setIsSidenavOpen(!isSidenavOpen);
   };
+
   const [isDrawerOpen, setOpenDrawer] = useState(false);
 
   const toggleDrawer = (anchor, open, event) => {
@@ -86,12 +89,12 @@ function Receipts() {
     sessionStorage.clear();
     setToken(null);
   }
-  useEffect(()=>{
-    if(isSidenavOpen){
-      toggleSidenav()
-    }
+  // useEffect(()=>{
+  //   if(isSidenavOpen){
+  //     toggleSidenav()
+  //   }
   
-  },[])
+  // },[])
 
   return (
     <div className="md:flex h-screen w-full">

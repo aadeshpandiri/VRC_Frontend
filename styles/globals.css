@@ -21,12 +21,18 @@ body {
   display: flex;
 }
 
+.login_page{
+  width: 100%;
+  height: 100vh;
+}
+
 .logIn__wrap {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 50vh; */
 }
 
 .lg__Ttl h2 {
@@ -69,7 +75,7 @@ body {
 .lg__Mn-cnt {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .lg__Fld {
@@ -117,12 +123,10 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-
 .sbt__Btn button:hover {
-  color: #1366D9;
+  color: #1366d9;
   background: #fff;
 }
-
 
 .button {
   width: 100%;
@@ -154,14 +158,31 @@ body {
 }
 
 .ck__Act {
-  margin-top: 9rem;
+  margin-top: 5rem;
+}
+
+.lexoddLogo_con{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lexodd{
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.3;
+}
+
+.lexodd p{
+  font-size: 10px;
+  font-weight: 500;
 }
 
 .lg__Box input:focus-visible {
   outline: none;
   border: 1px solid #1366d9;
 }
-
 
 .info {
   font-size: 14px;
@@ -218,7 +239,8 @@ body {
   font-weight: bold;
 }
 
-.AddProject__wrap,.EditStatusFormCard {
+.AddProject__wrap,
+.EditStatusFormCard {
   min-width: 15rem;
 }
 
@@ -257,13 +279,11 @@ body {
   white-space: nowrap;
 }
 
-.Btns__container,.recBtns__container {
+.Btns__container,
+.recBtns__container {
   display: flex;
+  justify-content: center;
   gap: 10px;
-}
-
-.Btns__container{
-  justify-content: flex-end;
 }
 
 .recBtns__container {
@@ -271,8 +291,9 @@ body {
 }
 
 .add__Btn,
-.payrollSub__Btn,
-.payrollAdd__Btn {
+.payrollAdd__Btn, .payrollSub__Btn button {
+  width: 100%;
+  text-align: center;
   padding: 10px 18px;
   font-size: 16px;
   line-height: 24px;
@@ -328,7 +349,6 @@ body {
 .ReceiptCard {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   gap: 32px;
   min-width: 15rem;
 }
@@ -386,7 +406,6 @@ body {
   flex: 3;
 }
 
-
 .payrollAdd__Btn {
   text-align: right;
 }
@@ -394,12 +413,13 @@ body {
   text-align: center;
 }
 
+
 .details__Fld {
   display: flex;
   justify-content: space-between;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .deatails__Fld {
     display: flex;
     align-items: baseline;
@@ -407,4 +427,4 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
   }
-}
+} */

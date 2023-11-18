@@ -4,6 +4,8 @@ import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 function OnboardingForm() {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
@@ -47,6 +49,7 @@ function OnboardingForm() {
                     setError(result.message)
                 }
                 else {
+                    toast.success('Added Client Successfully')
                     clearFields()
                 }
 

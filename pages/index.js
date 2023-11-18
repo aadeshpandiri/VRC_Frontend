@@ -84,14 +84,12 @@ export default function Home() {
     setIsSidenavOpen(!isSidenavOpen);
   };
 
-  useEffect(()=>{
-    if(isSidenavOpen){
-      toggleSidenav()
-    }
-  
-  },[])
+  // useEffect(()=>{
+  //   if(isSidenavOpen){
+  //     toggleSidenav()
+  //   }
+  // },[])
 
- 
   return (    <>
     {
       token?
