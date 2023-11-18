@@ -260,6 +260,7 @@ const Main = () => {
   const AddRow = (item) => {
     setRows([...rows, item])
   }
+  
   const SaveEditedRow = (item) => {
     const newRows = rows.map((each, i) => {
       if (item.project_id === each.project_id) {

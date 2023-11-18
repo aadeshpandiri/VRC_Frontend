@@ -58,6 +58,7 @@ function EditStatusForm({ handleClose }) {
     };
 
     const handleAutocompleteChange = (fieldName, newValue) => {
+        console.log(fieldName, newValue)
         setFormData({
             ...formData,
             [fieldName]: newValue,
@@ -333,19 +334,6 @@ function EditStatusForm({ handleClose }) {
                     {formData.project_type && <>
                         <div className='deatails__Fld'>
                             <p>Status</p>
-                            {/* <Autocomplete className='auto__Fld'
-                                options={["SOLD", "TOKEN", "ADVANCE", "AVAILABLE"]}
-                                value={formData.status}
-                                onChange={(event, newValue) => handleAutocompleteChange('status', newValue)}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Select Status"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
-                                )}
-                            /> */}
                             <Autocomplete
                                 className='auto__Fld'
                                 options={['AVAILABLE', 'SOLD', 'TOKEN', 'ADVANCE']}

@@ -68,9 +68,10 @@ const AddprojectDrawer = ({ anchor, toggleDrawer, isOpen, paper, AddRow, current
     }
 
     const onChangeInputAutoEdit = (fieldName, newValue) => {
+        console.log(fieldName,newValue)
         setEditRow((prevState) => ({
             ...prevState,
-            fieldName: newValue
+            [fieldName]: newValue
         }))
     }
 

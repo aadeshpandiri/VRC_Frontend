@@ -58,14 +58,6 @@ function Editproject({ editRow, onChangeInputEdit, onChangeInputAutoEdit, handle
             });
     };
 
-    const inputThemObj = {
-        width: "150px",
-        height: "44px",
-        borderColor: "rgb(208,213,221)",
-        borderRadius: '8px',
-        boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)'
-    }
-
     const handleDiscardClick = (e) => {
         e.preventDefault(); // Prevents the default form submission
         handleClose(); // Add any other necessary logic for discarding
