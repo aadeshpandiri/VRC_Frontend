@@ -5,13 +5,19 @@ import { TextField, InputAdornment, Autocomplete } from '@mui/material';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 function Payroll() {
 
-    const { token ,loader,setLoader} = useContext(sharedContext);
+    const { token, loader, setLoader } = useContext(sharedContext);
 
-    const [name, setName] = useState('');
-    const [role, setRole] = useState('');
-    const [amount, setAmount] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        role_type: '',
+        amount: '',
+    });
+    const [errors, setErrors] = useState({});
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,11 +27,7 @@ function Payroll() {
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            "name": name,
-            "role_type": role,
-            "amount": amount,
-        });
+        var raw = JSON.stringify(formData);
 
         var requestOptions = {
             method: 'POST',
@@ -40,29 +42,46 @@ function Payroll() {
                 console.log(result)
                 // AddRow(result.data)
                 // handleClose()
+                toast.success('Added Payroll Successfully')
                 clearFields()
                 setLoader(false)
             })
-            .catch(error => {console.log('error', error)
-        
-            setLoader(false)});
+            .catch(error => {
+                console.log('error', error)
+
+                setLoader(false)
+            });
     };
 
     const onChangeInput = (e) => {
-        console.log(e.target.name)
-        switch (e.target.name) {
-            case 'name': setName(e.target.value);
-                break;
-            case 'amount': setAmount(e.target.value);
-                break;
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+        if (name === 'amount') {
+            if (!/^\d+$/.test(value)) {
+                setErrors({
+                    ...errors,
+                    [name]: 'Amount should only contain numbers',
+                });
+            } else {
+                setErrors({
+                    ...errors,
+                    [name]: '',
+                });
+            }
+            if (value === '') {
+                setErrors({})
+            }
         }
     }
 
     const handleAutocompleteChange = (fieldName, newValue) => {
-        switch (fieldName) {
-            case 'role': setRole(newValue);
-                break;
-        }
+        setFormData({
+            ...formData,
+            [fieldName]: newValue,
+        });
     };
 
     const clearFields = () => {
@@ -74,14 +93,14 @@ function Payroll() {
     return (
         <div className='PayrollCard'>
             <h2>Payroll</h2>
-            {loader&& <Loader/>}
+            <Loader />
             <form onSubmit={handleSubmit} className='prDeatails__Box'>
                 <div className='prFields__Box'>
                     <div className='prDeatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
                         <p>Name</p>{/*class="w-40 text-gray-700 font-medium text-lg whitespace-nowrap"*/}
                         <TextField className='nText__Fld'
                             type="text"
-                            value={name}
+                            value={formData?.name}
                             onChange={onChangeInput}
                             placeholder='Enter Name'
                             required
@@ -93,7 +112,7 @@ function Payroll() {
                         <p>Role Type</p>
                         <Autocomplete className='nText__Fld'
                             options={["Accountant", "Document Writer", "Office Boy", "Maid", "Priest", "Director 1", "Director 2"]}
-                            value={role}
+                            value={formData?.role}
                             onChange={(event, newValue) => handleAutocompleteChange('role', newValue)}
                             renderInput={(params) => (
                                 <TextField
@@ -101,19 +120,22 @@ function Payroll() {
                                     label="Select Role Type"
                                     variant="outlined"
                                     fullWidth
+                                    required
                                 />
                             )}
                         />
                     </div>
                     <div className='prDeatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
                         <p>Amount</p>{/*class="w-40 text-gray-700 font-medium text-lg whitespace-nowrap"*/}
-                                                <TextField
+                        <TextField
                             className='nText__Fld'
                             type="text"
-                            value={amount}
+                            value={formData?.amount}
                             onChange={onChangeInput}
                             placeholder='Enter Amount'
                             required
+                            error={Boolean(errors.amount)}
+                            helperText={errors.amount}
                             autoComplete="off"
                             name='amount'
                             InputProps={{
@@ -128,7 +150,7 @@ function Payroll() {
                         />
                     </div>
                 </div>
-                <div onClick={handleSubmit} className='payrollSub__Btn'>
+                <div type='submit' className='payrollSub__Btn'>
                     <button>Submit</button>
                 </div>
             </form>

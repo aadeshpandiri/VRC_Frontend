@@ -14,6 +14,10 @@ module.exports = {
         'blue-1366D9': '#1366D9',
         'grey-500': 'rgba(240, 241, 243, 1)'
       },
+      colors: {
+        'grey': '#383E49',
+        'blue': '#1570EF'
+      }
     },
   },
   plugins: [],

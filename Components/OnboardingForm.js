@@ -4,9 +4,12 @@ import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 function OnboardingForm() {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
+    const [error, setError] = useState('')
 
     const [formData, setFormData] = useState({
         client_name: '',
@@ -29,7 +32,6 @@ function OnboardingForm() {
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
-
         var raw = JSON.stringify(formData);
 
         var requestOptions = {
@@ -43,10 +45,11 @@ function OnboardingForm() {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                if (result.status == 500) {
-
+                if (result.status == 409) {
+                    setError(result.message)
                 }
                 else {
+                    toast.success('Added Client Successfully')
                     clearFields()
                 }
 
@@ -157,6 +160,7 @@ function OnboardingForm() {
                 amount_received: '',
             }
         );
+        setError('')
         setAvailablePrns([])
         setAvailablePts([])
         setAvailableTns([])
@@ -202,8 +206,8 @@ function OnboardingForm() {
             <h2>Onboarding Form</h2>
             <form onSubmit={handleSubmit} className='deatails__Box' >
                 <div className='fields__Box'>
-                    <div className='deatails__Fld'>{/*class="flex items-center gap-10 flex-wrap"*/}
-                        <p>Client Name</p>{/*class="w-40 text-gray-700 font-medium text-lg whitespace-nowrap"*/}
+                    <div className='deatails__Fld'>
+                        <p>Client Name</p>
                         <TextField className='text__Fld'
                             status="text"
                             value={formData.client_name}
@@ -377,7 +381,9 @@ function OnboardingForm() {
                         </div>
                     </>}
                 </div>
-
+                <div >
+                    <span style={{ color: 'red' }}>{error}</span>
+                </div>
                 <div className='Btns__container'>
                     <div className='dcrd__Btn' onClick={clearFields}>
                         <button>Discard</button>

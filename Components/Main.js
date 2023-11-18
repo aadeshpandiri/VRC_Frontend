@@ -20,7 +20,6 @@ const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => 
 
   const handleEditClick = () => {
     // some action
-    console.log(index)
     setEditRow(index)
     setOpenAddProjectDrawer(true)
     setCurrent('edit')
@@ -39,9 +38,8 @@ const MatEdit = ({ index, setCurrent, setOpenAddProjectDrawer, setEditRow }) => 
 };
 const Main = () => {
   const [current, setCurrent] = useState('');
-  // const [openDrawer, setOpenDrawer] = useState(false)
 
-  const { token, setToken, loader, setLoader, userRole,setUserRole } = useContext(sharedContext);
+  const { token, setToken, loader, setLoader, userRole, setUserRole } = useContext(sharedContext);
 
   const columns = [
 
@@ -49,7 +47,7 @@ const Main = () => {
       field: 'project_id',
       headerName: 'Project ID',
       width: 160,
-      editable: false,
+      // editable: false,
     },
     {
       field: 'project_name',
@@ -127,11 +125,12 @@ const Main = () => {
       }
     }
   ];
-  const router =useRouter()
+
+  const router = useRouter()
   const [rows, setRows] = useState([])
   const [editRow, setEditRow] = useState();
-  const [income,setIncome]=useState();
-  const [expence,setExpence]=useState();
+  const [income, setIncome] = useState();
+  const [expence, setExpence] = useState();
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -139,6 +138,7 @@ const Main = () => {
     setToken(null)
     setUserRole('USER')
   }
+
   useEffect(() => {
     if (token) {
       setLoader(true)
@@ -173,9 +173,10 @@ const Main = () => {
           setLoader(false)
         });
     }
-  }, [token,userRole])
-    useEffect(() => {
- if(userRole=='SUPERADMIN'){
+  }, [token, setLoader, userRole])
+
+  useEffect(() => {
+    if (userRole == 'SUPERADMIN') {
       setLoader(true)
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -192,7 +193,7 @@ const Main = () => {
           if (result.status == 401 || result.message == 'Token Invalid/Expired') {
             handleLogout();
           }
-          else if(result.status == 200){
+          else if (result.status == 200) {
             setIncome(result.data)
           }
           setLoader(false)
@@ -200,39 +201,42 @@ const Main = () => {
         .catch(error => {
           setLoader(false)
         });
-      }
-    
-  }, [token,userRole])
+    }
+
+  }, [token, userRole, setLoader])
+
   useEffect(() => {
-    if(userRole=='SUPERADMIN'){
-         setLoader(true)
-         var myHeaders = new Headers();
-         myHeaders.append("Authorization", `Bearer ${token}`);
-   
-         var requestOptions = {
-           method: 'GET',
-           headers: myHeaders,
-           redirect: 'follow'
-         };
-   
-         fetch(`${baseurl?.url}/payroll/getExpenses`, requestOptions)
-           .then(response => response.json())
-           .then(result => {
-             if (result.status == 401 || result.message == 'Token Invalid/Expired') {
-               handleLogout();
-             }
-             else if(result.status == 200){
-               setExpence(result.data)
-             }
-             setLoader(false)
-           })
-           .catch(error => {
-             setLoader(false)
-           });
-         }
-       
-     }, [token,userRole])
+    if (userRole == 'SUPERADMIN') {
+      setLoader(true)
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`${baseurl?.url}/payroll/getExpenses`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.status == 401 || result.message == 'Token Invalid/Expired') {
+            handleLogout();
+          }
+          else if (result.status == 200) {
+            setExpence(result.data)
+          }
+          setLoader(false)
+        })
+        .catch(error => {
+          setLoader(false)
+        });
+    }
+
+  }, [token, userRole, setLoader])
+
   const [isAddProjectDrawerOpen, setOpenAddProjectDrawer] = useState(false);
+
   const toggleAddProjectDrawer = (anchor, open, event) => {
     if (
       event &&
@@ -244,20 +248,19 @@ const Main = () => {
     if (!open) {
       setOpenAddProjectDrawer(open)
     }
-    if (event.target.name === "add") {
+    if (event?.target.name === "add") {
       setCurrent('add')
       setOpenAddProjectDrawer(open);
     }
-    else if (event.target.name === "sReceipt") {
+    else if (event?.target.name === "sReceipt") {
       setCurrent('sReceipt')
       setOpenAddProjectDrawer(open);
-      // setOpenDrawer(open);
     }
-    else if (event.target.name === 'edit') {
+    else if (event?.target.name === 'edit') {
       setCurrent('edit');
       setOpenAddProjectDrawer(open);
     }
-    else if (event.target.name === 'editStatus') {
+    else if (event?.target.name === 'editStatus') {
       setCurrent('editStatus');
       setOpenAddProjectDrawer(open);
     }
@@ -266,8 +269,8 @@ const Main = () => {
   const AddRow = (item) => {
     setRows([...rows, item])
   }
+  
   const SaveEditedRow = (item) => {
-    console.log(item)
     const newRows = rows.map((each, i) => {
       if (item.project_id === each.project_id) {
         // Increment the clicked counter
@@ -280,7 +283,7 @@ const Main = () => {
     setRows(newRows);
   }
 
-  const filteredColumns = userRole !== "SALES" ? columns : columns.filter(column => column.field !== "actions");
+  const filteredColumns = userRole !== "SALES" && userRole !== "MANAGER" ? columns : columns.filter(column => column.field !== "actions");
 
   return (
     <div className="p-4 mt-20 bg-grey-500">
@@ -345,14 +348,14 @@ const Main = () => {
             <span className='sbt__Btn' style={{ backgroundColor: 'none' }}>
               <button onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="add">Add Project</button>
             </span>
-            { userRole === "SUPERADMIN" && <span className='eds__Btn'>
-              <Button className='button' onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content'}} name="editStatus">
+            {userRole !== "MANAGER" && <span className='eds__Btn'>
+              <Button className='button' onClick={(event) => toggleAddProjectDrawer('right', true, event)} style={{ width: 'max-content' }} name="editStatus">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 10H15M2.5 5H17.5M7.5 15H12.5" stroke="#5D6679" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 Edit Status
               </Button>
-            </span> }
+            </span>}
           </div>
         }
      </div>

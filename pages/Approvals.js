@@ -5,6 +5,8 @@ import Sidenav from '../Components/SideNav';
 import sharedContext from '../context/SharedContext';
 import { useContext } from "react";
 import Link from "next/link";
+import toast, { Toaster } from 'react-hot-toast'
+
 
 import { Drawer, List, ListItem, ListItemText, IconButton, Button } from '@mui/material';
 // const roles = {
@@ -20,12 +22,16 @@ import { useRouter } from 'next/router';
 function Approvals() {
   const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, loader, setLoader } = useContext(sharedContext);
   const [approvalsList, setApprovalsList] = useState([]);
+
   // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   // const userRole = 'superadmin'; // Set the user's role here
   // const [userRole,setUserRole]=useState('superadmin');
+
   const toggleSidenav = () => {
+    console.log("called togglesidenav app")
     setIsSidenavOpen(!isSidenavOpen);
   };
+
   const [isDrawerOpen, setOpenDrawer] = useState(false);
 
   const toggleDrawer = (anchor, open, event) => {
@@ -71,12 +77,13 @@ function Approvals() {
     }
 
   }, [token])
-  useEffect(() => {
-    if (isSidenavOpen) {
-      toggleSidenav()
-    }
 
-  }, [])
+  // useEffect(() => {
+  //   if (isSidenavOpen) {
+  //     toggleSidenav()
+  //   }
+  // }, [isSidenavOpen])
+
   const handleLogout = () => {
     sessionStorage.clear();
     setToken(null);
@@ -106,6 +113,7 @@ function Approvals() {
       .then(result => {
         console.log(result)
         if (result.message === "Success") {
+          toast.success('Action Completed Successfully')
           // Create a copy of the current approvalsList without the approved/rejected item.
           const updatedList = approvalsList.filter(approvalItem => approvalItem.emailId !== item.emailId);
           setLoader(false)
@@ -119,8 +127,8 @@ function Approvals() {
         setLoader(false)
       });
   }
-  if (userRole !== "SUPERADMIN") {
 
+  if (userRole !== "SUPERADMIN") {
     return <div>
       not accessible
       <Link href='/'>Home</Link>
@@ -150,6 +158,7 @@ function Approvals() {
        </ListItem>
      ))}
    </List> */}
+
         <SideBar />
       </div>
 
@@ -164,11 +173,8 @@ function Approvals() {
 
         {/* Main Content */}
         {/* <Main /> */}
-        <div className='bg-grey-500 p-4 overflow-scroll mt-20 pt-10' style={{ height: '90vh' }}>
-          {loader && <Loader />}
-
-          {/* <table className='w-full text-left   border-separate border-spacing-y-2.5'> */}
-          {/* <tbody> */}
+        <div className='bg-grey-500 p-4 overflow-scroll mt-20' style={{ height: '80vh' }}>
+          <Loader />
           <div className='w-full text-left   border-separate border-spacing-y-2.5'>
             {approvalsList?.map((item, index) => (
               <>
@@ -181,10 +187,8 @@ function Approvals() {
                 </div>
 
                 <div className='mt-2 mb-5 w-full flex justify-end gap-3'>
-                  {/* <div className='p-4'></div>
-                    <div className='p-4'></div>
-                    <div className='p-4'></div>
-                    <div className='p-4'></div> */}
+                  <button className='rounded-md py-1 px-2 border-2 border-solid border-white' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
+                 
                   <button className='bg-white text-grey rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'R')}>Denied</button>
                   <button className='bg-blue-1366D9 text-white rounded-md py-1 px-2' onClick={() => handleApproveOrReject(item, 'V')}>Approval</button>
                 </div>

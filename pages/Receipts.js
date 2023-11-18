@@ -23,9 +23,12 @@ function Receipts() {
   // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   // const userRole = 'superadmin'; // Set the user's role here
   // const [userRole,setUserRole]=useState('superadmin');
+
   const toggleSidenav = () => {
+    console.log("called togglesidenav rec")
     setIsSidenavOpen(!isSidenavOpen);
   };
+
   const [isDrawerOpen, setOpenDrawer] = useState(false);
 
   const toggleDrawer = (anchor, open, event) => {
@@ -86,12 +89,12 @@ function Receipts() {
     sessionStorage.clear();
     setToken(null);
   }
-  useEffect(()=>{
-    if(isSidenavOpen){
-      toggleSidenav()
-    }
+  // useEffect(()=>{
+  //   if(isSidenavOpen){
+  //     toggleSidenav()
+  //   }
   
-  },[])
+  // },[])
 
   return (
     <div className="md:flex h-screen w-full">
@@ -134,7 +137,7 @@ function Receipts() {
           {
             receiptsList?.map((item, index) => {
               console.log(item)
-              return <div key={index} className='bg-white p-2 rounded-md' onClick={(event) => toggleReceiptDrawer('right', true, event, item)}>Project ID:{item.project_id}</div>
+              return <div key={index} className='bg-white p-2 rounded-md cursor-pointer' onClick={(event) => toggleReceiptDrawer('right', true, event, item)}>Project ID:{item.project_id}</div>
             })
           }
         </div>

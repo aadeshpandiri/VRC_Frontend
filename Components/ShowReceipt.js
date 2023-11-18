@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { MenuItem, Select } from '@mui/material';
 import baseurl from '../data/baseurl'
 import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
 function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
 
     const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen,setLoader } = useContext(sharedContext);
@@ -30,6 +32,7 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
                 console.log(result)
                 if (result.message === "Success") {
                     console.log("hello I am coming",data,receiptsList)
+                    toast.success('Approved Successfully')
                     // Create a copy of the current approvalsList without the approved/rejected item.
                     const updatedList = receiptsList?.filter(approvalItem => approvalItem.emailId !== data.emailId);
 
@@ -66,6 +69,7 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
                 console.log(result)
                 if (result.message === "Success") {
                     console.log("hello I am coming")
+                    toast.success('Rejected Successfully')
                     // Create a copy of the current approvalsList without the approved/rejected item.
                     const updatedList = receiptsList?.filter(approvalItem => approvalItem.emailId !== data.emailId);
 
@@ -112,9 +116,9 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
             </div>
             {
                 userRole === "SUPERADMIN" &&
-                <div className='Btns__container'>
+                <div className='recBtns__container'>
                     <div className='dcrd__Btn' onClick={(e, data) => handleReject(e, data)} >
-                        <button >Cancle</button>
+                        <button >Reject</button>
                     </div>
                     <div className='add__Btn' onClick={(e, data) => handleSubmit(e, data)}>
                         <button>Validate</button>
@@ -123,11 +127,10 @@ function ShowReceipt({ handleClose, data, receiptsList, setReceiptsList }) {
             }
             {
                 userRole === "MANAGER" &&
-                <div className='Btns__container'>
+                <div className='recBtns__container'>
                     <div className='add__Btn' onClick={handleClose} >
                         <button >Close</button>
                     </div>
-
                 </div>
             }
         </div>

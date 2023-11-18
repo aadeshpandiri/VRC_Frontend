@@ -3,9 +3,13 @@ import sharedContext from '../context/SharedContext';
 import { useContext, useState, useEffect } from 'react';
 import { MenuItem, Select, Radio, FormControlLabel, FormControl, FormLabel, Autocomplete, TextField } from '@mui/material';
 import baseurl from '../data/baseurl'
+import Loader from './Loader';
+import toast, { Toaster } from 'react-hot-toast'
+
+
 function EditStatusForm({ handleClose }) {
 
-    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen ,loader,setLoader} = useContext(sharedContext);
+    const { userRole, token, isSidenavOpen, setUserRole, setToken, setIsSidenavOpen, setLoader ,loader} = useContext(sharedContext);
 
     const [formData, setFormData] = useState({
         project_name: '',
@@ -15,7 +19,7 @@ function EditStatusForm({ handleClose }) {
         villa_number: '',
         plot_number: '',
         status: '',
-        amount_received: 0,
+        amount_received: '',
     });
 
     const [availablePrns, setAvailablePrns] = useState([])
@@ -28,6 +32,7 @@ function EditStatusForm({ handleClose }) {
 
     const onChangeInput = (e) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setFormData({
             ...formData,
             [name]: value,
@@ -38,7 +43,7 @@ function EditStatusForm({ handleClose }) {
             if (!/^\d+$/.test(value)) {
                 setErrors({
                     ...errors,
-                    [name]: 'Amount should only contain numbers',
+                    [name]: 'only numbers',
                 });
             } else {
                 setErrors({
@@ -46,10 +51,14 @@ function EditStatusForm({ handleClose }) {
                     [name]: '',
                 });
             }
+            if (value === '') {
+                setErrors({})
+            }
         }
     };
 
     const handleAutocompleteChange = (fieldName, newValue) => {
+        console.log(fieldName, newValue)
         setFormData({
             ...formData,
             [fieldName]: newValue,
@@ -181,19 +190,7 @@ function EditStatusForm({ handleClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        let pid
-        switch (formData.project_type) {
-            case "Apartment":
-                pid = formData.project_name + "_" + formData.project_type + "_" + formData.tower_number + "_" + formData.flat_number;
-                break
-            case "Villa":
-                pid = formData.project_name + "_" + formData.project_type + "_" + formData.villa_number;
-                break
-            case "Plot":
-                pid = formData.project_name + "_" + formData.project_type + "_" + formData.plot_number;
-                break
-        }
+        setLoader(true)
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -212,17 +209,41 @@ function EditStatusForm({ handleClose }) {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                toast.success('Edited Project Status Successfully')
                 clearFields()
                 handleClose()
                 setLoader(false)
             })
-            .catch(error =>{ console.log('error', error)
-            setLoader(false)
-        });
+            .catch(error => {
+                console.log('error', error)
+                setLoader(false)
+            }
+            );
+    };
+
+    const optionColors = {
+        AVAILABLE: '#27ae60',
+        SOLD: '#e74c3c',
+        TOKEN: '#f39c12',
+        ADVANCE: '#3498db',
+    };
+
+    const getOptionLabel = (option) => {
+        // Return the label for the option
+        return option;
+    };
+
+    const getOptionStyle = (option) => {
+        // Return the style for the option based on the predefined colors
+        const color = optionColors[option];
+        return {
+            color: color || 'black',
+        };
     };
 
     return (
         <div className='EditStatusFormCard'>
+            <Loader />
             <h2>Edit Project Status</h2>
             <form onSubmit={handleSubmit} className='deatails__Box' >
                 <div className='fields__Box'>
@@ -329,30 +350,37 @@ function EditStatusForm({ handleClose }) {
                     {formData.project_type && <>
                         <div className='deatails__Fld'>
                             <p>Status</p>
-                            <Autocomplete className='auto__Fld'
-                                options={["SOLD", "TOKEN", "ADVANCE", "AVAILABLE"]}
+                            <Autocomplete
+                                className='auto__Fld'
+                                options={['AVAILABLE', 'SOLD', 'TOKEN', 'ADVANCE']}
                                 value={formData.status}
                                 onChange={(event, newValue) => handleAutocompleteChange('status', newValue)}
+                                getOptionLabel={getOptionLabel}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        placeholder="Select Status"
+                                        label="Select Project Status"
                                         variant="outlined"
                                         fullWidth
                                     />
+                                )}
+                                renderOption={(props, option, state) => (
+                                    <li {...props} style={{ ...props.style, ...getOptionStyle(option) }}>
+                                        {option}
+                                    </li>
                                 )}
                             />
                         </div>
                         <div className='deatails__Fld'>
                             <p>Amount</p>
                             <TextField className='text__Fld'
-                                type="number"
+                                type="text"
                                 value={formData.amount_received}
                                 onChange={onChangeInput}
                                 placeholder='Enter Amount'
                                 required
-                                // error={Boolean(errors.amount)}
-                                // helperText={errors.amount}
+                                error={Boolean(errors.amount_received)}
+                                helperText={errors.amount_received}
                                 autoComplete="off"
                                 name='amount_received'
                             />
@@ -360,16 +388,16 @@ function EditStatusForm({ handleClose }) {
                     </>}
                 </div>
 
-                    <div className='Btns__container'>
-                        {/* <div className='dcrd__Btn' >
+                <div className='Btns__container'>
+                    {/* <div className='dcrd__Btn' >
                             <button onClick={handleClose}>Discard</button>
                         </div> */}
-                        <div className='add__Btn'>
-                            <button type='submit'>Submit</button>
-                        </div>
+                    <div className='add__Btn'>
+                        <button type='submit'>Submit</button>
                     </div>
-                </form>
-            </div >
+                </div>
+            </form>
+        </div >
 
     )
 }

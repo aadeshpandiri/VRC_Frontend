@@ -27,15 +27,18 @@ function Onboarding() {
 
     setOpenDrawer(open);
   };
+
   const toggleSidenav = () => {
+    console.log("called togglesidenav onb")
     setIsSidenavOpen(!isSidenavOpen);
   };
-  useEffect(() => {
-    if (isSidenavOpen) {
-      toggleSidenav()
-    }
 
-  }, [])
+  // useEffect(() => {
+  //   if (isSidenavOpen) {
+  //     toggleSidenav()
+  //   }
+
+  // }, [])
   return (
     <div className="md:flex h-screen w-full">
 
