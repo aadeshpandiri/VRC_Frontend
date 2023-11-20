@@ -6,7 +6,7 @@ import BASEURL from '../data/baseurl';
 import Loader from '../Components/Loader';
 import { useContext } from 'react';
 import sharedContext from '../context/SharedContext';
-import logo from '../utils/logo.png';
+import logo from '../utils/Logo.png';
 import lexoddLogo from '../utils/lexodd_logo.png';
 import Image from 'next/image';
 function Register() {
