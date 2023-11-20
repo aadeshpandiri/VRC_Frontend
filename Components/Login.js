@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import Loader from './Loader';
 import baseurl from '../data/baseurl';
 import { useRouter } from 'next/router';
-import logo from '../utils/logo.png';
+import logo from '../utils/Logo.png';
 import Image from 'next/image';
 import lexoddLogo from '../utils/lexodd_logo.png';
 import toast, { Toaster } from 'react-hot-toast'
